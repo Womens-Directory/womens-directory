@@ -56,3 +56,9 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "pg", "~> 1.2"
+
+gem "rspec-rails", "~> 5.0"
+
+gem "annotate", "~> 3.1"
+
+gem "rexml", "~> 3.2"
