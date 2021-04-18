@@ -3,3 +3,6 @@
 <p><%= @location.desc %></p>
 
 <p>See <%= link_to "website", @location.website, target: "_blank" %> for current hours of operation.</p>
+
+<p>Organization: <%= link_to @location.org.name, @location.org.website, target: "_blank" %></p>
+<p><%= @location.org.desc %>
