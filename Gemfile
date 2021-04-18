@@ -62,3 +62,5 @@ gem "rspec-rails", "~> 5.0"
 gem "annotate", "~> 3.1"
 
 gem "rexml", "~> 3.2"
+
+gem 'rails_admin', '~> 2.0'
