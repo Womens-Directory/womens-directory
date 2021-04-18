@@ -1,6 +1,9 @@
 <h1><%= @category.name %></h1>
 <ul>
   <% @category.locations.each do |location| %>
-    <li><%= location.name %></li>
+    <li>
+      <%= link_to location.name, show_location_path(location.id)  %>
+    </li>
   <% end %>
 </ul>
+
