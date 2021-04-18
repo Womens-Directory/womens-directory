@@ -1,9 +1,9 @@
-<h1><%= @category.name %></h1>
+<h1 class="is-size-1"><%= @category.name %></h1>
 <ul>
   <% @category.locations.each do |location| %>
     <li>
-      <%= link_to location.name, show_location_path(location.id)  %>
+      <%= link_to location.name, show_location_path(location.id) %>
+      (<%= location.neighborhood %>, <%= location.zip %>)
     </li>
   <% end %>
 </ul>
-
