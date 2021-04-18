@@ -3,7 +3,7 @@
 <ul>
   <% Category.all.each do |category| %>
     <li>
-      <%= category.name %>
+      <%= link_to category.name, show_category_path(category.id) %>
     </li>
   <% end %>
 </ul>
