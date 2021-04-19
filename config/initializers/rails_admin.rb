@@ -2,7 +2,22 @@
 require "nested_form/engine"
 require "nested_form/builder_mixin"
 
+unless Rails.env.development? || Rails.env.test?
+  ADMIN_PASSWORD = ENV['ADMIN_PASSWORD']
+  raise "ADMIN_PASSWORD is unset" unless ADMIN_PASSWORD
+end
+
 RailsAdmin.config do |config|
+  if ADMIN_PASSWORD
+    config.authenticate_with do
+      authenticate_or_request_with_http_basic('Login required') do |username, password|
+        if username != 'wd' || password != ADMIN_PASSWORD
+          raise "Unauthorized login to Rails Admin: #{username}/#{password}"
+        end
+        true
+      end
+    end
+  end
 
   ### Popular gems integration
 
