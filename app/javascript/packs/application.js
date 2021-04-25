@@ -8,6 +8,7 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import "bulma/bulma.sass"
+import "../style.scss"
 
 Rails.start()
 Turbolinks.start()
