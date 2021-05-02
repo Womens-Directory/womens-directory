@@ -66,3 +66,5 @@ gem 'rails_admin', '~> 2.0'
 gem 'sprockets', '< 4'
 
 gem "faker", "~> 2.17"
+
+gem "font-awesome-rails", "~> 4.7"
