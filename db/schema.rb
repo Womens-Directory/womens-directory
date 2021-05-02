@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_18_185720) do
+ActiveRecord::Schema.define(version: 2021_05_02_214314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,14 @@ ActiveRecord::Schema.define(version: 2021_04_18_185720) do
     t.bigint "location_id", null: false
     t.index ["category_id", "location_id"], name: "index_categories_locations_on_category_id_and_location_id"
     t.index ["location_id", "category_id"], name: "index_categories_locations_on_location_id_and_category_id"
+  end
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.string "page"
+    t.string "email"
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "locations", force: :cascade do |t|
