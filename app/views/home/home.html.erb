@@ -1,24 +1,15 @@
 <h1 class="is-size-1">Women's Directory</h1>
 
-
-
 <div class="columns">
-  <div class="column">
-    <ul>
-      <% Category.all.each do |category| %>
-        <li>
-          <%= link_to category.name, show_category_path(category.id) %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-  <div class="column">
-    <ul>
-      <% Category.all.each do |category| %>
-        <li>
-          <%= link_to category.name, show_category_path(category.id) %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+  <% @columns.each do |column| %>
+    <div class="column">
+      <ul>
+        <% column.each do |category| %>
+          <li>
+            <%= link_to category.name, show_category_path(category.id) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 </div>
