@@ -3,7 +3,11 @@
   <% @category.locations.each do |location| %>
     <li>
       <%= link_to location.name, show_location_path(location.id) %>
-      (<%= location.neighborhood %>, <%= location.zip %>)
+      <% if location.neighborhood %>
+        (<%= location.neighborhood %>, <%= location.zip %>)
+      <% else %>
+        (<%= location.zip %>)
+      <% end %>
     </li>
   <% end %>
 </ul>
