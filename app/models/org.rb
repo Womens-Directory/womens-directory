@@ -10,6 +10,6 @@
 #  updated_at :datetime         not null
 #
 class Org < ApplicationRecord
-  has_many :locations
+  has_many :locations, dependent: :destroy
   validates_presence_of :desc, :name, :website
 end

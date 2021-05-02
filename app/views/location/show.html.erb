@@ -1,14 +1,27 @@
 <h1 class="is-size-1"><%= @location.name %></h1>
 
-<p class="mb-3"><%= @location.desc %></p>
-
-<p class="mb-3">
-  See <%= link_to "website", @location.website, target: "_blank" %> for current hours of operation.
-</p>
-
-<p class="mb-3">
-  Organization: <%= link_to @location.org.name, show_org_path %>
-  (<%= link_to "website", @location.org.website, target: "_blank" %>)
-</p>
-
-<p class="mb-3"><%= @location.org.desc %></p>
+<div class="columns mb-3">
+  <div class="column">
+    <p class="mb-3"><%= @location.desc %></p>
+    <p>
+      <span class="has-text-weight-bold">
+        Organization: <%= link_to @location.org.name, show_org_path %>
+      </span>
+      (<%= link_to "website", @location.org.website, target: "_blank" %>)
+    <p>
+    <p><%= @location.org.desc %></p>
+  </div>
+  <div class="column">
+    <p class="has-text-weight-bold">Hours and More Info</p>
+    <p class="mb-3">
+      <%= link_to @location.website_without_protocol, @location.website, target: "_blank" %>
+    </p>
+    <p class="has-text-weight-bold">Services Provided</p>
+    <ul>
+      <% @location.categories.each do |category| %>
+      <li><%= link_to category.name, show_category_path(category) %></li>
+      <% end %>
+    </ul>
+    </p>
+  </div>
+</div>
