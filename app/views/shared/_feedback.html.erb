@@ -1,5 +1,33 @@
 <a href="#">
-  <div class="feedback">
+  <div class="feedback-closed">
     <%= fa_icon "comments" %>
   </div>
 </a>
+
+<div class="feedback-open">
+  <div class="px-3 py-3">
+    <a href="#"><%= fa_icon "times", class: "x" %></a>
+
+    <p>How can we make Women's Directory better? We'll use your feedback to improve the site.</p>
+    <form class="form" id="feedback-form" method="POST">
+      <input type="hidden" value="<% request.path %>">
+      <div class="control mt-3">
+        <p class="has-text-weight-bold">I found an issue with:</p>
+        <label class="radio">
+          <input class="ml-0 mr-1" type="radio" name="kind" value="entire-site">The entire site</input>
+        </label>
+        <label class="radio">
+          <input class="ml-0 mr-1" type="radio" name="kind" value="specific-page">This specific page</input>
+        </label>
+        <label class="radio">
+          <input class="ml-0 mr-1" type="radio" name="kind" value="something-else">Something else</input>
+        </label>
+      </div>
+      <div class="control mt-3">
+        <p class="has-text-weight-bold">How can we improve?</p>
+        <textarea class="textarea" id="feedback-body" name="body"></textarea>
+      </div>
+      <input class="button is-primary mt-3" form="feedback-form" type="submit" value="Send feedback">
+    </form>
+  </div>
+</div>
