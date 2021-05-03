@@ -29,8 +29,9 @@ ActiveRecord::Schema.define(version: 2021_05_02_214314) do
   end
 
   create_table "feedbacks", force: :cascade do |t|
-    t.string "page"
-    t.string "email"
+    t.string "ip"
+    t.string "path"
+    t.string "category"
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

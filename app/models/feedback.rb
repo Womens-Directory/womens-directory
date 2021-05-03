@@ -4,8 +4,9 @@
 #
 #  id         :bigint           not null, primary key
 #  body       :text
-#  email      :string
-#  page       :string
+#  category   :string
+#  ip         :string
+#  path       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
