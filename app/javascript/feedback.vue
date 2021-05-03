@@ -74,6 +74,7 @@ const categories = [
 export default {
   props: {
     currentPath: { type: String, required: true },
+    csrfToken: { type: String, required: true },
   },
 
   data: () => ({
@@ -100,6 +101,7 @@ export default {
         category: this.category,
         body: this.body,
         path: this.currentPath,
+        authenticity_token: this.csrfToken,
       };
       this.state = "submitting";
       try {

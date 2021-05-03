@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   get 'category/:id', to: 'category#show', as: 'show_category'
   get 'location/:id', to: 'location#show', as: 'show_location'
   get 'org/:id', to: 'org#show', as: 'show_org'
+  post 'feedback', to: 'feedback#save', as: 'save_feedback'
 end
