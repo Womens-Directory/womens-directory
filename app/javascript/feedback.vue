@@ -2,14 +2,15 @@
   <div>
     <a v-if="!open" @click="open = true">
       <div class="feedback-closed">
-        <i class="fa fa-comments"></i>
+        <i class="fa fa-comments" />
       </div>
     </a>
 
     <div class="feedback-open" v-else>
       <div class="px-3 py-3">
-        <a @click="open = false">
-          <i class="fa fa-times px-2 py-2 ml-2"></i>
+        <a @click="open = false" class="x px-2 py-1 ml-3">
+          <i class="fa fa-times mr-1" />
+          Close
         </a>
         <p>
           How can we make Women's Directory better? We'll use your feedback to
@@ -18,15 +19,15 @@
         <form class="form" id="feedback-form">
           <input type="hidden" value="<% request.path %>" />
           <div class="control mt-3">
-            <p class="has-text-weight-bold">I found an issue with:</p>
-            <label class="radio" v-for="category in categories" :key="category">
+            <p class="has-text-weight-bold">What's wrong?</p>
+            <label class="radio" v-for="cat in categories" :key="cat">
               <input
                 class="ml-0 mr-1"
                 type="radio"
-                v-model="kind"
-                :value="category.toLowerCase().replace(/ /g, '-')"
+                v-model="category"
+                :value="cat"
               />
-              {{ category }}
+              {{ cat }}
             </label>
           </div>
           <div class="control mt-3">
@@ -36,7 +37,7 @@
           <p class="is-italic mt-3">{{ error }}</p>
           <button
             @click="submit"
-            class="button is-primary mt-3 mb-1"
+            class="button is-info mt-3 mb-1"
             :disabled="error"
           >
             Send feedback
@@ -48,7 +49,12 @@
 </template>
 
 <script lang="ts">
-const categories = ["The entire site", "This specific page", "Something else"];
+const categories = [
+  "Something is wrong with the entire site",
+  "Something is wrong with this specific page",
+  "I want to add a location to the site",
+  "I have something else to suggest",
+];
 
 export default {
   props: {
@@ -59,19 +65,22 @@ export default {
     categories,
     open: true,
     body: "",
-    kind: null,
+    category: null,
   }),
 
   computed: {
     error() {
-      if (!this.kind) return "Please select an issue category.";
+      if (!this.category) return "Please select an issue category.";
       if (!this.body) return "Please tell us how we can improve.";
     },
   },
 
   methods: {
     submit(e: Event) {
-      console.log("submit");
+      const data = {
+        category: this.category,
+        body: this.body,
+      };
       e.preventDefault();
     },
   },
@@ -122,7 +131,7 @@ export default {
     margin-left: 0;
   }
 
-  .fa-times {
+  .x {
     float: right;
   }
 }
