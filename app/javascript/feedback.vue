@@ -48,7 +48,7 @@
             <p class="is-italic mt-3" v-if="state == 'submitError'">
               Sorry, something went wrong. Please try again.
             </p>
-            <p class="is-italic mt-3" v-else>{{ error }}</p>
+            <p class="is-italic mt-3">{{ error }}</p>
             <button
               @click="submit"
               class="button is-info mt-3 mb-1"
@@ -103,10 +103,20 @@ export default {
       };
       this.state = "submitting";
       try {
-        await window.fetch();
+        const resp = await window.fetch("/feedback", {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (!resp.ok) {
+          this.state = "submitError";
+          return;
+        }
         this.state = "submitted";
       } catch {
         this.state = "submitError";
+        return;
       }
     },
   },
