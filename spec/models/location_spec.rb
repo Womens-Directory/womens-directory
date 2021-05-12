@@ -7,8 +7,8 @@
 #  address2     :string
 #  city         :string           not null
 #  desc         :text             not null
-#  latitude     :float
-#  longitude    :float
+#  latitude     :decimal(9, 6)
+#  longitude    :decimal(9, 6)
 #  name         :string           not null
 #  neighborhood :string
 #  state        :string           not null

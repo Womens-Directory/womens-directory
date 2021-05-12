@@ -50,8 +50,8 @@ ActiveRecord::Schema.define(version: 2021_05_12_012837) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "website"
-    t.float "latitude"
-    t.float "longitude"
+    t.decimal "latitude", precision: 9, scale: 6
+    t.decimal "longitude", precision: 9, scale: 6
     t.index ["org_id"], name: "index_locations_on_org_id"
   end
 
