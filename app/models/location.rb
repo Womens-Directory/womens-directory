@@ -41,6 +41,10 @@ class Location < ApplicationRecord
     [address1, address2, city, state, zip].select { |x| x }.join ', '
   end
 
+  def to_s
+    "#<Location #{id}: #{name}>"
+  end
+
   # Don't break development apps when we're making fake locations locally
   if Rails.env.production?
     after_validation :geocode

@@ -12,4 +12,8 @@
 class Org < ApplicationRecord
   has_many :locations, dependent: :destroy
   validates_presence_of :desc, :name, :website
+
+  def to_s
+    "#<Org #{id}: #{name}>"
+  end
 end
