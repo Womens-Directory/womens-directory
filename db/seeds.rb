@@ -58,6 +58,8 @@ def create_all
         state: Faker::Address.state,
         zip: Faker::Address.zip,
         neighborhood: rand < 0.8 ? Faker::Address.community : nil,
+        latitude: Faker::Address.latitude,
+        longitude: Faker::Address.longitude,
       )
     end
   end
