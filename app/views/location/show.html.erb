@@ -20,10 +20,12 @@
     <p><%= @location.org.desc %></p>
   </div>
   <div class="column">
+    <% if @location.website %>
     <p class="has-text-weight-bold">Hours and More Info</p>
     <p class="mb-3">
       <%= link_to @location.website_without_protocol, @location.website, target: "_blank" %>
     </p>
+    <% end %>
     <p class="has-text-weight-bold">Services Provided</p>
     <ul>
       <% @location.categories.each do |category| %>
