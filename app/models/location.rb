@@ -37,15 +37,20 @@ class Location < ApplicationRecord
     match[1]
   end
 
-  after_validation :geocode
-  geocoded_by :full_address do |obj, results|
-    if result = results[0]
-      ngh_data = result.data['address_components'].find { |c| c['types'].include? 'neighborhood' }
-      obj.neighborhood = ngh_data['short_name'] if ngh_data
-    end
+  def full_address
+    [address1, address2, city, state, zip].select { |x| x }.join ', '
   end
 
-  def full_address
-    [address1, address2, city, state, zip].join ', '
+  # Don't break development apps when we're making fake locations locally
+  if Rails.env.production?
+    after_validation :geocode
+    geocoded_by :full_address do |obj, results|
+      if result = results[0]
+        obj.latitude = result.data['geometry']['location']['lat']
+        obj.longitude = result.data['geometry']['location']['lng']
+        ngh_data = result.data['address_components'].find { |c| c['types'].include? 'neighborhood' }
+        obj.neighborhood = ngh_data['short_name'] if ngh_data
+      end
+    end
   end
 end
