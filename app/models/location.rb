@@ -41,6 +41,10 @@ class Location < ApplicationRecord
     [address1, address2, city, state, zip].select { |x| x }.join ', '
   end
 
+  def full_address_with_name
+    [name, full_address].join ', '
+  end
+
   def to_s
     "#<Location #{id}: #{name}>"
   end

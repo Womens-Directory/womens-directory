@@ -7,9 +7,9 @@
     <div class="mb-3">
       <p><%= @location.neighborhood %></p>
       <p><%= @location.address1 %> <%= @location.address2 %></p>
-      <p class="mb-3"><%= @location.city %>, <%= @location.state %> <%= @location.zip %></p>
-      <p><a href="http://maps.apple.com/?q=<%= @location.full_address %>">Open in Apple Maps</a></p>
-      <p><a href="http://maps.google.com/?q=<%= @location.full_address %>">Open in Google Maps</a></p>
+      <p class="mb-2"><%= @location.city %>, <%= @location.state %> <%= @location.zip %></p>
+      <p><a target="_blank" href="http://maps.apple.com/?q=<%= @location.full_address_with_name %>">Open in Apple Maps</a></p>
+      <p><a target="_blank" href="http://maps.google.com/?q=<%= @location.full_address_with_name %>">Open in Google Maps</a></p>
     </div>
     <p>
       <span class="has-text-weight-bold">
