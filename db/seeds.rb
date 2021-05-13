@@ -67,7 +67,20 @@ end
 
 if Category.any?
   puts "#{Category.count} categories already exist. Not creating fake data."
-  exit 1
 else
   create_all
+end
+
+if Comfy::Cms::Page.any?
+  puts "#{Comfy::Cms::Page} pages already exist. Not creating initial pages."
+else
+  site = Comfy::Cms::Site.create! identifier: 'site', label: 'site', hostname: 'localhost'
+  layout = Comfy::Cms::Layout.create!(
+    site: site, identifier: 'default', label: 'default',
+    app_layout: 'application', content: '{{ cms:wysiwyg content }}',
+  )
+  page = Comfy::Cms::Page.create!(
+    site: site, layout: layout, label: 'Home', content_cache: "Welcome to Women's Directory!",
+  )
+  ap page
 end
