@@ -3,6 +3,14 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  protocol = ENV['INSECURE'] ? 'http' : 'https'
+  port = ENV['INSECURE'] ? 80 : 443 # forcing port drops all port numbers from prod URLs
+  options = { host: ENV['APP_DOMAIN'], port: port, protocol: protocol }
+
+  config.action_mailer.default_url_options = options # for mailers
+  config.action_controller.default_url_options = options # for rendering
+  Rails.application.routes.default_url_options = options # for console
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 
