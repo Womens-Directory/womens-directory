@@ -1,6 +1,8 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  raise 'SENDGRID_API_KEY not present' unless ENV['SENDGRID_API_KEY']
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   protocol = ENV['INSECURE'] ? 'http' : 'https'
@@ -71,6 +73,16 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "womens_directory_production"
 
   config.action_mailer.perform_caching = false
+
+  ActionMailer::Base.smtp_settings = {
+    user_name: 'apikey',
+    password: ENV['SENDGRID_API_KEY'],
+    domain: 'womensdirectory.org',
+    address: 'smtp.sendgrid.net',
+    port: 587,
+    authentication: :plain,
+    enable_starttls_auto: true,
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
