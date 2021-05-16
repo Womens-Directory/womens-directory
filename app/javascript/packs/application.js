@@ -5,9 +5,11 @@
 
 import Rails from "@rails/ujs";
 import * as ActiveStorage from "@rails/activestorage";
+import * as Navbar from "../navbar";
 import "channels";
 import "bulma/bulma.sass";
 import "../style.scss";
 
 Rails.start();
 ActiveStorage.start();
+Navbar.start();
