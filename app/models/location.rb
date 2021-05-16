@@ -49,6 +49,10 @@ class Location < ApplicationRecord
     "#<Location #{id}: #{name}>"
   end
 
+  def to_param
+    "#{id}-#{name_as_slug}"
+  end
+
   # Don't break development apps when we're making fake locations locally
   if Rails.env.production?
     after_validation :geocode
@@ -62,5 +66,11 @@ class Location < ApplicationRecord
         end
       end
     end
+  end
+
+  private
+
+  def name_as_slug
+    name.downcase.gsub /[^-A-Za-z0-9]+/, '-'
   end
 end
