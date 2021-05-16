@@ -56,8 +56,10 @@ class Location < ApplicationRecord
       if result = results[0]
         obj.latitude = result.data['geometry']['location']['lat']
         obj.longitude = result.data['geometry']['location']['lng']
-        ngh_data = result.data['address_components'].find { |c| c['types'].include? 'neighborhood' }
-        obj.neighborhood = ngh_data['short_name'] if ngh_data
+        if !obj.neighborhood  # don't overwrite a neighborhood if we already set one manually
+          ngh_data = result.data['address_components'].find { |c| c['types'].include? 'neighborhood' }
+          obj.neighborhood = ngh_data['short_name'] if ngh_data
+        end
       end
     end
   end
