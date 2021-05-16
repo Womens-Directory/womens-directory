@@ -2,14 +2,14 @@
 
 <div class="columns">
   <% @columns.each do |column| %>
-    <div class="column">
-      <ul>
-        <% column.each do |category| %>
-          <li>
-            <%= link_to category.name, show_category_path(category.id) %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
+  <div class="column">
+    <ul>
+      <% column.each do |category| %>
+      <li>
+        <%= link_to category.name, show_category_path(category) %>
+      </li>
+      <% end %>
+    </ul>
+  </div>
   <% end %>
 </div>

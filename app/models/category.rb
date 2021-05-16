@@ -15,4 +15,14 @@ class Category < ApplicationRecord
   def to_s
     "#<Category #{id}: #{name}>"
   end
+
+  def to_param
+    "#{id}-#{name_as_slug}"
+  end
+
+  private
+
+  def name_as_slug
+    name.downcase.gsub /[^-A-Za-z0-9]+/, '-'
+  end
 end
