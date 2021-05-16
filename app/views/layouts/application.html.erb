@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>WomensDirectory</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all' %>
-    <%= stylesheet_pack_tag 'application' %>
-    <%= javascript_pack_tag 'application' %>
-    <%= javascript_pack_tag 'feedback' %>
-    <%= stylesheet_pack_tag 'feedback' %>
-  </head>
+<head>
+  <title>WomensDirectory</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-  <body>
-    <div class="container app">
-      <%= yield %>
-    </div>
-    <script type="text/plain" id="current-path"><%= request.path %></script>
-  </body>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= stylesheet_pack_tag 'application' %>
+  <%= javascript_pack_tag 'application' %>
+  <%= javascript_pack_tag 'feedback' %>
+  <%= stylesheet_pack_tag 'feedback' %>
+</head>
+
+<body>
+  <%= render 'navbar' %>
+  <div class="container app">
+    <%= yield %>
+  </div>
+  <script type="text/plain" id="current-path"><%= request.path %></script>
+</body>
+
 </html>

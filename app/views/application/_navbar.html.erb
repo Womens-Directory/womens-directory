@@ -1,0 +1,23 @@
+<div class="container nav">
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item has-text-weight-bold" href="/">
+        Women's Directory
+      </a>
+
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-items">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div id="navbar-items" class="navbar-menu">
+      <div class="navbar-start">
+        <% top_level_pages.each do |page| %>
+        <a class="navbar-item" href="<%= page.full_path %>"><%= page.label %></a>
+        <% end %>
+      </div>
+    </div>
+  </nav>
+</div>
