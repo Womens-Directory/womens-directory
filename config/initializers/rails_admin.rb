@@ -3,17 +3,13 @@ require "nested_form/engine"
 require "nested_form/builder_mixin"
 
 RailsAdmin.config do |config|
-  unless Rails.env.development? || Rails.env.test?
-    admin_password = ENV['ADMIN_PASSWORD']
-    raise "ADMIN_PASSWORD is unset" unless admin_password
+  config.authorize_with do |controller|
+    class RailsAdmin::MainController
+      include Passwordless::ControllerHelpers
+    end
 
-    config.authenticate_with do
-      authenticate_or_request_with_http_basic('Login required') do |username, password|
-        if username != 'wd' || password != admin_password
-          raise "Unauthorized login to Rails Admin: #{username}/#{password}"
-        end
-        true
-      end
+    unless controller.authenticate_by_session(User)
+      raise ActionController::RoutingError, 'Not Found'
     end
   end
 

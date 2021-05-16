@@ -71,3 +71,7 @@ gem "font-awesome-rails", "~> 4.7"
 gem "geocoder", "~> 1.6"
 
 gem "awesome_print", "~> 1.9"
+
+gem "passwordless", "~> 0.10.0"
+
+gem "letter_opener", "~> 1.7", :group => :development
