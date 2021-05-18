@@ -36,7 +36,7 @@ end
 
 def create_all
   category_count.times do
-    puts Category.create! name: Faker::Space.meteorite
+    puts Category.create! name: Faker::Space.meteorite, description: rand_desc
   end
 
   org_count.times do
