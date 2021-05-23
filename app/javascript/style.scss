@@ -1,0 +1,19 @@
+// Auto-style Markdown-rendered text with a sane set of default styles.
+.markdown {
+  h1 {
+    font-size: 2rem;
+  }
+  p,
+  ul,
+  ol {
+    margin-bottom: 0.5rem;
+  }
+
+  ul,
+  ol {
+    padding-left: 24px;
+    li {
+      list-style-type: disc;
+    }
+  }
+}
