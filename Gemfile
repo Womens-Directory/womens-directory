@@ -77,3 +77,5 @@ gem "passwordless", "~> 0.10.0"
 gem "letter_opener", "~> 1.7", :group => :development
 
 gem "comfortable_mexican_sofa", "~> 2.0"
+
+gem "kramdown", "~> 2.3"

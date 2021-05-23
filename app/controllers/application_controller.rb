@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include Passwordless::ControllerHelpers
 
-  helper_method :current_user, :crumbs, :top_level_pages
+  helper_method :current_user, :crumbs, :markdown, :top_level_pages
 
   private
 
@@ -14,6 +14,10 @@ class ApplicationController < ActionController::Base
     cat = helpers.link_to(category.name, show_category_path(category)) if category
     loc = helpers.link_to(location.name, show_category_location_path(category, location)) if category && location
     [home, cat, loc].reject(&:blank?).join(' &raquo; ').html_safe
+  end
+
+  def markdown(text)
+    Kramdown::Document.new(text).to_html.html_safe
   end
 
   def root_page

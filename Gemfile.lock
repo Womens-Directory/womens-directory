@@ -334,6 +334,7 @@ DEPENDENCIES
   font-awesome-rails (~> 4.7)
   geocoder (~> 1.6)
   jbuilder (~> 2.7)
+  kramdown (~> 2.3)
   letter_opener (~> 1.7)
   listen (~> 3.3)
   passwordless (~> 0.10.0)
