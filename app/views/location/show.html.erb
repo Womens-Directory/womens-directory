@@ -4,7 +4,8 @@
 
 <div class="columns mb-3">
   <div class="column">
-    <p class="mb-3"><%= @location.desc %></p>
+    <%= markdown @location.desc %>
+    <div class="mb-3"></div>
     <div class="map-embed mb-2" data-latitude="<%= @location.latitude %>" data-longitude="<%= @location.longitude %>"></div>
     <div class="mb-3">
       <p><%= @location.neighborhood %></p>
@@ -19,7 +20,7 @@
       </span>
       (<%= link_to "website", @location.org.website, target: "_blank" %>)
     <p>
-    <p><%= @location.org.desc %></p>
+    <p><%= markdown @location.org.desc %></p>
   </div>
   <div class="column">
     <% if @location.website %>
