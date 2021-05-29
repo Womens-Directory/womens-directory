@@ -11,4 +11,5 @@
 #  updated_at :datetime         not null
 #
 class Feedback < ApplicationRecord
+  strips_spaces_from_string_fields
 end
