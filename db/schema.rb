@@ -227,12 +227,15 @@ ActiveRecord::Schema.define(version: 2021_05_29_200300) do
   end
 
   create_table "phone_numbers", force: :cascade do |t|
+    t.bigint "location_id"
+    t.string "name"
     t.string "number", null: false
     t.boolean "call", default: false, null: false
     t.boolean "sms", default: false, null: false
     t.boolean "always_open", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["location_id"], name: "index_phone_numbers_on_location_id"
   end
 
   create_table "users", force: :cascade do |t|
