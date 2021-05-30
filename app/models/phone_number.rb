@@ -18,4 +18,5 @@
 #
 class PhoneNumber < ApplicationRecord
   belongs_to :location
+  strips_spaces_from_string_fields
 end
