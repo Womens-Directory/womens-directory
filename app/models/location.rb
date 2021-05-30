@@ -30,6 +30,7 @@ class Location < ApplicationRecord
   belongs_to :org
   has_and_belongs_to_many :categories
   validates_presence_of :city, :desc, :name, :state, :zip
+  strips_spaces_from_string_fields
 
   def website_without_protocol
     match = /https?:\/\/(.+)/.match website
