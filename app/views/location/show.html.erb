@@ -6,6 +6,8 @@
   <div class="column">
     <%= markdown @location.desc %>
     <div class="mb-3"></div>
+
+    <% if @location.address1 %>
     <div class="map-embed mb-2" data-latitude="<%= @location.latitude %>" data-longitude="<%= @location.longitude %>"></div>
     <div class="mb-3">
       <p><%= @location.neighborhood %></p>
@@ -14,6 +16,10 @@
       <p><a target="_blank" href="http://maps.apple.com/?q=<%= @location.full_address_with_name %>">Open in Apple Maps</a></p>
       <p><a target="_blank" href="http://maps.google.com/?q=<%= @location.full_address_with_name %>">Open in Google Maps</a></p>
     </div>
+    <% else %>
+    <p class="mb-2"><%= @location.city %>, <%= @location.state %></p>
+    <% end %>
+
     <p>
       <span class="has-text-weight-bold">
         Organization: <%= link_to @location.org.name, show_org_path %>
