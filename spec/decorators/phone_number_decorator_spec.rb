@@ -2,7 +2,10 @@ require 'rails_helper'
 
 RSpec.describe PhoneNumberDecorator do
   subject { pn.decorate }
-  let(:pn) { PhoneNumber.create! number: number }
+  let(:org) { Org.create! name: 'My Org', desc: 'Some desc', website: 'example.com' }
+  let(:loc) { Location.create! org: org, name: 'My Loc', desc: 'Some desc', website: 'example.com',
+                               city: 'Denver', state: 'CO', zip: '80202' }
+  let(:pn) { PhoneNumber.create! location: loc, number: number }
 
   context 'with a number containing ten digits' do
     let(:number) { '  612 555-1212? ' }
