@@ -35,12 +35,12 @@
       <% @location.phone_numbers.each do |n| %>
       <div class="mb-2">
         <% num = n.decorate %>
-        <%if num.name%><p><%= num.name %>:</p><% end %>
+        <% if num.name %><p><%= num.name %>:</p><% end %>
         <p><a href="tel:<%= num.pretty %>"><%= num.pretty %></a></p>
         <p>
-          <% if num.call? %><span class="pill">Call</span><% end %>
-          <% if num.sms? %><span class="pill">Text</span><% end %>
-          <% if num.always_open? %><span class="pill">24/7</span><% end %>
+          <% if num.call? %><span class="pill"><a href="tel:<%= num.pretty %>">Call</a></span><% end %>
+          <% if num.sms? %><span class="pill"><a href="sms:<%= num.pretty %>">Text</a></span><% end %>
+          <% if num.always_open? %><span class="pill"><a href="tel:<%= num.pretty %>">24/7</a></span><% end %>
         </p>
       </div>
       <% end %>
