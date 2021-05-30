@@ -29,6 +29,7 @@
 class Location < ApplicationRecord
   belongs_to :org
   has_and_belongs_to_many :categories
+  has_many :phone_numbers
   validates_presence_of :city, :desc, :name, :state, :zip
   strips_spaces_from_string_fields
 
