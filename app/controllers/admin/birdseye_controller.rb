@@ -1,6 +1,6 @@
 class Admin::BirdseyeController < Admin::BaseController
   def categories
-    @cats = Category.all
+    @cats = Category.all.order(:name)
   end
 
   def category
