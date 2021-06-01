@@ -14,7 +14,7 @@
       <span class="has-text-weight-bold"><%= loc.name %>,</span>
     </a>
     <a onClick="fly(<%= loc.latitude %>, <%= loc.longitude %>)" title="Show this location on the map">
-      <%= loc.neighborhood %>, <%= loc.city %>, <%= loc.state %> <%= loc.zip %>
+      <%= loc.full_address %>
     </a>
   </p>
   <p><%= checks loc %></p>
