@@ -5,19 +5,26 @@ import marker1x from "leaflet/dist/images/marker-icon.png";
 import marker2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerSh from "leaflet/dist/images/marker-shadow.png";
 
-const tile = leaflet.tileLayer(
-  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-  {
-    tileSize: 256,
-    // detectRetina: true,
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }
-);
+const DENVER_DOWNTOWN: leaflet.LatLngTuple = [
+  39.75316148610883,
+  -105.00014407137768
+];
+
+function tileSet(): leaflet.TileLayer {
+  return leaflet.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      tileSize: 256,
+      // detectRetina: true,
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }
+  );
+}
 
 // HACK: URL is corrupted on the way into Rails; we fix the URLs and leave the other options at default
 // https://github.com/Leaflet/Leaflet/blob/0f904a515879fcd08f69b7f51799ee7f18f23fd8/src/layer/marker/Icon.Default.js#L23-L30
-const icon = new leaflet.Icon({
+const pin = new leaflet.Icon({
   iconUrl: marker1x,
   iconRetinaUrl: marker2x,
   shadowUrl: markerSh,
@@ -36,6 +43,24 @@ tgts.forEach(tgt => {
   const latitude = parseFloat(tgt.getAttribute("data-latitude"));
   const longitude = parseFloat(tgt.getAttribute("data-longitude"));
   const map = leaflet.map(tgt, { center: [latitude, longitude], zoom: 13 });
-  tile.addTo(map);
-  leaflet.marker([latitude, longitude], { icon: icon }).addTo(map);
+  tileSet().addTo(map);
+  leaflet.marker([latitude, longitude], { icon: pin }).addTo(map);
+});
+
+const birdseyes: HTMLElement[] = Array.prototype.slice.call(
+  document.querySelectorAll(".map-embed-birdseye")
+);
+
+birdseyes.forEach(tgt => {
+  const map = leaflet.map(tgt, { center: DENVER_DOWNTOWN, zoom: 10 });
+  tileSet().addTo(map);
+  const points = JSON.parse(tgt.getAttribute("data-points"));
+  const opts = { radius: 10, color: "red" };
+  const markers: leaflet.Marker[] = points.map((point: string[]) => {
+    const latitude = parseFloat(point[0]);
+    const longitude = parseFloat(point[1]);
+    return leaflet.circleMarker([latitude, longitude], opts);
+  });
+  markers.forEach(m => m.addTo(map));
+  map.fitBounds(leaflet.featureGroup(markers).getBounds());
 });
