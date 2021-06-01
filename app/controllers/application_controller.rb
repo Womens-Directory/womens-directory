@@ -1,12 +1,16 @@
 class ApplicationController < ActionController::Base
   include Passwordless::ControllerHelpers
 
-  helper_method :current_user, :crumbs, :markdown, :top_level_pages
+  helper_method :current_user, :require_user!, :crumbs, :markdown, :top_level_pages
 
   private
 
   def current_user
     @current_user ||= authenticate_by_session(User)
+  end
+
+  def require_user!
+    raise ActionController::RoutingError, 'Not Found' unless current_user
   end
 
   def crumbs(category, location)
