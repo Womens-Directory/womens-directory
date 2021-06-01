@@ -5,6 +5,6 @@ class Admin::BirdseyeController < Admin::BaseController
 
   def category
     @cat = Category.find params[:id]
-    @locs = @cat.locations.order(:name)
+    @locs = @cat.locations.eager_load(:phone_numbers).order(:name)
   end
 end

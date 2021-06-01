@@ -1,15 +1,32 @@
 <%= link_to "« Back to all categories", :admin_birdseye_categories %>
 
-<h1 class="is-size-4 mb-3"><%= @cat.name %>: <%= @locs.count %> locations</h1>
+<h1 class="is-size-4"><%= @cat.name %>: <%= @locs.count %> locations</h1>
+
+<p class="mb-3"><%= @cat.description %></p>
 
 <%= map_tag @locs %>
 <div class="mb-3"></div>
 
 <% @locs.each do |loc| %>
-<p class="has-text-weight-bold"><%= loc.name %></p>
-<p><%= loc.desc %></p>
+<div class="mb-2">
+  <p class="has-text-black">
+    <span class="has-text-weight-bold"><%= loc.name %></span>,
+    <a onClick="fly(<%= loc.latitude %>, <%= loc.longitude %>)">
+      <%= loc.neighborhood %>, <%= loc.city %>, <%= loc.state %> <%= loc.zip %>
+    </a>
+  </p>
+  <p><%= checks loc %></p>
+  <p><%= loc.desc %></p>
+</div>
 <% end %>
-</details>
+
+<script>
+  function fly(lat, lng) {
+    window.scrollTo(0, 0)
+    window.birdseyeMap.setZoom(13)
+    window.birdseyeMap.panTo([lat, lng])
+  }
+</script>
 
 <%= stylesheet_pack_tag 'map' %>
 <%= javascript_pack_tag 'map' %>

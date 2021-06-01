@@ -70,4 +70,5 @@ birdseyes.forEach(tgt => {
   });
   markers.forEach(m => m.addTo(map));
   map.fitBounds(leaflet.featureGroup(markers).getBounds());
+  window.birdseyeMap = map;
 });
