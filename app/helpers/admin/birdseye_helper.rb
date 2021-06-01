@@ -46,7 +46,7 @@ module Admin::BirdseyeHelper
   end
 
   def has_pn(loc)
-    [pluralize(loc.phone_numbers.count, "phone numbers"), loc.phone_numbers.any? ? "📱" : x_grey]
+    [pluralize(loc.phone_numbers.count, "phone number"), loc.phone_numbers.any? ? "📱" : x_grey]
   end
 
   def has_neigh(loc)
