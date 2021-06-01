@@ -10,7 +10,9 @@
 <% @locs.each do |loc| %>
 <div class="mb-2">
   <p class="has-text-black">
-    <span class="has-text-weight-bold"><%= loc.name %></span>,
+    <a href="<%= RailsAdmin::Engine.routes.url_helpers.edit_path :location, loc.id %>">
+      <span class="has-text-weight-bold"><%= loc.name %>,</span>
+    </a>
     <a onClick="fly(<%= loc.latitude %>, <%= loc.longitude %>)">
       <%= loc.neighborhood %>, <%= loc.city %>, <%= loc.state %> <%= loc.zip %>
     </a>
