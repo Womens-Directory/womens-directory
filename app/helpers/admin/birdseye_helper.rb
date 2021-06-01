@@ -12,47 +12,21 @@ module Admin::BirdseyeHelper
 
   def checks(loc)
     conds = %i[
-      has_addr
-      has_pn
-      has_neigh
+      must_have_addr_or_pn
+      addrs_must_have_neighs
     ]
-    evals = conds.map { |cond| send(cond, loc) }
-    lis = evals.map { |msg, sym| "<li>#{sym} #{msg}</li>" }.join('')
-    puts lis
+    errors = conds.flat_map { |cond| send(cond, loc) }.select { |x| x }
+    lis = errors.map { |msg| "<li>❌ #{msg}</li>" }.join('')
     "<ul>#{lis}</ul>".html_safe
   end
 
-  def x_grey
-    "✖️"
+  def must_have_addr_or_pn(loc)
+    return "No address and no phone numbers!" if loc.phone_numbers.empty? && !loc.address1?
   end
 
-  def x_red
-    "❌"
-  end
-
-  def check_grey
-    "✔️"
-  end
-
-  def check_green
-    "✅"
-  end
-
-  def has_addr(loc)
-    if loc.phone_numbers.empty? && !loc.address1?
-      return ["No address and no phone numbers!", x_red]
-    end
-    loc.address1? ? ['Has address', check_grey] : ['No address', x_grey]
-  end
-
-  def has_pn(loc)
-    [pluralize(loc.phone_numbers.count, "phone number"), loc.phone_numbers.any? ? "📱" : x_grey]
-  end
-
-  def has_neigh(loc)
-    if loc.neighborhood.nil? || loc.neighborhood.empty?
-      return ["No neighborhood specified!", x_red]
-    end
-    ["Neighborhood: #{loc.neighborhood}", check_grey]
+  def addrs_must_have_neighs(loc)
+    has_addr = loc.address1?
+    missing_neigh = loc.neighborhood.nil? || loc.neighborhood.empty?
+    return "Has address but no neighborhood!" if has_addr && missing_neigh
   end
 end
