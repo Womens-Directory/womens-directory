@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get 'birdseye/categories'
+    get 'birdseye/categories/:id', to: 'birdseye#category', as: 'birdseye_category'
+  end
+
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   comfy_route_cms_admin path: '/cms'
   passwordless_for :users

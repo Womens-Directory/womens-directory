@@ -1,0 +1,15 @@
+<%= link_to "« Back to all categories", :admin_birdseye_categories %>
+
+<h1 class="is-size-4 mb-3"><%= @cat.name %>: <%= @locs.count %> locations</h1>
+
+<%= map_tag @locs %>
+<div class="mb-3"></div>
+
+<% @locs.each do |loc| %>
+<p class="has-text-weight-bold"><%= loc.name %></p>
+<p><%= loc.desc %></p>
+<% end %>
+</details>
+
+<%= stylesheet_pack_tag 'map' %>
+<%= javascript_pack_tag 'map' %>

@@ -5,6 +5,12 @@ import marker1x from "leaflet/dist/images/marker-icon.png";
 import marker2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerSh from "leaflet/dist/images/marker-shadow.png";
 
+interface Point {
+  name: string;
+  latitude: number;
+  longitude: number;
+}
+
 const DENVER_DOWNTOWN: leaflet.LatLngTuple = [
   39.75316148610883,
   -105.00014407137768
@@ -54,12 +60,13 @@ const birdseyes: HTMLElement[] = Array.prototype.slice.call(
 birdseyes.forEach(tgt => {
   const map = leaflet.map(tgt, { center: DENVER_DOWNTOWN, zoom: 10 });
   tileSet().addTo(map);
-  const points = JSON.parse(tgt.getAttribute("data-points"));
+  const locs = JSON.parse(tgt.getAttribute("data-locs"));
   const opts = { radius: 10, color: "red" };
-  const markers: leaflet.Marker[] = points.map((point: string[]) => {
-    const latitude = parseFloat(point[0]);
-    const longitude = parseFloat(point[1]);
-    return leaflet.circleMarker([latitude, longitude], opts);
+  const markers: leaflet.Marker[] = locs.map((point: Point) => {
+    const coords: leaflet.LatLngTuple = [point.latitude, point.longitude];
+    const marker = leaflet.circleMarker(coords, opts);
+    marker.bindPopup(point.name);
+    return marker;
   });
   markers.forEach(m => m.addTo(map));
   map.fitBounds(leaflet.featureGroup(markers).getBounds());
