@@ -2,7 +2,7 @@ module Admin::BirdseyeHelper
   def map_tag(locs)
     j = locs.map do |l|
       {
-        name: l.name,
+        name: l.full_address_with_name,
         latitude: l.latitude.to_f,
         longitude: l.longitude.to_f,
       }
