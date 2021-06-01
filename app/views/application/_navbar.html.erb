@@ -21,12 +21,15 @@
 
       <% if current_user %>
       <div class="navbar-end">
-        <a class="navbar-item has-text-black has-text-weight-bold has-background-warning" href="/cms" target="_blank">CMS</a>
-        <a class="navbar-item has-text-weight-bold has-background-danger" href="/admin" target="_blank">Admin</a>
-        <a class="navbar-item is-flex-direction-column is-align-items-end is-size-7" href="/users/sign_out">
-          <span class="has-text-weight-bold">Sign out</span>
-          <%= current_user.email %>
-        </a>
+        <div class="navbar-item has-dropdown is-hoverable has-background-danger">
+          <a class="navbar-link has-text-weight-bold">Admin</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="/admin" target="_blank">Database</a>
+            <a class="navbar-item" href="/cms" target="_blank">Content Management</a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" href="/users/sign_out">Sign out <%= current_user.email %></a>
+          </div>
+        </div>
       </div>
       <% end %>
     </div>
