@@ -1,4 +1,12 @@
-.map-embed {
+.map-embed,
+.map-embed-birdseye {
   width: 100%;
+}
+
+.map-embed {
   height: 300px;
+}
+
+.map-embed-birdseye {
+  height: 400px;
 }

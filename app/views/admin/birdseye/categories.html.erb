@@ -1,0 +1,8 @@
+<h1 class="is-size-4 mb-3">Birdseye: <%= @cats.count %> categories</h1>
+
+<% @cats.each do |cat| %>
+<p>
+  <a href="<%= admin_birdseye_category_path cat %>"><span class="has-text-weight-bold"><%= cat.name %></span></a>:
+  <%= cat.locations.count %> locations
+</p>
+<% end %>

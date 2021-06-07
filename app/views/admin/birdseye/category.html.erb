@@ -1,0 +1,34 @@
+<%= link_to "« Back to all categories", :admin_birdseye_categories %>
+
+<h1 class="is-size-4"><%= @cat.name %>: <%= @locs.count %> locations</h1>
+
+<p class="mb-3"><%= @cat.description %></p>
+
+<%= map_tag @locs %>
+<div class="mb-3"></div>
+
+<% @locs.each do |loc| %>
+<div class="mb-2">
+  <p class="has-text-black">
+    <a href="<%= RailsAdmin::Engine.routes.url_helpers.edit_path :location, loc.id %>" title="Edit this location">
+      <span class="has-text-weight-bold"><%= loc.name %>,</span>
+    </a>
+    <a onClick="fly(<%= loc.latitude %>, <%= loc.longitude %>)" title="Show this location on the map">
+      <%= loc.full_address %>
+    </a>
+  </p>
+  <p><%= checks loc %></p>
+  <p><%= loc.desc %></p>
+</div>
+<% end %>
+
+<script>
+  function fly(lat, lng) {
+    window.scrollTo(0, 0)
+    window.birdseyeMap.setZoom(13)
+    window.birdseyeMap.panTo([lat, lng])
+  }
+</script>
+
+<%= stylesheet_pack_tag 'map' %>
+<%= javascript_pack_tag 'map' %>

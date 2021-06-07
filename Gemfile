@@ -81,3 +81,5 @@ gem "comfortable_mexican_sofa", "~> 2.0"
 gem "kramdown", "~> 2.3"
 
 gem "draper", "~> 4.0"
+
+gem "niceql", "~> 0.1.25", :group => :development
