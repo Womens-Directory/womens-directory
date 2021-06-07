@@ -1,3 +1,5 @@
+lead_num = /\d+(-.+)?/
+
 Rails.application.routes.draw do
   namespace :admin do
     get 'birdseye/categories'
@@ -11,8 +13,8 @@ Rails.application.routes.draw do
   root to: 'home#home'
   get 'location/:id', to: 'location#show', as: 'show_location'
 
-  get ':id', to: 'category#show', as: 'show_category'
-  get ':cat_id/:id', to: 'location#show', as: 'show_category_location'
+  get ':id', to: 'category#show', as: 'show_category', constraints: { id: lead_num }
+  get ':cat_id/:id', to: 'location#show', as: 'show_category_location', constraints: { cat_id: lead_num, id: lead_num }
 
   get 'org/:id', to: 'org#show', as: 'show_org'
   post 'feedback', to: 'feedback#save', as: 'save_feedback'
