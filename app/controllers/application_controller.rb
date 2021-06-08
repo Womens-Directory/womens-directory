@@ -15,9 +15,22 @@ class ApplicationController < ActionController::Base
 
   def crumbs(category, location)
     home = helpers.link_to 'Home', '/'
-    cat = helpers.link_to(category.name, show_category_path(category)) if category
-    loc = helpers.link_to(location.name, show_category_location_path(category, location)) if category && location
-    [home, cat, loc].reject(&:blank?).join(' &raquo; ').html_safe
+    bits = [home]
+
+    if category
+      bits << helpers.link_to(category.name, show_category_path(category))
+      if location
+        bits << helpers.link_to(location.name, show_category_location_path(category, location))
+      end
+    elsif location
+      bits << helpers.link_to(location.name, show_location_path(location))
+    end
+
+    arrow_pipeline bits
+  end
+
+  def arrow_pipeline(bits)
+    bits.reject(&:blank?).join(' &raquo; ').html_safe
   end
 
   def markdown(text)
