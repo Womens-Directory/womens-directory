@@ -16,29 +16,28 @@
 
 <body>
   <%= render 'navbar' %>
-  <div class="container is-max-desktop mb-6">
+  <div class="container main-content is-max-desktop mb-6">
     <% if flash[:notice] %>
     <div class="notification is-primary"><button class="delete"></button><%= flash[:notice] %></div>
     <% end %>
     <% if flash[:alert] %>
     <div class="notification is-danger"><button class="delete"></button><%= flash[:alert] %></div>
     <% end %>
-
     <%= yield %>
+  </div>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const notis = document.querySelectorAll('.notification .delete') || []
-        notis.forEach(del => {
-          const noti = del.parentNode;
-          del.addEventListener('click', () => {
-            noti.parentNode.removeChild(noti);
-          });
+  <script type="text/plain" id="current-path"><%= request.path %></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const notis = document.querySelectorAll('.notification .delete') || []
+      notis.forEach(del => {
+        const noti = del.parentNode;
+        del.addEventListener('click', () => {
+          noti.parentNode.removeChild(noti);
         });
       });
-    </script>
-  </div>
-  <script type="text/plain" id="current-path"><%= request.path %></script>
+    });
+  </script>
 </body>
 
 </html>

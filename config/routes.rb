@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   comfy_route_cms_admin path: '/cms'
   passwordless_for :users
 
-  root to: 'home#home'
   get 'location/:id', to: 'location#show', as: 'show_location'
 
   get ':cat_id/:id', to: 'location#show', as: 'show_category_location', constraints: { cat_id: lead_num, id: lead_num }

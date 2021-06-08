@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
 
   def markdown(text)
     body = Kramdown::Document.new(text).to_html
-    "<div class=\"markdown\">#{body}</div>".html_safe
+    "<div class=\"autostyle\">#{body}</div>".html_safe
   end
 
   def root_page

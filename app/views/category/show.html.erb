@@ -1,7 +1,8 @@
 <%= crumbs @category, nil %>
 
 <h1 class="is-size-3"><%= @category.name %></h1>
-<p class="mb-2"><%= markdown @category.description %></p>
+<p><%= markdown @category.description %></p>
+<div class="mb-2"></div>
 <ul>
   <% @category.locations.each do |location| %>
   <li>
