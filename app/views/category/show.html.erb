@@ -4,7 +4,7 @@
 <p><%= markdown @category.description %></p>
 <div class="mb-2"></div>
 <ul>
-  <% @category.locations.each do |location| %>
+  <% @category.locations.order(:name).each do |location| %>
   <li>
     <%= link_to location.name, show_category_location_path(@category, location) %>
     <% if location.neighborhood %>
