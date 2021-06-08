@@ -9,10 +9,13 @@
 
 <% @locs.each do |loc| %>
 <div class="mb-2">
-  <p class="has-text-black">
+  <p>
+    <%= link_to loc.name, show_location_path(loc), title: 'View in a new tab', class: 'has-text-weight-bold', target: '_blank' %>
     <a href="<%= RailsAdmin::Engine.routes.url_helpers.edit_path :location, loc.id %>" title="Edit this location">
-      <span class="has-text-weight-bold"><%= loc.name %>,</span>
+      (edit)
     </a>
+  </p>
+  <p>
     <a onClick="fly(<%= loc.latitude %>, <%= loc.longitude %>)" title="Show this location on the map">
       <%= loc.full_address %>
     </a>
