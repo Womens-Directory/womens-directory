@@ -1,3 +1,5 @@
+@import "bulma/sass/utilities/initial-variables.sass";
+
 // Auto-style specified text with a sane set of default styles.
 .autostyle {
   h1 {
@@ -41,5 +43,13 @@
     ul {
       margin-bottom: 0;
     }
+  }
+}
+
+// Container side padding goes missing on tablet and smaller
+@media only screen and (max-width: $desktop - 1px) {
+  .main-content {
+    padding-left: 12px;
+    padding-right: 12px;
   }
 }
