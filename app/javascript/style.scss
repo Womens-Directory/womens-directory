@@ -1,5 +1,5 @@
-// Auto-style Markdown-rendered text with a sane set of default styles.
-.markdown {
+// Auto-style specified text with a sane set of default styles.
+.autostyle {
   h1 {
     font-size: 2rem;
   }
@@ -28,5 +28,18 @@
   font-size: 12px;
   a {
     color: #fff;
+  }
+}
+
+// Fix bottom spacing on category columns
+.category-columns {
+  margin-top: 8px;
+  margin-bottom: 0 !important;
+  .column {
+    padding-top: 0;
+    padding-bottom: 0;
+    ul {
+      margin-bottom: 0;
+    }
   }
 }
