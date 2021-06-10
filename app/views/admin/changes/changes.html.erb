@@ -3,16 +3,32 @@
   <% @versions.each do |v| %>
   <% o = v[:obj] %>
   <% i = v[:item] %>
-  <div>
-    <%= time_ago_in_words v[:at] %> ago:
-    <%= v[:user_email] %>
-    <%= o.event %>d
-    <%= link_to i, RailsAdmin::Engine.routes.url_helpers.show_path(i.class.name.underscore.to_sym, i.id) %>
-  </div>
-  <div class="columns">
-    <div class="column">from</div>
-    <div class="column">to</div>
-  </div>
+  <details>
+    <summary>
+      <span class="has-text-weight-bold"><%= time_ago_in_words v[:at] %> ago:</span>
+      <%= v[:user_email] %>
+      <%= o.event %>d
+      <%= link_to i, RailsAdmin::Engine.routes.url_helpers.show_path(i.class.name.underscore.to_sym, i.id) %>
+    </summary>
+
+    <div class="mb-3"></div>
+
+    <% v[:changes].each do |k, ft| %>
+    <% f = ft[0] %>
+    <% t = ft[1] %>
+    <div class="changes mb-3">
+      <p class="has-text-weight-bold key mb-0"><%= k %></p>
+      <div class="columns">
+        <div class="column">
+          <%= f || '<none>' %>
+        </div>
+        <div class="column">
+          <%= t %>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </details>
   <% end %>
 </div>
 

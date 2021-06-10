@@ -1,5 +1,5 @@
 class Admin::ChangesController < Admin::BaseController
-  IGNORE_CHANGES_TO = %i[created_at updated_at]
+  IGNORE_CHANGES_TO = %w[created_at updated_at]
   def changes
     @pagy, version_objects = pagy(PaperTrail::Version.order('created_at DESC'))
     @versions = version_objects.map do |o|
