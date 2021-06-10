@@ -1,4 +1,5 @@
 <%= crumbs @category, @location %>
+<%= admin_edit_button @location %>
 
 <h1 class="is-size-3"><%= @location.name %></h1>
 
@@ -22,13 +23,14 @@
 
     <p>
       <span class="has-text-weight-bold">
-        Organization: <%= link_to @location.org.name, show_org_path %>
+        Organization: <%= link_to @location.org.name, show_org_path(@location.org) %>
       </span>
       (<%= link_to "website", @location.org.website, target: "_blank" %>)
     <p>
     <p><%= markdown @location.org.desc %></p>
   </div>
   <div class="column">
+
     <% if @location.phone_numbers.any? %>
     <div class="mb-1">
       <p class="has-text-weight-bold"><%= "Phone Number".pluralize @location.phone_numbers.count %></p>
@@ -55,7 +57,7 @@
     <% end %>
     <p class="has-text-weight-bold">Services Provided</p>
     <ul>
-      <% @location.categories.each do |category| %>
+      <% @location.categories.order(:name).each do |category| %>
       <li><%= link_to category.name, show_category_path(category) %></li>
       <% end %>
     </ul>

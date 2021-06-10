@@ -1,2 +1,22 @@
-<h1 class="is-size-3 mb-3"><%= @org.name %></h1>
-<p class="mb-3"><%= markdown @org.desc %></p>
+<div class="autostyle">
+  <%= admin_edit_button @org %>
+
+  <h1 class="mb-3"><%= @org.name %></h1>
+
+  <p class="mb-3">
+    <span class="has-text-weight-bold">More information:</span>
+    <%= link_to @org.website_pretty, @org.website %>
+  </p>
+  <p class="mb-3"><%= markdown @org.desc %></p>
+
+  <% locs = @org.locations.order(:name) %>
+  <h1 class="mb-3"><%= pluralize locs.count, "locations" %></h1>
+
+  <% locs.each do |loc| %>
+  <p class="mb-0">
+    <%= link_to loc.name, show_category_location_path(@org, loc), class: 'has-text-weight-bold' %>
+  </p>
+  <p class="mb-0"><%= loc.full_address %></p>
+  <p class="mb-3"><%= loc.desc %></p>
+  <% end %>
+</div>

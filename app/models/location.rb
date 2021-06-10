@@ -69,10 +69,4 @@ class Location < ApplicationRecord
       end
     end
   end
-
-  private
-
-  def name_as_slug
-    name.downcase.gsub /[^-A-Za-z0-9]+/, '-'
-  end
 end
