@@ -1,5 +1,8 @@
 <div class="autostyle">
+  <%= admin_edit_button @org %>
+
   <h1 class="mb-3"><%= @org.name %></h1>
+
   <p class="mb-3">
     <span class="has-text-weight-bold">More information:</span>
     <%= link_to @org.website_pretty, @org.website %>

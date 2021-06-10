@@ -1,4 +1,5 @@
 <%= crumbs @category, @location %>
+<%= admin_edit_button @location %>
 
 <h1 class="is-size-3"><%= @location.name %></h1>
 
@@ -29,13 +30,6 @@
     <p><%= markdown @location.org.desc %></p>
   </div>
   <div class="column">
-    <% if current_user %>
-    <p class="mb-3">
-      <a href="<%= RailsAdmin::Engine.routes.url_helpers.edit_path :location, @location.id %>" title="Edit this location" class="button is-danger">
-        Edit this location
-      </a>
-    </p>
-    <% end %>
 
     <% if @location.phone_numbers.any? %>
     <div class="mb-1">
