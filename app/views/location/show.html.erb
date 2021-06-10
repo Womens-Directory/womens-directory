@@ -22,7 +22,7 @@
 
     <p>
       <span class="has-text-weight-bold">
-        Organization: <%= link_to @location.org.name, show_org_path %>
+        Organization: <%= link_to @location.org.name, show_org_path(@location.org) %>
       </span>
       (<%= link_to "website", @location.org.website, target: "_blank" %>)
     <p>
