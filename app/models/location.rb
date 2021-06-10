@@ -49,7 +49,7 @@ class Location < ApplicationRecord
   end
 
   def to_s
-    "#<Location #{id}: #{name}>"
+    "Location #{id}: #{name}"
   end
 
   def to_param

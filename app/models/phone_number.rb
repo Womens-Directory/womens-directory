@@ -21,4 +21,20 @@ class PhoneNumber < ApplicationRecord
   validates_presence_of :number
   has_paper_trail
   strips_spaces_from_string_fields
+
+  def to_s
+    "Phone #{id}: #{name || '<no name>'} #{flags_desc}".strip
+  end
+
+  private
+
+  def flags_desc
+    flags = {
+      'call': call,
+      'SMS': sms,
+      '24/7': always_open,
+    }.filter { |_, v| v }.map { |k, v| k }
+    return '' if flags.empty?
+    return "(#{flags.join(', ')})"
+  end
 end

@@ -13,6 +13,6 @@ class User < ApplicationRecord
   passwordless_with :email
 
   def to_s
-    "#<User #{id}: #{email}>"
+    "User #{id}: #{email}"
   end
 end

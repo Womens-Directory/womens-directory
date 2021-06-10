@@ -16,7 +16,7 @@ class Org < ApplicationRecord
   strips_spaces_from_string_fields
 
   def to_s
-    "#<Org #{id}: #{name}>"
+    "Org #{id}: #{name}"
   end
 
   def to_param

@@ -15,7 +15,7 @@ class Category < ApplicationRecord
   strips_spaces_from_string_fields
 
   def to_s
-    "#<Category #{id}: #{name}>"
+    "Category #{id}: #{name}"
   end
 
   def to_param
