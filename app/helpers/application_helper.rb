@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include Pagy::Frontend
+
   def admin_edit_button(inst)
     return unless current_user
 
