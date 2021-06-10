@@ -2,6 +2,13 @@
 require "nested_form/engine"
 require "nested_form/builder_mixin"
 
+MODELS_WITH_HISTORY = %s[
+  Category
+  Location
+  Org
+  PhoneNumber
+]
+
 RailsAdmin.config do |config|
   config.authorize_with do |controller|
     class RailsAdmin::MainController
@@ -28,7 +35,7 @@ RailsAdmin.config do |config|
   # config.authorize_with :pundit
 
   ## == PaperTrail ==
-  # config.audit_with :paper_trail, 'User', 'PaperTrail::Version' # PaperTrail >= 3.0.0
+  config.audit_with :paper_trail, 'User', 'PaperTrail::Version' # PaperTrail >= 3.0.0
 
   ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
 
@@ -47,8 +54,7 @@ RailsAdmin.config do |config|
     delete
     show_in_app
 
-    ## With an audit adapter, you can add:
-    # history_index
-    # history_show
+    history_index
+    history_show
   end
 end

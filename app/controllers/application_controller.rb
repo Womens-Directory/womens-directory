@@ -2,6 +2,11 @@ class ApplicationController < ActionController::Base
   include Passwordless::ControllerHelpers
 
   helper_method :current_user, :require_user!, :crumbs, :markdown, :top_level_pages
+  before_action :set_paper_trail_whodunnit, :whoami
+
+  def whoami
+    puts "WHOAMI: #{current_user}"
+  end
 
   private
 
