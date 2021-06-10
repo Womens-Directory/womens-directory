@@ -14,7 +14,7 @@ class ApplicationRecord < ActiveRecord::Base
       each do |col|
         # get the existing value
         raw = send col.name.to_sym
-        return unless raw
+        next unless raw
 
         # strip spaces and set the new value
         setter = "#{col.name}=".to_sym
