@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get 'birdseye/categories'
     get 'birdseye/categories/:id', to: 'birdseye#category', as: 'birdseye_category'
+    get 'changes', to: 'changes#changes', as: 'changes'
   end
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'

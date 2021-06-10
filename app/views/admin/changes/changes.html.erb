@@ -1,0 +1,15 @@
+<div class="autostyle mb-3">
+  <h1>Recent Changes</h1>
+  <p>Find me in app/views/admin/changes/changes.html.erb</p>
+  <% @versions.each do |v| %>
+  <% o = v[:obj] %>
+  <% i = v[:item] %>
+  <div>
+    <%= v[:user_email] %>
+    <%= o.event %>d
+    <%= link_to i, RailsAdmin::Engine.routes.url_helpers.show_path(i.class.name.underscore.to_sym, i.id) %>
+  </div>
+  <% end %>
+</div>
+
+<%== pagy_bulma_nav @pagy %>
