@@ -17,4 +17,8 @@ class Org < ApplicationRecord
   def to_s
     "#<Org #{id}: #{name}>"
   end
+
+  def to_param
+    "#{id}-#{name_as_slug}"
+  end
 end

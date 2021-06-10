@@ -22,4 +22,8 @@ class ApplicationRecord < ActiveRecord::Base
         self.send setter, clean
       end
   end
+
+  def name_as_slug
+    name.downcase.gsub /[^-A-Za-z0-9]+/, '-'
+  end
 end
