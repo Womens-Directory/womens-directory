@@ -11,4 +11,8 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: { case_sensitive: false }
 
   passwordless_with :email
+
+  def to_s
+    "#<User #{id}: #{email}>"
+  end
 end

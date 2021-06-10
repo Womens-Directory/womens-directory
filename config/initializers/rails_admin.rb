@@ -10,7 +10,6 @@ MODELS_WITH_HISTORY = %w[
 ]
 
 HIDDEN_MODELS = %w[
-  PaperTrail::Version
   PaperTrail::VersionAssociation
   Comfy::Cms::Categorization
   Comfy::Cms::Category
