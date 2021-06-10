@@ -29,6 +29,14 @@
     <p><%= markdown @location.org.desc %></p>
   </div>
   <div class="column">
+    <% if current_user %>
+    <p class="mb-3">
+      <a href="<%= RailsAdmin::Engine.routes.url_helpers.edit_path :location, @location.id %>" title="Edit this location" class="button is-danger">
+        Edit this location
+      </a>
+    </p>
+    <% end %>
+
     <% if @location.phone_numbers.any? %>
     <div class="mb-1">
       <p class="has-text-weight-bold"><%= "Phone Number".pluralize @location.phone_numbers.count %></p>
