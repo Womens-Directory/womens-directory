@@ -63,7 +63,7 @@
     <% end %>
     <p class="has-text-weight-bold">Services Provided</p>
     <ul>
-      <% @location.categories.each do |category| %>
+      <% @location.categories.order(:name).each do |category| %>
       <li><%= link_to category.name, show_category_path(category) %></li>
       <% end %>
     </ul>
