@@ -2,11 +2,26 @@
 require "nested_form/engine"
 require "nested_form/builder_mixin"
 
-MODELS_WITH_HISTORY = %s[
+MODELS_WITH_HISTORY = %w[
   Category
   Location
   Org
   PhoneNumber
+]
+
+HIDDEN_MODELS = %w[
+  PaperTrail::Version
+  PaperTrail::VersionAssociation
+  Comfy::Cms::Categorization
+  Comfy::Cms::Category
+  Comfy::Cms::File
+  Comfy::Cms::Fragment
+  Comfy::Cms::Layout
+  Comfy::Cms::Page
+  Comfy::Cms::Revision
+  Comfy::Cms::Site
+  Comfy::Cms::Snippet
+  Comfy::Cms::Translation
 ]
 
 RailsAdmin.config do |config|
@@ -54,7 +69,13 @@ RailsAdmin.config do |config|
     delete
     show_in_app
 
-    history_index
-    history_show
+    history_index { only MODELS_WITH_HISTORY }
+    history_show { only MODELS_WITH_HISTORY }
+  end
+
+  HIDDEN_MODELS.each do |m|
+    config.model m do
+      visible false
+    end
   end
 end
