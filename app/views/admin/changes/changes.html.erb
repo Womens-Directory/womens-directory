@@ -1,13 +1,17 @@
 <div class="autostyle mb-3">
   <h1>Recent Changes</h1>
-  <p>Find me in app/views/admin/changes/changes.html.erb</p>
   <% @versions.each do |v| %>
   <% o = v[:obj] %>
   <% i = v[:item] %>
   <div>
+    <%= time_ago_in_words v[:at] %> ago:
     <%= v[:user_email] %>
     <%= o.event %>d
     <%= link_to i, RailsAdmin::Engine.routes.url_helpers.show_path(i.class.name.underscore.to_sym, i.id) %>
+  </div>
+  <div class="columns">
+    <div class="column">from</div>
+    <div class="column">to</div>
   </div>
   <% end %>
 </div>

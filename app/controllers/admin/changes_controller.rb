@@ -14,6 +14,7 @@ class Admin::ChangesController < Admin::BaseController
         changes: changes,
         item: o.item_type.constantize.find(o.item_id),
         user_email: o.whodunnit ? User.find(o.whodunnit).email : '<unknown>',
+        at: o.created_at,
       }
     end
   end
