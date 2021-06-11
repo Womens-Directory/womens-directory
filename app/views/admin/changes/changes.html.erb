@@ -1,19 +1,10 @@
 <div class="autostyle mb-3">
   <h1>Recent Changes</h1>
   <% @versions.each do |v| %>
-  <% o = v[:obj] %>
-  <% i = v[:item] %>
   <details>
-    <summary>
-      <span class="has-text-weight-bold"><%= time_ago_in_words v[:at] %> ago:</span>
-      <%= v[:user_email] %>
-      <%= o.event %>d
-      <%= link_to i, RailsAdmin::Engine.routes.url_helpers.show_path(i.class.name.underscore.to_sym, i.id) %>
-    </summary>
+    <summary><%= v.summary %></summary>
 
-    <div class="mb-3"></div>
-
-    <% v[:changes].each do |k, ft| %>
+    <% v.changes.each do |k, ft| %>
     <% f = ft[0] %>
     <% t = ft[1] %>
     <div class="changes mb-3">
