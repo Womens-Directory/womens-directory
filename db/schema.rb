@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 2021_06_10_184412) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "description"
+    t.boolean "visible", default: true, null: false
   end
 
   create_table "categories_locations", id: false, force: :cascade do |t|
