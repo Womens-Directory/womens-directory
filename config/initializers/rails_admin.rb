@@ -2,6 +2,27 @@
 require "nested_form/engine"
 require "nested_form/builder_mixin"
 
+MODELS_WITH_HISTORY = %w[
+  Category
+  Location
+  Org
+  PhoneNumber
+]
+
+HIDDEN_MODELS = %w[
+  PaperTrail::VersionAssociation
+  Comfy::Cms::Categorization
+  Comfy::Cms::Category
+  Comfy::Cms::File
+  Comfy::Cms::Fragment
+  Comfy::Cms::Layout
+  Comfy::Cms::Page
+  Comfy::Cms::Revision
+  Comfy::Cms::Site
+  Comfy::Cms::Snippet
+  Comfy::Cms::Translation
+]
+
 RailsAdmin.config do |config|
   config.authorize_with do |controller|
     class RailsAdmin::MainController
@@ -19,7 +40,7 @@ RailsAdmin.config do |config|
   # config.authenticate_with do
   #   warden.authenticate! scope: :user
   # end
-  # config.current_user_method(&:current_user)
+  config.current_user_method { authenticate_by_session(User) }
 
   ## == CancanCan ==
   # config.authorize_with :cancancan
@@ -28,7 +49,7 @@ RailsAdmin.config do |config|
   # config.authorize_with :pundit
 
   ## == PaperTrail ==
-  # config.audit_with :paper_trail, 'User', 'PaperTrail::Version' # PaperTrail >= 3.0.0
+  config.audit_with :paper_trail, 'User', 'PaperTrail::Version' # PaperTrail >= 3.0.0
 
   ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
 
@@ -47,8 +68,13 @@ RailsAdmin.config do |config|
     delete
     show_in_app
 
-    ## With an audit adapter, you can add:
-    # history_index
-    # history_show
+    history_index { only MODELS_WITH_HISTORY }
+    history_show { only MODELS_WITH_HISTORY }
+  end
+
+  HIDDEN_MODELS.each do |m|
+    config.model m do
+      visible false
+    end
   end
 end

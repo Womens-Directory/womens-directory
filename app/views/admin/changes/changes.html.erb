@@ -1,0 +1,26 @@
+<div class="autostyle mb-3">
+  <h1>Recent Changes</h1>
+  <% @versions.each do |v| %>
+  <details>
+    <summary><%= v.summary %></summary>
+
+    <% v.changes.each do |k, ft| %>
+    <% f = ft[0] %>
+    <% t = ft[1] %>
+    <div class="changes mb-3">
+      <p class="has-text-weight-bold key mb-1"><%= k %></p>
+      <div class="columns values">
+        <div class="column from">
+          <%= f || '<none>' %>
+        </div>
+        <div class="column to">
+          <%= t %>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </details>
+  <% end %>
+</div>
+
+<%== pagy_bulma_nav @pagy %>

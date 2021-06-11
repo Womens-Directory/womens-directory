@@ -77,10 +77,16 @@ else
   site = Comfy::Cms::Site.create! identifier: 'site', label: 'site', hostname: 'localhost'
   layout = Comfy::Cms::Layout.create!(
     site: site, identifier: 'default', label: 'default',
-    app_layout: 'application', content: '{{ cms:wysiwyg content }}',
+    app_layout: 'application', content: '{{ cms:markdown content }}',
   )
-  page = Comfy::Cms::Page.create!(
-    site: site, layout: layout, label: 'Home', content_cache: "Welcome to Women's Directory!",
-  )
+  # TODO: fill page with basic content and categories snippet
+  page = Comfy::Cms::Page.create!(site: site, layout: layout, label: 'Home')
   ap page
+end
+
+if User.any?
+  puts "#{User.count} users already exist. Not creating dev users."
+else
+  User.create! email: 'dev@womensdirectory.org'
+  puts 'Sign into your dev user as dev@womensdirectory.org'
 end

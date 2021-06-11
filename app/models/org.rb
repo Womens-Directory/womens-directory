@@ -12,10 +12,11 @@
 class Org < ApplicationRecord
   has_many :locations, dependent: :destroy
   validates_presence_of :desc, :name, :website
+  has_paper_trail
   strips_spaces_from_string_fields
 
   def to_s
-    "#<Org #{id}: #{name}>"
+    "Org #{id}: #{name}"
   end
 
   def to_param

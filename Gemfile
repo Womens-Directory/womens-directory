@@ -83,3 +83,8 @@ gem "kramdown", "~> 2.3"
 gem "draper", "~> 4.0"
 
 gem "niceql", "~> 0.1.25", :group => :development
+
+gem "paper_trail", "~> 11.1"
+gem "paper_trail-association_tracking", "~> 2.1"
+
+gem "pagy", "~> 4.8"

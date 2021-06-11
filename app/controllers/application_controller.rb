@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
   include Passwordless::ControllerHelpers
+  include Pagy::Backend
 
   helper_method :current_user, :require_user!, :crumbs, :markdown, :top_level_pages
+  before_action :set_paper_trail_whodunnit
 
   private
 

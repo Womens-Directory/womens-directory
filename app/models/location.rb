@@ -31,6 +31,7 @@ class Location < ApplicationRecord
   has_and_belongs_to_many :categories
   has_many :phone_numbers
   validates_presence_of :city, :desc, :name, :state, :zip
+  has_paper_trail
   strips_spaces_from_string_fields
 
   def website_without_protocol
@@ -48,7 +49,7 @@ class Location < ApplicationRecord
   end
 
   def to_s
-    "#<Location #{id}: #{name}>"
+    "Location #{id}: #{name}"
   end
 
   def to_param
