@@ -38,6 +38,10 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  gem 'rack-mini-profiler'
+  gem 'memory_profiler'
+  gem 'stackprof'
 end
 
 group :test do
@@ -88,3 +92,5 @@ gem "paper_trail", "~> 11.1"
 gem "paper_trail-association_tracking", "~> 2.1"
 
 gem "pagy", "~> 4.8"
+
+gem "ahoy_matey", "~> 3.2"

@@ -11,5 +11,6 @@
 #  updated_at :datetime         not null
 #
 class Feedback < ApplicationRecord
+  has_many :events, class_name: 'Ahoy::Event'
   strips_spaces_from_string_fields
 end
