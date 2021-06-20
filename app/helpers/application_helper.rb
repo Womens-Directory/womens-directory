@@ -1,6 +1,11 @@
 module ApplicationHelper
   include Pagy::Frontend
 
+  def title
+    return "Women's Directory" unless @title
+    "#{@title} – Women's Directory"
+  end
+
   def admin_edit_button(inst)
     return unless current_user
 
