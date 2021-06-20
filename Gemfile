@@ -93,4 +93,6 @@ gem "paper_trail-association_tracking", "~> 2.1"
 
 gem "pagy", "~> 4.8"
 
+gem "rest-client", "~> 2.1"
+
 gem "ahoy_matey", "~> 3.2"

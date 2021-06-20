@@ -1,4 +1,6 @@
 class FeedbackController < ApplicationController
+  include Notifiable
+
   def save
     p = request.params
     f = Feedback.create!(
@@ -7,6 +9,7 @@ class FeedbackController < ApplicationController
       body: p['body'],
       ip: request.remote_ip,
     )
+    notify_new_feedback f
     ahoy.track :feedback_submitted, feedback_id: f.id
     render plain: '', status: :no_content
   end
