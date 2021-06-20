@@ -1,4 +1,5 @@
 <%= crumbs @category, nil %>
+<%= admin_edit_button @category %>
 
 <h1 class="is-size-3"><%= @category.name %></h1>
 <p><%= markdown(@category.description || '') %></p>
