@@ -2,6 +2,10 @@ test:
   service: Disk
   root: <%= Rails.root.join("tmp/storage") %>
 
+local:
+  service: Disk
+  root: <%= Rails.root.join("storage") %>
+
 s3:
   service: S3
   bucket: <%= ENV['S3_ASSETS_BUCKET'] %>
