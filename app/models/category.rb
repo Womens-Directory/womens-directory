@@ -11,6 +11,7 @@
 #
 class Category < ApplicationRecord
   has_and_belongs_to_many :locations
+  has_many :events, class_name: 'Ahoy::Event'
   validates_presence_of :name
   has_paper_trail
   strips_spaces_from_string_fields

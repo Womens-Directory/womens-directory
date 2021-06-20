@@ -10,6 +10,7 @@ class FeedbackController < ApplicationController
       ip: request.remote_ip,
     )
     notify_new_feedback f
+    ahoy.track :feedback_submitted, feedback_id: f.id
     render plain: '', status: :no_content
   end
 end
