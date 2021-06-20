@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+git_source(:github) { |repo| 'https://github.com/#{repo}.git' }
 
 ruby '3.0.0'
 
@@ -15,33 +15,47 @@ gem 'sass-rails', '>= 6'
 gem 'webpacker', '~> 5.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
-# Use Active Model has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
+# Fix segmentation fault on assets:precompile - https://github.com/sass/sassc-ruby/issues/207
+gem 'sprockets', '< 4'
+
+gem 'ahoy_matey', '~> 3.2'
+gem 'annotate', '~> 3.1'
+gem 'awesome_print', '~> 1.9'
+gem 'comfortable_mexican_sofa', '~> 2.0'
+gem 'draper', '~> 4.0'
+gem 'faker', '~> 2.17'
+gem 'font-awesome-rails', '~> 4.7'
+gem 'geocoder', '~> 1.6'
+gem 'kramdown', '~> 2.3'
+gem 'pagy', '~> 4.8'
+gem 'paper_trail-association_tracking', '~> 2.1'
+gem 'paper_trail', '~> 11.1'
+gem 'passwordless', '~> 0.10.0'
+gem 'pg', '~> 1.2'
+gem 'rails_admin', '~> 2.0'
+gem 'rest-client', '~> 2.1'
+gem 'rexml', '~> 3.2'
+gem 'rspec-rails', '~> 5.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem "pry-rails", "~> 0.3.9"
+  gem 'pry-rails', '~> 0.3.9'
 end
 
 group :development do
-  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', '>= 4.1.0'
+  gem 'letter_opener', '~> 1.7'
   gem 'listen', '~> 3.3'
+  gem 'memory_profiler'
+  gem 'niceql', '~> 0.1.25'
+  gem 'rack-mini-profiler'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-
-  gem 'rack-mini-profiler'
-  gem 'memory_profiler'
   gem 'stackprof'
+  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
+  gem 'web-console', '>= 4.1.0'
 end
 
 group :test do
@@ -51,48 +65,3 @@ group :test do
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-gem "pg", "~> 1.2"
-
-gem "rspec-rails", "~> 5.0"
-
-gem "annotate", "~> 3.1"
-
-gem "rexml", "~> 3.2"
-
-gem 'rails_admin', '~> 2.0'
-
-# Fix segmentation fault on assets:precompile - https://github.com/sass/sassc-ruby/issues/207
-gem 'sprockets', '< 4'
-
-gem "faker", "~> 2.17"
-
-gem "font-awesome-rails", "~> 4.7"
-
-gem "geocoder", "~> 1.6"
-
-gem "awesome_print", "~> 1.9"
-
-gem "passwordless", "~> 0.10.0"
-
-gem "letter_opener", "~> 1.7", :group => :development
-
-gem "comfortable_mexican_sofa", "~> 2.0"
-
-gem "kramdown", "~> 2.3"
-
-gem "draper", "~> 4.0"
-
-gem "niceql", "~> 0.1.25", :group => :development
-
-gem "paper_trail", "~> 11.1"
-gem "paper_trail-association_tracking", "~> 2.1"
-
-gem "pagy", "~> 4.8"
-
-gem "rest-client", "~> 2.1"
-
-gem "ahoy_matey", "~> 3.2"
