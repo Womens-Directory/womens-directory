@@ -11,9 +11,15 @@ module Notifiable
     base = request.base_url
     view_path = RailsAdmin::Engine.routes.url_helpers.show_path :feedback, f.id
     notify <<~MSG
-      [**Feedback #{f.id}:**](#{base}#{view_path}) #{f.category}
-      Submitted on [`#{f.path}`](#{base}#{f.path})
-      > #{f.body}
+      [**Feedback #{e f.id}:**](#{e base}#{e view_path}) #{e f.category}
+      Submitted on [`#{e f.path}`](#{e base}#{e f.path})
+      > #{e f.body}
     MSG
+  end
+
+  private
+
+  def e(msg)
+    Markdown.escape msg
   end
 end
