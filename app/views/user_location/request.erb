@@ -40,15 +40,16 @@ async function sendAndRedirect(data) {
   } catch {
     return location.reload()
   }
-  history.back()
+  window.location.href = document.referrer;
 }
 
 async function success(pos) {
   await sendAndRedirect({ lat: pos.coords.latitude, lon: pos.coords.longitude })
 }
 
-function failure() {
-  console.log('Could not locate your device.')
+async function failure() {
+  // force an error
+  await sendAndRedirect({})
 }
 
 function locate() {

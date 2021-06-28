@@ -5,10 +5,12 @@ class UserLocationController < ApplicationController
     zip = json_body['zip']
     lat = json_body['lat']
     lon = json_body['lon']
-    flash.alert = ERR_MSG and return if !(zip || (lat && lon))
+    error and return if !(zip || (lat && lon))
 
     if !(lat && lon)
-      lat, lon = geocode zip
+      latlon = geocode zip
+      error and return unless latlon
+      lat, lon = latlon
     end
 
     session['lat'] = lat
@@ -23,10 +25,15 @@ class UserLocationController < ApplicationController
   end
 
   def geocode(zip)
-    result = Geocoder.search(zip)[0]
-    flash.alert = ERR_MSG and return unless result
+    Rails.cache.fetch "coords/zip/#{zip}" do
+      return unless result = Geocoder.search(zip)[0]
+      loc = result.data['geometry']['location']
+      return loc['lat'], loc['lng']
+    end
+  end
 
-    loc = result.data['geometry']['location']
-    return loc['lat'], loc['lng']
+  def error
+    flash.alert = ERR_MSG
+    head :bad_request
   end
 end
