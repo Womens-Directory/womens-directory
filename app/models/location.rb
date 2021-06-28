@@ -34,6 +34,7 @@ class Location < ApplicationRecord
   validates_presence_of :city, :desc, :name, :state, :zip
   has_paper_trail
   strips_spaces_from_string_fields
+  attr_accessor :distance
 
   def website_without_protocol
     match = /https?:\/\/(.+)/.match website

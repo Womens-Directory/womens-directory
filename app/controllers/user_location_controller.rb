@@ -13,9 +13,28 @@ class UserLocationController < ApplicationController
       lat, lon = latlon
     end
 
-    session['lat'] = lat
-    session['lon'] = lon
+    session[:lat] = lat
+    session[:lon] = lon
     flash.notice = 'Your location has been saved on your device.'
+    sort_by_distance
+  end
+
+  def clear
+    session.delete :lat
+    session.delete :lon
+    sort_by_name
+  end
+
+  def sort_by_name
+    session[:sort_by] = :name
+    redirect_back fallback_location: Rails.root
+  end
+
+  def sort_by_distance
+    redirect_to :request_user_location and return unless user_coords
+
+    session[:sort_by] = :distance
+    redirect_back fallback_location: Rails.root
   end
 
   private

@@ -18,6 +18,10 @@ Rails.application.routes.draw do
 
   get 'user_location/request', as: 'request_user_location'
   post 'user_location/save', as: 'set_user_location'
+  post 'user_location/clear', as: 'clear_user_location'
+  post 'sort/name', as: 'sort_by_name', to: 'user_location#sort_by_name'
+  post 'sort/distance', as: 'sort_by_distance', to: 'user_location#sort_by_distance'
+
   post 'feedback', to: 'feedback#save', as: 'save_feedback'
 
   comfy_route_cms path: '/'

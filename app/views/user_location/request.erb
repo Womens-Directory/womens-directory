@@ -21,6 +21,15 @@
     <% end %>
   </div>
 
+  <% if user_coords %>
+    <div class="mb-5">
+      <%= form_tag clear_user_location_path do %>
+        <%= label_tag nil, "Or, clear your current location:", class: "label" %>
+        <%= submit_tag "Delete my location data", class: 'button is-danger' %>
+      <% end %>
+    </div>
+  <% end %>
+
   <div class="mb-5">
     <%= label_tag :zip, "Or, just go back:", class: "label" %>
     <%= link_to "« Cancel without saving location", "javascript:history.back()", class: "button is-info" %>
