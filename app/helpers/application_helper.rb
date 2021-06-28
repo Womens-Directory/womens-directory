@@ -6,6 +6,17 @@ module ApplicationHelper
     "#{@title} – Women's Directory"
   end
 
+  def map_tag(locs)
+    j = locs.map do |l|
+      {
+        name: l.full_address_with_name,
+        latitude: l.latitude.to_f,
+        longitude: l.longitude.to_f,
+      }
+    end.to_json
+    "<div class=\"map-embed-birdseye\" data-locs=\"#{h(j)}\"></div>".html_safe
+  end
+
   def admin_edit_button(inst)
     return unless current_user
 

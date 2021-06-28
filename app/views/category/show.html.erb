@@ -4,7 +4,10 @@
 <h1 class="is-size-3"><%= @category.name %></h1>
 <p><%= markdown(@category.description || '') %></p>
 <div class="mb-2"></div>
-<ul>
+
+<%= map_tag @category.locations %>
+
+<ul class="mt-3">
   <% @category.locations.order(:name).each do |location| %>
   <li>
     <%= link_to location.name, show_category_location_path(@category, location) %>
@@ -16,3 +19,6 @@
   </li>
   <% end %>
 </ul>
+
+<%= stylesheet_pack_tag 'map' %>
+<%= javascript_pack_tag 'map' %>
