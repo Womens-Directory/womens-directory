@@ -30,6 +30,7 @@ gem 'faker', '~> 2.17'
 gem 'font-awesome-rails', '~> 4.7'
 gem 'geocoder', '~> 1.6'
 gem 'kramdown', '~> 2.3'
+gem 'maxminddb', '~> 0.1.22'
 gem 'pagy', '~> 4.8'
 gem 'paper_trail-association_tracking', '~> 2.1'
 gem 'paper_trail', '~> 11.1'
@@ -66,5 +67,3 @@ group :test do
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
-
-gem "maxminddb", "~> 0.1.22"
