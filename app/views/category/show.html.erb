@@ -7,10 +7,7 @@
 
 <%= map_tag @category.locations %>
 
-<%= form_tag(set_location_path) do %>
-<%= hidden_field_tag :zip, '80202' %>
-<%= submit_tag 'Save zip code' %>
-<% end %>
+<%= link_to "Set my location", request_user_location_path %>
 
 <ul class="mt-3">
   <% @category.locations.order(:name).each do |location| %>

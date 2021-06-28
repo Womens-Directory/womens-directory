@@ -16,7 +16,8 @@ Rails.application.routes.draw do
   get 'loc/:id', to: 'location#show', as: 'show_location'
   get 'org/:id', to: 'org#show', as: 'show_org'
 
-  post 'user_location/save', as: 'set_location'
+  get 'user_location/request', as: 'request_user_location'
+  post 'user_location/save', as: 'set_user_location'
   post 'feedback', to: 'feedback#save', as: 'save_feedback'
 
   comfy_route_cms path: '/'

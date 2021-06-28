@@ -1,0 +1,65 @@
+<h1 class="is-size-3">Set your location</h1>
+<p class="mb-3">
+  To show you nearby resources, we need to know where you are.
+  Your location stays on your device and is not stored on our servers.
+  For more information, see our <a href="/privacy">privacy page</a>.
+</p>
+
+<div class="set-user-location-form mb-3">
+  <div class="mb-3">
+    <%= form_tag set_user_location_path do %>
+      <%= label_tag nil, "Use your device's location:", class: "label" %>
+      <a onclick="locate()" class="button is-info">Find my location</a>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form_tag set_user_location_path, class: :zip do %>
+      <%= label_tag :zip, "Or, enter your zip code:", class: "label" %>
+      <%= text_field_tag :zip, nil, class: "input mb-3", placeholder: "80202" %>
+      <%= submit_tag "Set my zip code", class: 'button is-info' %>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= label_tag :zip, "Or, just go back:", class: "label" %>
+    <%= link_to "« Cancel without saving location", "javascript:history.back()", class: "button is-info" %>
+  </div>
+</div>
+
+<script>
+async function sendAndRedirect(data) {
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+  try {
+    await fetch("<%= set_user_location_path %>", {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ authenticity_token: csrfToken, ...data }),
+    })
+  } catch {
+    return location.reload()
+  }
+  history.back()
+}
+
+async function success(pos) {
+  await sendAndRedirect({ lat: pos.coords.latitude, lon: pos.coords.longitude })
+}
+
+function failure() {
+  console.log('Could not locate your device.')
+}
+
+function locate() {
+  if (!navigator.geolocation) return failure()
+  navigator.geolocation.getCurrentPosition(success, failure)
+}
+
+async function saveZip(event) {
+  event.preventDefault();
+  await sendAndRedirect({ zip: document.querySelector('#zip').value })
+}
+
+document.querySelector('form.zip').addEventListener('submit', saveZip);
+</script>
