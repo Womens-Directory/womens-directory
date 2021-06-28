@@ -39,4 +39,10 @@ class Ahoy::Visit < ApplicationRecord
 
   has_many :events, class_name: "Ahoy::Event"
   belongs_to :user, optional: true
+
+  before_save :clear_ip
+
+  def clear_ip
+    self.ip = nil
+  end
 end
