@@ -61,10 +61,9 @@ birdseyes.forEach(tgt => {
   const map = leaflet.map(tgt, { center: DENVER_DOWNTOWN, zoom: 10 });
   tileSet().addTo(map);
   const locs = JSON.parse(tgt.getAttribute("data-locs"));
-  const opts = { radius: 10, color: "red" };
   const markers: leaflet.Marker[] = locs.map((point: Point) => {
     const coords: leaflet.LatLngTuple = [point.latitude, point.longitude];
-    const marker = leaflet.circleMarker(coords, opts);
+    const marker = leaflet.marker(coords, { icon: pin });
     marker.bindPopup(point.name);
     return marker;
   });
