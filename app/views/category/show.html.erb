@@ -9,18 +9,23 @@
 
 <div class="mt-3 mb-3">
   Sort by:
+
   <% if @show_distance %>
   <span class="has-text-weight-bold">
     <%= link_to "Name", sort_by_name_path, method: :post, class: 'mx-2' %>
     <span class="mx-2">Distance</span>
   </span>
+
   <% else %>
   <span class="has-text-weight-bold">
     <span class="mx-2">Name</span>
     <%= link_to "Distance", sort_by_distance_path, method: :post, class: 'mx-2' %>
   </span>
   <% end %>
-  <%= link_to "Change my location »", request_user_location_path, class: 'mx-2 is-italic' if user_coords %>
+
+  <% if user_coords %>
+  <%= link_to "Change my location »", request_user_location_path, class: 'mx-2 is-italic' %>
+  <% end %>
 </div>
 
 <ul class="mb-3">

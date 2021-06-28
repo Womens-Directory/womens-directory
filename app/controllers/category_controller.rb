@@ -3,8 +3,7 @@ class CategoryController < ApplicationController
     @category = Category.find(params[:id])
     @locations = @category.locations.order :name
 
-    if session[:sort_by] == 'distance' && session[:lat] && session[:lon]
-      user_coords = [session[:lat], session[:lon]]
+    if session[:sort_by] == 'distance' && user_coords
       @locations.each do |loc|
         loc.distance = Geocoder::Calculations.distance_between user_coords, [loc.latitude, loc.longitude]
       end
