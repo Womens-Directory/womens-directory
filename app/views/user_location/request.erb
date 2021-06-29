@@ -1,38 +1,15 @@
-<h1 class="is-size-3">Set your location</h1>
-<p class="mb-5">
-  To show you nearby resources, we need to know where you are.
-  Your location stays on your device and is not stored on our servers.
-  For more information, see our <a href="/privacy">privacy page</a>.
-</p>
+<h1 class="is-size-3">Find resources near me</h1>
+<p class="mb-3">Your location stays private. <a href="/privacy">Learn more.</a></p>
 
 <div class="set-user-location-form mb-5">
-  <div class="mb-5">
+  <div class="mb-3">
     <%= form_tag set_user_location_path do %>
-      <%= label_tag nil, "Use your device's location:", class: "label" %>
-      <a onclick="locate()" class="button is-info">Find my location</a>
+      <a onclick="locate()" class="button is-info">Use my current location</a>
     <% end %>
   </div>
 
-  <div class="mb-5">
-    <%= form_tag set_user_location_path, class: :zip do %>
-      <%= label_tag :zip, "Or, enter your zip code:", class: "label" %>
-      <%= text_field_tag :zip, nil, class: "input mb-3", placeholder: "80202" %>
-      <%= submit_tag "Set my zip code", class: 'button is-info' %>
-    <% end %>
-  </div>
-
-  <% if user_coords %>
-    <div class="mb-5">
-      <%= form_tag clear_user_location_path do %>
-        <%= label_tag nil, "Or, clear your current location:", class: "label" %>
-        <%= submit_tag "Delete my location data", class: 'button is-danger' %>
-      <% end %>
-    </div>
-  <% end %>
-
-  <div class="mb-5">
-    <%= label_tag :zip, "Or, just go back:", class: "label" %>
-    <%= link_to "« Cancel without saving location", "javascript:history.back()", class: "button is-info" %>
+  <div class="mb-3">
+    <%= link_to "« No thanks, go back", "javascript:history.back()", class: "button is-info" %>
   </div>
 </div>
 
