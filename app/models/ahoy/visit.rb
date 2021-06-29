@@ -34,9 +34,23 @@
 #  index_ahoy_visits_on_user_id      (user_id)
 #  index_ahoy_visits_on_visit_token  (visit_token) UNIQUE
 #
+
+class ClearIpJob < ActiveJob::Base
+  def perform(visit)
+    visit.update! ip: nil
+  end
+end
+
 class Ahoy::Visit < ApplicationRecord
   self.table_name = "ahoy_visits"
 
   has_many :events, class_name: "Ahoy::Event"
   belongs_to :user, optional: true
+
+  after_save :clear_ip
+
+  def clear_ip
+    # Must wait a little bit before clearing the IP so that the visit can be geocoded
+    ClearIpJob.set(wait: 5.seconds).perform_later(self)
+  end
 end
