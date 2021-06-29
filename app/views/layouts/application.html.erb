@@ -19,10 +19,10 @@
   <%= render 'navbar' %>
   <div class="container main-content is-max-desktop mb-6">
     <% if flash[:notice] %>
-    <div class="notification is-primary"><button class="delete"></button><%= flash[:notice] %></div>
+    <div class="notification mb-2 is-primary"><button class="delete"></button><%= flash[:notice] %></div>
     <% end %>
     <% if flash[:alert] %>
-    <div class="notification is-danger"><button class="delete"></button><%= flash[:alert] %></div>
+    <div class="notification mb-2 is-danger"><button class="delete"></button><%= flash[:alert] %></div>
     <% end %>
     <%= yield %>
   </div>

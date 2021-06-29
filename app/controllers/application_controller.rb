@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include Passwordless::ControllerHelpers
   include Pagy::Backend
 
-  helper_method :current_user, :require_user!, :crumbs, :markdown, :top_level_pages
+  helper_method :current_user, :require_user!, :crumbs, :markdown, :top_level_pages, :user_coords
   before_action :set_paper_trail_whodunnit
 
   private
@@ -47,5 +47,12 @@ class ApplicationController < ActionController::Base
   # List all CMS pages that are "top level" - immediate children of the root page, excluding the root page
   def top_level_pages
     Comfy::Cms::Page.where(parent_id: root_page).order :position
+  end
+
+  def user_coords
+    lat = session[:lat]
+    lon = session[:lon]
+    return nil unless lat && lon
+    return [lat, lon]
   end
 end
