@@ -1,6 +1,4 @@
 class UserLocationController < ApplicationController
-  ERR_MSG = 'Sorry, there was a problem saving your location. Please try again.'
-
   def save
     zip = json_body['zip']
     lat = json_body['lat']
@@ -15,7 +13,6 @@ class UserLocationController < ApplicationController
 
     session[:lat] = lat
     session[:lon] = lon
-    flash.notice = 'Your location has been saved on your device.'
     sort_by_distance
   end
 
@@ -52,7 +49,7 @@ class UserLocationController < ApplicationController
   end
 
   def error
-    flash.alert = ERR_MSG
+    flash.alert = 'Sorry, there was a problem saving your location. Please try again.'
     head :bad_request
   end
 end

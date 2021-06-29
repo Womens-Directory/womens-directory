@@ -1,0 +1,8 @@
+<% if user_coords %>
+  <div class="mb-3">
+    <p class="mb-3">
+      Click below to clear your location data from the site:
+    </p>
+  <%= link_to "Delete my location data", :clear_user_location, method: :post, class: 'button is-danger' %>
+  </div>
+<% end %>
