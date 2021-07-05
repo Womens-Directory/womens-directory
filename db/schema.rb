@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_05_190435) do
+ActiveRecord::Schema.define(version: 2021_07_05_191951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -228,6 +228,15 @@ ActiveRecord::Schema.define(version: 2021_07_05_190435) do
     t.index ["page_id"], name: "index_comfy_cms_translations_on_page_id"
   end
 
+  create_table "emails", force: :cascade do |t|
+    t.string "address", null: false
+    t.string "name"
+    t.bigint "location_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["location_id"], name: "index_emails_on_location_id"
+  end
+
   create_table "feedbacks", force: :cascade do |t|
     t.string "path"
     t.string "category"
@@ -324,5 +333,6 @@ ActiveRecord::Schema.define(version: 2021_07_05_190435) do
   add_foreign_key "ahoy_events", "feedbacks"
   add_foreign_key "ahoy_events", "locations"
   add_foreign_key "ahoy_events", "orgs"
+  add_foreign_key "emails", "locations"
   add_foreign_key "locations", "orgs"
 end

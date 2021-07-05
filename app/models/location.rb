@@ -30,6 +30,7 @@ class Location < ApplicationRecord
   belongs_to :org
   has_and_belongs_to_many :categories
   has_many :phone_numbers
+  has_many :emails
   has_many :events, class_name: 'Ahoy::Event'
   validates_presence_of :city, :desc, :name, :state, :zip
   has_paper_trail

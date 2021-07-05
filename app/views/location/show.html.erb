@@ -49,6 +49,18 @@
     </div>
     <% end %>
 
+    <% if @location.emails.any? %>
+    <div class="mb-1">
+      <p class="has-text-weight-bold"><%= "Email".pluralize @location.emails.count %></p>
+      <% @location.emails.each do |email| %>
+      <div class="mb-2">
+        <% if email.name %><p><%= email.name %>:</p><% end %>
+        <p><a href="mailto:<%= email.address %>"><%= email.address %></a></p>
+      </div>
+      <% end %>
+    </div>
+    <% end %>
+
     <% if @location.website %>
     <p class="has-text-weight-bold">Hours and More Info</p>
     <p class="mb-3">
