@@ -3,7 +3,6 @@ class FeedbackController < ApplicationController
 
   def save
     p = request.params
-    binding.pry
     f = Feedback.create!(
       path: p['path'],
       category: p['category'],
