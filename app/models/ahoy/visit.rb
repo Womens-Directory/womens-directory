@@ -47,7 +47,7 @@ class Ahoy::Visit < ApplicationRecord
   has_many :events, class_name: "Ahoy::Event"
   belongs_to :user, optional: true
 
-  after_save :clear_ip
+  after_create :clear_ip
 
   def clear_ip
     # Must wait a little bit before clearing the IP so that the visit can be geocoded
