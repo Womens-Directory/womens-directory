@@ -11,7 +11,7 @@
 #  visit_id   :bigint
 #
 class Feedback < ApplicationRecord
-  has_many :events, class_name: 'Ahoy::Event'
+  has_many :events, class_name: 'Ahoy::Event', dependent: :destroy
   belongs_to :visit, class_name: 'Ahoy::Visit'
   strips_spaces_from_string_fields
 end
