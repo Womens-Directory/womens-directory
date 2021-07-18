@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
 
   # List all CMS pages that are "top level" - immediate children of the root page, excluding the root page
   def top_level_pages
-    Comfy::Cms::Page.where(parent_id: root_page).order :position
+    Comfy::Cms::Page.published.where(parent_id: root_page).order :position
   end
 
   def user_coords
