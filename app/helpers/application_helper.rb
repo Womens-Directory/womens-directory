@@ -6,6 +6,11 @@ module ApplicationHelper
     "#{@title} – Women's Directory"
   end
 
+  # Used to call image_tag from CMS with `{{ cms:helper cms_image_tag, "some_asset.svg" }}`
+  def cms_image_tag(*args, **kwargs)
+    image_tag(*args, **kwargs)
+  end
+
   def map_tag(locs)
     j = locs.map do |l|
       {
