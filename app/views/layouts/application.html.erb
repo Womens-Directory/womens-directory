@@ -25,6 +25,7 @@
     <div class="notification mb-2 is-danger"><button class="delete"></button><%= flash[:alert] %></div>
     <% end %>
     <%= yield %>
+    <div id="feedback"></div>
   </div>
 
   <script type="text/plain" id="current-path"><%= request.path %></script>

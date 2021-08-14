@@ -1,10 +1,11 @@
 <template>
-  <div>
-    <a v-if="state == 'closed'" @click="state = 'open'">
-      <div class="feedback-closed">
-        <i class="fa fa-comments" />
-      </div>
-    </a>
+  <div class="mt-5">
+    <p class="has-text-centered">
+      Help us improve Women's Directory.
+      <a @click="state = 'open'">Send us your feedback.</a>
+    </p>
+
+    <a v-if="state == 'closed'" @click="state = 'open'"> </a>
 
     <div class="feedback-open" v-else-if="state != 'done'">
       <div class="px-3 py-3">

@@ -11,6 +11,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const comp = new Vue({
     render: h => h(Feedback, { props })
-  }).$mount();
-  document.body.appendChild(comp.$el);
+  }).$mount("#feedback");
 });
