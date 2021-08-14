@@ -7,6 +7,12 @@ class CreatePgSearchDocuments < ActiveRecord::Migration[6.1]
         t.timestamps null: false
       end
     end
+
+    [Location, Category, Org].each do |model|
+      say_with_time("Indexing existing #{model.name.pluralize}") do
+        PgSearch::Multisearch.rebuild(model)
+      end
+    end
   end
 
   def down
