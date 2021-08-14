@@ -22,7 +22,7 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <form action="/search" method="GET" class="form">
-            <input type="text" class="input" name="q" placeholder="Search for resources...">
+            <input type="text" class="input" name="q" placeholder="Search for resources..." value="<%= @query %>">
           </form>
         </div>
         <% if current_user %>
