@@ -10,11 +10,14 @@
 #  updated_at  :datetime         not null
 #
 class Category < ApplicationRecord
+  include PgSearch::Model
+
   has_and_belongs_to_many :locations
   has_many :events, class_name: 'Ahoy::Event', dependent: :destroy
   validates_presence_of :name
   has_paper_trail
   strips_spaces_from_string_fields
+  multisearchable against: %i[description name]
 
   def to_s
     "Category #{id}: #{name}"

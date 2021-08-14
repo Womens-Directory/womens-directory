@@ -10,11 +10,14 @@
 #  updated_at :datetime         not null
 #
 class Org < ApplicationRecord
+  include PgSearch::Model
+
   has_many :locations, dependent: :destroy
   has_many :events, class_name: 'Ahoy::Event', dependent: :destroy
   validates_presence_of :desc, :name, :website
   has_paper_trail
   strips_spaces_from_string_fields
+  multisearchable against: %i[desc name website]
 
   def to_s
     "Org #{id}: #{name}"

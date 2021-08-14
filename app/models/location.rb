@@ -27,6 +27,8 @@
 #  fk_rails_...  (org_id => orgs.id)
 #
 class Location < ApplicationRecord
+  include PgSearch::Model
+
   belongs_to :org
   has_and_belongs_to_many :categories
   has_many :phone_numbers, dependent: :destroy
@@ -35,6 +37,7 @@ class Location < ApplicationRecord
   validates_presence_of :city, :desc, :name, :state, :zip
   has_paper_trail
   strips_spaces_from_string_fields
+  multisearchable against: %i[address1 address2 city desc name neighborhood state website zip]
   attr_accessor :distance
 
   def website_without_protocol
