@@ -10,7 +10,7 @@
   <p class="mb-3"><%= markdown @org.desc %></p>
 
   <% locs = @org.locations.order(:name) %>
-  <h1 class="mb-3"><%= pluralize locs.count, "locations" %></h1>
+  <h2 class="mb-3">Locations on Women's Directory</h2>
 
   <% locs.each do |loc| %>
   <p class="mb-0">
