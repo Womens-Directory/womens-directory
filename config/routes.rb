@@ -1,7 +1,6 @@
 lead_num = /\d+(-.+)?/
 
 Rails.application.routes.draw do
-  get 'search/search'
   namespace :admin do
     get 'birdseye/categories'
     get 'birdseye/categories/:id', to: 'birdseye#category', as: 'birdseye_category'
