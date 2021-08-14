@@ -19,8 +19,13 @@
         <% end %>
       </div>
 
-      <% if current_user %>
       <div class="navbar-end">
+        <div class="navbar-item">
+          <form action="/search" method="GET" class="form">
+            <input type="text" class="input" name="q" placeholder="Search for resources...">
+          </form>
+        </div>
+        <% if current_user %>
         <div class="navbar-item has-dropdown is-hoverable has-background-danger">
           <a class="navbar-link has-text-weight-bold">Admin</a>
           <div class="navbar-dropdown">
@@ -32,8 +37,8 @@
             <a class="navbar-item" href="/users/sign_out">Sign out <%= current_user.email %></a>
           </div>
         </div>
+        <% end %>
       </div>
-      <% end %>
     </div>
   </div>
 </nav>
