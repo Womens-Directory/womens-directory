@@ -1,0 +1,11 @@
+<h1 class="is-size-3 mb-3"><%= pluralize @results.count, 'result' %> for <%= @query %></h1>
+<% @results.each do |result| %>
+  <div class="search-result mb-3">
+    <a href="<%= link_to_record result.record %>">
+      <h1 class="is-size-4">
+        <%= result.title %>
+      </h1>
+    </a>
+    <%= result.content %>
+  </div>
+<% end %>

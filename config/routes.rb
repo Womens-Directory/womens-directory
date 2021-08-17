@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   post 'sort/name', as: 'sort_by_name', to: 'user_location#sort_by_name'
   post 'sort/distance', as: 'sort_by_distance', to: 'user_location#sort_by_distance'
 
+  get 'search', to: 'search#search'
   post 'feedback', to: 'feedback#save', as: 'save_feedback'
 
   comfy_route_cms path: '/'

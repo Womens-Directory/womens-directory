@@ -38,4 +38,8 @@ module ApplicationHelper
     attrs_str = attrs.map { |k, v| "#{k}=\"#{v}\"" }.join(' ')
     "<a #{attrs_str}>#{text}</a>".html_safe
   end
+
+  def link_to_record(record)
+    send "show_#{record.class.name.underscore}_path".to_sym, record
+  end
 end

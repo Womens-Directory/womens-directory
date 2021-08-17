@@ -87,5 +87,11 @@ details summary {
 
 // Navbar color matches logo
 .navbar.is-info {
-  background-color: #0057BF;
+  background-color: #0057bf;
+}
+
+// Placeholders in input boxes are too light to be accessible
+input.input::placeholder {
+  opacity: 0.4;
+  color: rgba(0, 0, 0, 1);
 }
