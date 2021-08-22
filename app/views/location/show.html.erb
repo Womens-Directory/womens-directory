@@ -1,16 +1,13 @@
-<%= crumbs @category, @location %>
 <%= admin_edit_button @location %>
 
+<%= crumbs @category, @location %>
 <h1 class="is-size-3"><%= @location.name %></h1>
 
-<div class="columns mb-3">
+<div class="mb-0 columns">
   <div class="column">
-    <%= markdown @location.desc %>
-    <div class="mb-3"></div>
-
     <% if @location.address1 %>
     <div class="map-embed mb-2" data-latitude="<%= @location.latitude %>" data-longitude="<%= @location.longitude %>"></div>
-    <div class="mb-3">
+    <div>
       <p><%= @location.neighborhood %></p>
       <p><%= @location.address1 %> <%= @location.address2 %></p>
       <p class="mb-2"><%= @location.city %>, <%= @location.state %> <%= @location.zip %></p>
@@ -20,15 +17,15 @@
     <% else %>
     <p class="mb-2"><%= @location.city %>, <%= @location.state %></p>
     <% end %>
-
-    <p>
-      <span class="has-text-weight-bold">
-        Organization: <%= link_to @location.org.name, show_org_path(@location.org) %>
-      </span>
-      (<%= link_to "website", @location.org.website, target: "_blank" %>)
-    <p>
   </div>
+
   <div class="column">
+    <% if @location.website %>
+    <p class="has-text-weight-bold">Website</p>
+    <p class="mb-3">
+      <%= link_to @location.website_without_protocol, @location.website, target: "_blank" %>
+    </p>
+    <% end %>
 
     <% if @location.phone_numbers.any? %>
     <div class="mb-1">
@@ -59,20 +56,27 @@
       <% end %>
     </div>
     <% end %>
+  </div>
+</div>
 
-    <% if @location.website %>
-    <p class="has-text-weight-bold">Hours and More Info</p>
-    <p class="mb-3">
-      <%= link_to @location.website_without_protocol, @location.website, target: "_blank" %>
-    </p>
-    <% end %>
+<div class="columns">
+  <div class="column">
+    <%= markdown @location.desc %>
+  </div>
+  <div class="column">
     <p class="has-text-weight-bold">Services Provided</p>
     <ul>
       <% @location.categories.order(:name).each do |category| %>
       <li><%= link_to category.name, show_category_path(category) %></li>
       <% end %>
     </ul>
-    </p>
+
+    <p>
+      <span class="has-text-weight-bold">
+        Organization: <%= link_to @location.org.name, show_org_path(@location.org) %>
+      </span>
+      (<%= link_to "website", @location.org.website, target: "_blank" %>)
+    <p>
   </div>
 </div>
 
