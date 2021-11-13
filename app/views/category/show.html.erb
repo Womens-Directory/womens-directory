@@ -25,7 +25,7 @@
 </div>
 
 <ul class="mb-3">
-  <% @locations.each do |location| %>
+  <% @locations.filter { |l| l.visible }.each do |location| %>
   <li>
     <%= link_to location.name, show_category_location_path(@category, location) %>
     <% if @show_distance %>
