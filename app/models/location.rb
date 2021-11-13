@@ -12,6 +12,7 @@
 #  name         :string           not null
 #  neighborhood :string
 #  state        :string           not null
+#  visible      :boolean
 #  website      :string
 #  zip          :string           not null
 #  created_at   :datetime         not null
