@@ -261,7 +261,7 @@ ActiveRecord::Schema.define(version: 2021_11_13_194245) do
     t.string "website"
     t.decimal "latitude", precision: 9, scale: 6
     t.decimal "longitude", precision: 9, scale: 6
-    t.boolean "visible"
+    t.boolean "visible", default: false, null: false
     t.index ["org_id"], name: "index_locations_on_org_id"
   end
 
