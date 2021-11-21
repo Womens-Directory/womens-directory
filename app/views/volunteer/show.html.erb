@@ -1,16 +1,27 @@
-<h1>Volunteer</h1>
+<h1 class="is-size-3">Volunteer Form</h1>
 
 <form>
-  <label for="name">
-    Name: <input type="text" id="name" name="name">
-  </label>
-  <label for="contact">
-    Email or phone number: <input type="text" id="contact" name="contact">
-  </label>
-  <label for="why">
-    Why do you want to volunteer for Women's Directory? <textarea id="why" name="why"></textarea>
-  </label>
-  <label for="hours">
-    How many hours are you planning on volunteering per week? <input type="text" id="hours" name="name">
-  </label>
+  <div class="field">
+    <label class="label" for="name">Name:</label>
+    <input class="input" type="text" id="name" name="name">
+  </div>
+
+  <div class="field">
+    <label class="label" for="contact">Email or phone number:</label>
+    <input class="input" type="text" id="contact" name="contact">
+  </div>
+
+  <div class="field">
+    <label class="label" for="hours">How many hours are you planning on volunteering per week?</label>
+    <input class="input" type="text" id="hours" name="name">
+  </div>
+
+  <div class="field">
+    <label class="label" for="why">Why do you want to volunteer for Women's Directory?</label>
+    <textarea class="textarea" id="why" name="why"></textarea>
+  </div>
+
+  <div class="field">
+    <button class="button is-info">Submit</button>
+  </div>
 </form>
