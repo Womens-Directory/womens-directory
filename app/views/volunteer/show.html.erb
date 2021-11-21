@@ -1,6 +1,5 @@
 <h1 class="is-size-3">Volunteer Form</h1>
-
-<form>
+<%= form_tag do %>
   <div class="field">
     <label class="label" for="name">Name:</label>
     <input class="input" type="text" id="name" name="name">
@@ -22,6 +21,6 @@
   </div>
 
   <div class="field">
-    <button class="button is-info">Submit</button>
+    <input type="submit" value="Submit" class="button is-info">
   </div>
-</form>
+<% end %>
