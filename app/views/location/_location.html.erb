@@ -1,0 +1,14 @@
+<div class="column">
+  <% if @location.address1 %>
+    <div class="map-embed mb-2" data-latitude="<%= @location.latitude %>" data-longitude="<%= @location.longitude %>"></div>
+    <div>
+      <p><%= @location.neighborhood %></p>
+      <p><%= @location.address1 %> <%= @location.address2 %></p>
+      <p class="mb-2"><%= @location.city %>, <%= @location.state %> <%= @location.zip %></p>
+      <p><a target="_blank" href="http://maps.apple.com/?q=<%= @location.full_address_with_name %>">Open in Apple Maps</a></p>
+      <p><a target="_blank" href="http://maps.google.com/?q=<%= @location.full_address_with_name %>">Open in Google Maps</a></p>
+    </div>
+  <% else %>
+    <p class="mb-2"><%= @location.city %>, <%= @location.state %></p>
+  <% end %>
+</div>

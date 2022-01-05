@@ -1,0 +1,15 @@
+<div class="column">
+  <p class="has-text-weight-bold">Services Provided</p>
+  <ul>
+    <% @location.categories.order(:name).each do |category| %>
+    <li><%= link_to category.name, show_category_path(category) %></li>
+    <% end %>
+  </ul>
+
+  <p>
+    <span class="has-text-weight-bold">
+      Organization: <%= link_to @location.org.name, show_org_path(@location.org) %>
+    </span>
+    (<%= link_to "website", @location.org.website, target: "_blank" %>)
+  <p>
+</div>
