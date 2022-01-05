@@ -3,14 +3,28 @@
 <%= crumbs @category, @location %>
 <h1 class="is-size-3"><%= @location.name %></h1>
 
-<div class="mb-0 columns">
-  <%= render 'location' %>
-  <%= render 'contact' %>
+<div class="mobile-only">
+  <div class="mb-0 columns">
+    <%= render 'location' %>
+    <%= render 'contact' %>
+  </div>
+
+  <div class="columns">
+    <%= render 'description'%>
+    <%= render 'serviceandorg'%>
+  </div>
 </div>
 
-<div class="columns">
-  <%= render 'description'%>
-  <%= render 'serviceandorg'%>
+<div class="desktop-only">
+  <div class="mb-0 columns">
+    <%= render 'location' %>
+    <%= render 'contact' %>
+  </div>
+
+  <div class="columns">
+    <%= render 'description'%>
+    <%= render 'serviceandorg'%>
+  </div>
 </div>
 
 <%= stylesheet_pack_tag 'map' %>
