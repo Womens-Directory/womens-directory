@@ -4,26 +4,22 @@
 <h1 class="is-size-3"><%= @location.name %></h1>
 
 <div class="mobile-only">
-  <div class="mb-0 columns">
-    <%= render 'location' %>
-    <%= render 'contact' %>
-  </div>
-
-  <div class="columns">
-    <%= render 'description'%>
-    <%= render 'serviceandorg'%>
-  </div>
+  <%= render 'location' %>
+  <%= render 'contact' %>
+  <%= render 'description' %>
+  <%= render 'serviceandorg' %>
 </div>
 
 <div class="desktop-only">
-  <div class="mb-0 columns">
-    <%= render 'location' %>
-    <%= render 'contact' %>
-  </div>
-
   <div class="columns">
-    <%= render 'description'%>
-    <%= render 'serviceandorg'%>
+    <div class="column">
+      <%= render 'location' %>
+      <%= render 'description'%>
+    </div>
+    <div class="column">
+      <%= render 'contact' %>
+      <%= render 'serviceandorg'%>
+    </div>
   </div>
 </div>
 
