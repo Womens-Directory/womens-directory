@@ -103,7 +103,7 @@ input.input::placeholder {
   display: none;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: $tablet - 1px) {
   .desktop-only {
     display: none;
   }
