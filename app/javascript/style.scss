@@ -95,3 +95,19 @@ input.input::placeholder {
   opacity: 0.4;
   color: rgba(0, 0, 0, 1);
 }
+
+.desktop-only {
+  display: block;
+}
+.mobile-only {
+  display: none;
+}
+
+@media screen and (max-width: $tablet - 1px) {
+  .desktop-only {
+    display: none;
+  }
+  .mobile-only {
+    display: block;
+  }
+}
