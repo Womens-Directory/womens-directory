@@ -1,6 +1,8 @@
 lead_num = /\d+(-.+)?/
 
 Rails.application.routes.draw do
+  resources :volunteers
+
   namespace :admin do
     get 'birdseye/categories'
     get 'birdseye/categories/:id', to: 'birdseye#category', as: 'birdseye_category'
@@ -24,8 +26,6 @@ Rails.application.routes.draw do
 
   get 'search', to: 'search#search'
   post 'feedback', to: 'feedback#save', as: 'save_feedback'
-
-  get 'volunteer', to: 'volunteers#index'
 
   comfy_route_cms path: '/'
 end

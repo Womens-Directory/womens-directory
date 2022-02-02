@@ -1,1 +1,11 @@
-<h1>hi</h1>
+<h1>List of all Volunteers</h1></br>
+
+<div>
+  <% @volunteers.each do |volunteer| %>
+    <p><%= volunteer.first_name %></p>
+    <p><%= volunteer.last_name %></p>
+    <p><%= volunteer.email %></p>
+    <p><%= volunteer.phone %></p>
+    <p>Hours to Volunteer per Week: <%= volunteer.hours_per_week %></p></br>
+  <% end %>
+</div>
