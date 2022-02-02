@@ -12,4 +12,5 @@
 #  updated_at     :datetime         not null
 #
 class Volunteer < ApplicationRecord
+  validates_presence_of :first_name, :last_name, :phone, :email, :hours_per_week
 end
