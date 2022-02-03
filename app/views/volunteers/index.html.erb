@@ -1,12 +1,33 @@
-<h1>See our Valuable Volunteers below!</h1></br>
-<h2>If you would like to volunteer, please click <%= link_to "here!", new_volunteer_path %></h2></br>
+<h1>Please fill out this form if you are interested in volunteering for Women's Directory</h1>
 
-<div>
-  <% @volunteers.each do |volunteer| %>
-    <p><%= volunteer.first_name %></p>
-    <p><%= volunteer.last_name %></p>
-    <p><%= volunteer.email %></p>
-    <p><%= volunteer.phone %></p>
-    <p>Hours to Volunteer per Week: <%= volunteer.hours_per_week %></p></br>
-  <% end %>
-</div>
+<%= form_with url: volunteers_path do |form| %>
+  <div>
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name %>
+  </div>
+
+  <div>
+    <%= form.label :last_name %>
+    <%= form.text_area :last_name %>
+  </div>
+
+  <div>
+    <%= form.label :email %>
+    <%= form.text_area :email %>
+  </div>
+
+  <div>
+    <%= form.label :phone %>
+    <%= form.text_area :phone %>
+  </div>
+
+  <div>
+    <%= form.label :hours_per_week %>
+    <%= form.text_area :hours_per_week %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+  <%# need to change to 'Submit' button %>
+<% end %>
