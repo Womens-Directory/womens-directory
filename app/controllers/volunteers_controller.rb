@@ -12,7 +12,7 @@ class VolunteersController < ApplicationController
 
     respond_to do |format|
       if @volunteer.save
-        format.html { redirect_to volunteers_path, notice: "Your form has been submitted." }
+        format.html { redirect_to @volunteer, notice: "You have submitted the information below." }
       else
         format.html { render :new }
       end
@@ -27,7 +27,7 @@ class VolunteersController < ApplicationController
     @volunteer = Volunteer.find(params[:id])
     respond_to do |format|
       if @volunteer.update(params.require(:volunteer).permit(:first_name, :last_name, :email, :phone, :hours_per_week))
-        format.html { redirect_to volunteers_path, notice: "The record was successfully updated." }
+        format.html { redirect_to volunteers, notice: "The record was successfully updated." }
       else
         format.html { render :edit }
       end
