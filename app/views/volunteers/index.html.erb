@@ -1,33 +1,39 @@
-<h1>Please fill out this form if you are interested in volunteering for Women's Directory</h1>
+<h1><b>Please fill out this form if you are interested in volunteering for Women's Directory. Someone will reach out to help you get started. Thanks!</b></h1><br>
 
 <%= form_with url: volunteers_path do |form| %>
-  <div>
-    <%= form.label :first_name %>
-    <%= form.text_field :first_name %>
+
+  <div class="field">
+    <label class="label">Name</label>
+    <div class="control">
+      <input class="input" type="text" placeholder="Text input">
+    </div>
   </div>
 
-  <div>
-    <%= form.label :last_name %>
-    <%= form.text_area :last_name %>
+  <div class="field">
+    <label class="label">Email</label>
+    <div class="control">
+      <input class="input" type="text" placeholder="Text input">
+    </div>
   </div>
 
-  <div>
-    <%= form.label :email %>
-    <%= form.text_area :email %>
+  <div class="field">
+    <label class="label">Phone</label>
+    <div class="control">
+      <input class="input" type="text" placeholder="Text input">
+    </div>
   </div>
 
-  <div>
-    <%= form.label :phone %>
-    <%= form.text_area :phone %>
+
+  <div class="field">
+    <label class="label">How many hours per week you would like to volunteer:</label>
+    <div class="control">
+      <input class="input" type="text" placeholder="Text input">
+    </div>
   </div>
 
-  <div>
-    <%= form.label :hours_per_week %>
-    <%= form.text_area :hours_per_week %>
+  <div class="field is-grouped">
+    <div class="control">
+      <button class="button is-link">Submit</button>
   </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-  <%# need to change to 'Submit' button %>
+</div>
 <% end %>
