@@ -36,6 +36,10 @@ WD uses a Postgres database, to set it up run:
     rails db:create
     rails db:migrate
 ```
+# Deployment
+
+This app is deployed by the WD team, as a DigitalOcean app. See docs for Digital Ocean https://docs.digitalocean.com/products/app-platform/
+
 
 # Environment Variables
 
@@ -43,7 +47,10 @@ WD uses a Postgres database, to set it up run:
 | --------------------- | ---------------------------------------------------------------------------------------------------- |
 | `APP_DOMAIN`          | The domain where the application lives (currently `womens-directory-kgjo4.ondigitalocean.app`)       |
 | `EMAIL_DOMAIN`        | The send-from domain used for emails, authorized for use in SendGrid (usually `womensdirectory.org`) |
-# can we use SendGrid for emails?
 | `GOOGLE_MAPS_API_KEY` | The API key for the Google Cloud project with access to geocoding                                    |
 | `INSECURE`            | If set, uses HTTP for URLs; if unset (default), uses HTTPS                                           |
 | `SENDGRID_API_KEY`    | The API key for sending emails via [SendGrid](https://sendgrid.com/)                                 |
+
+## Support
+
+Please submit a pull request at https://github.com/AARodgers/womens-directory
