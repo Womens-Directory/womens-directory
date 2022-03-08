@@ -21,21 +21,34 @@ Women's Directory is a rails app that is used to run the non-profit Women's Dire
 
 ## Installation
 
-WD uses Ruby Version Rails 6.1.3.1, Ruby 3.0.0, Node v17.3.1, Yarn 1.22.10
+WD uses Ruby 3.0.0, Node 16.14.0 and Postgres 14.
 
-Install this app by running:
+Start your Postgres server locally. On Mac, [Postgres.app](https://postgresapp.com) is a good option.
 
-```bash
-  rails install womens-directory ??
-  cd womens-directory
-```
-
-WD uses a Postgres database, to set it up run:
+Install dependencies, prepare the assets, and create and seed the database:
 
 ```bash
-    rails db:create
-    rails db:migrate
+bundle install
+rails yarn:install
+rails assets:precompile
+rails db:setup
 ```
+
+## Usage
+
+Start the server:
+
+```bash
+rails server
+```
+
+The database has already been seeded with demo categories and locations, as well as an admin user.
+
+Sign into the app at [localhost:3000/users/sign_in](http://localhost:3000/users/sign_in).
+Use the email address `dev@womensdirectory.org` to sign in as an admin.
+
+Once you have signed in, go back to the homepage. The admin tools will be available under the **Admin** dropdown in the nav bar.
+
 # Deployment
 
 This app is deployed by the WD team, as a DigitalOcean app. See docs for Digital Ocean https://docs.digitalocean.com/products/app-platform/
