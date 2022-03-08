@@ -1,25 +1,27 @@
-# Women's Directory
+[<img src="app/assets/images/logo.svg" style="max-width: 200px;">](https://womensdirectory.org)
 
-![Logo](https://raw.githubusercontent.com/AARodgers/womens-directory/4ce1c893aff59293e3ebb65546cad5f001ee8594/app/assets/images/logo.svg?token=ALPB3ILGDIJN4QLLKZUH5L3CEZIBI)
+# [Women's Directory](https://womensdirectory.org)
 
-This application hosts [https://womensdirectory.org](womensdirectory.org).
+Women's Directory is a non-profit organization. Our website shows women in need where they can find help and critical resources in their communities.
 
-Women's Directory is a rails app that is used to run the non-profit Women's Directory website. The website is a free resource for women to find critical resources and help within their community.
+This Rails app runs the Women's Directory [production website](https://womensdirectory.org).
+
+# Features
+
+- Users can browse for locations that offer services helpful to women in need.
+- Locations are categorized (for example: shelters, food banks) so that women can quickly find what they need.
+- The app has three main views:
+  - The homepage presents a complete list of categories.
+  - The category page shows a list of all the locations that belong to that category.
+  - The location page presents information about the location, such as location and contact information.
+- Users can submit feedback via the button located in the bottom-right corner of all pages. Feedback is sent to a configurable Discord channel for admins to review, and stored in the database.
+- Admin tools are available only once an admin user has signed in via `/users/sign_in`. They include:
+  - [Rails Admin dashboard](https://github.com/railsadminteam/rails_admin)
+  - [Comfy CMS](https://github.com/comfy/comfortable-mexican-sofa)
+  - [Birdseye](app/controllers/admin/birdseye_controller.rb)
 
 
-## Features
-
-- This app allows users to browse different locations that offer services under a set of categories for help, such as shelters.
-- WD provides three main views: homepage, category, and location.
-- The homepage is located in () and shows the different categories a user can click on to see it's locations.
-- Location views are located in () and list the different locations that are in that category.
-- A user can click on the location link to see more details about that location such as contact information and location.
-- A user can contact the admin via the feedback button located at the bottom right corner of the homepage.
-- Feedback is sent to a Discord channel to be reviewed.
-- The admin dashboards are Rails Admin and Birdseye. Admin can access them by logging in at https://womensdirectory.org/users/sign_in and then navigating to https://womensdirectory.org/admin once successfully logged in.
-
-
-## Installation
+# Installation
 
 WD uses Ruby 3.0.0, Node 16.14.0 and Postgres 14.
 
@@ -34,7 +36,7 @@ rails assets:precompile
 rails db:setup
 ```
 
-## Usage
+# Usage
 
 Start the server:
 
@@ -66,4 +68,4 @@ This app is deployed by the WD team, as a DigitalOcean app. See docs for Digital
 
 ## Support
 
-Please submit a pull request at https://github.com/AARodgers/womens-directory
+Problems, suggestions, or contributions? Please [open an issue](https://github.com/AARodgers/womens-directory/issues) or [submit a pull request](https://github.com/AARodgers/womens-directory/pulls).
