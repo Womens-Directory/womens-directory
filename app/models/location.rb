@@ -39,6 +39,7 @@ class Location < ApplicationRecord
   has_paper_trail
   strips_spaces_from_string_fields
   multisearchable against: %i[address1 address2 city desc name neighborhood state website zip]
+  # tells PgSearch what to search in database
   attr_accessor :distance
 
   def website_without_protocol

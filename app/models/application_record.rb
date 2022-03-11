@@ -1,5 +1,6 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
+  # used to not create empty columns?
 
   def self.strips_spaces_from_string_fields
     before_save :strip_strings
@@ -22,6 +23,7 @@ class ApplicationRecord < ActiveRecord::Base
         self.send setter, clean
       end
   end
+  # when use send each way, ex. send etc or etc.send, how does send work?
 
   def name_as_slug
     name.downcase.gsub /[^-A-Za-z0-9]+/, '-'
