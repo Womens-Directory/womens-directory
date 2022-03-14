@@ -53,7 +53,11 @@ Once you have signed in, go back to the homepage. The admin tools will be availa
 
 # Deployment
 
-This app is deployed by the WD team, as a DigitalOcean app. See docs for Digital Ocean https://docs.digitalocean.com/products/app-platform/
+This app is owned by the Women's Directory team in DigitalOcean. It is deployed as a [DigitalOcean App](https://docs.digitalocean.com/products/app-platform).
+
+Commits that land in the `main` branch are automatically deployed to production. The DigitalOcean App Platform watches for these commits. It builds a new image using [Buildpack](https://docs.digitalocean.com/products/app-platform/concepts/buildpack/). It starts a new container from this image which replaces the previous WD container.
+
+If you land code that includes database migrations, you must run them manually in the DigitalOcean console. After the new instance is live in production, go to the App's [console](https://docs.digitalocean.com/products/app-platform/concepts/console/) and run `rails db:migrate`.
 
 
 # Environment Variables
