@@ -77,7 +77,7 @@ else
   site = Comfy::Cms::Site.create! identifier: 'site', label: 'site', hostname: 'localhost'
   layout = Comfy::Cms::Layout.create!(
     site: site, identifier: 'default', label: 'default',
-    app_layout: 'application', content: '{{ cms:markdown content }}',
+    app_layout: 'application', content: '{{ cms:partial "shared/categories" }}',
   )
   # TODO: fill page with basic content and categories snippet
   page = Comfy::Cms::Page.create!(site: site, layout: layout, label: 'Home')

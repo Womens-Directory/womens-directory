@@ -54,3 +54,4 @@ class Ahoy::Event < ApplicationRecord
     end
   end
 end
+# each event has a name and properties in ahoy (properties = jsonb) what is jsonb? 

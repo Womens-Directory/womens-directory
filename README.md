@@ -1,6 +1,64 @@
-# Women's Directory
+[<img src="app/assets/images/logo.svg" style="max-width: 200px;">](https://womensdirectory.org)
 
-This application hosts [https://womensdirectory.org](womensdirectory.org).
+# [Women's Directory](https://womensdirectory.org)
+
+Women's Directory is a non-profit organization. Our website shows women in need where they can find help and critical resources in their communities.
+
+This Rails app runs the Women's Directory [production website](https://womensdirectory.org).
+
+# Features
+
+- Users can browse for locations that offer services helpful to women in need.
+- Locations are categorized (for example: shelters, food banks) so that women can quickly find what they need.
+- The app has three main views:
+  - The homepage presents a complete list of categories.
+  - The category page shows a list of all the locations that belong to that category.
+  - The location page presents information about the location, such as location and contact information.
+- Users can submit feedback via the button located in the bottom-right corner of all pages. Feedback is sent to a configurable Discord channel for admins to review, and stored in the database.
+- Admin tools are available only once an admin user has signed in via `/users/sign_in`. They include:
+  - [Rails Admin dashboard](https://github.com/railsadminteam/rails_admin)
+  - [Comfy CMS](https://github.com/comfy/comfortable-mexican-sofa)
+  - [Birdseye](app/controllers/admin/birdseye_controller.rb)
+
+
+# Installation
+
+WD uses Ruby 3.0.0, Node 16.14.0 and Postgres 14.
+
+Start your Postgres server locally. On Mac, [Postgres.app](https://postgresapp.com) is a good option.
+
+Install dependencies, prepare the assets, and create and seed the database:
+
+```bash
+bundle install
+rails yarn:install
+rails assets:precompile
+rails db:setup
+```
+
+# Usage
+
+Start the server:
+
+```bash
+rails server
+```
+
+The database has already been seeded with demo categories and locations, as well as an admin user.
+
+Sign into the app at [localhost:3000/users/sign_in](http://localhost:3000/users/sign_in).
+Use the email address `dev@womensdirectory.org` to sign in as an admin.
+
+Once you have signed in, go back to the homepage. The admin tools will be available under the **Admin** dropdown in the nav bar.
+
+# Deployment
+
+This app is owned by the Women's Directory team in DigitalOcean. It is deployed as a [DigitalOcean App](https://docs.digitalocean.com/products/app-platform).
+
+Commits that land in the `main` branch are automatically deployed to production. The DigitalOcean App Platform watches for these commits. It builds a new image using [Buildpack](https://docs.digitalocean.com/products/app-platform/concepts/buildpack/). It starts a new container from this image which replaces the previous WD container.
+
+If you land code that includes database migrations, you must run them manually in the DigitalOcean console. After the new instance is live in production, go to the App's [console](https://docs.digitalocean.com/products/app-platform/concepts/console/) and run `rails db:migrate`.
+
 
 # Environment Variables
 
@@ -11,3 +69,7 @@ This application hosts [https://womensdirectory.org](womensdirectory.org).
 | `GOOGLE_MAPS_API_KEY` | The API key for the Google Cloud project with access to geocoding                                    |
 | `INSECURE`            | If set, uses HTTP for URLs; if unset (default), uses HTTPS                                           |
 | `SENDGRID_API_KEY`    | The API key for sending emails via [SendGrid](https://sendgrid.com/)                                 |
+
+## Support
+
+Problems, suggestions, or contributions? Please [open an issue](https://github.com/AARodgers/womens-directory/issues) or [submit a pull request](https://github.com/AARodgers/womens-directory/pulls).
