@@ -24,8 +24,10 @@ class ApplicationRecord < ActiveRecord::Base
       end
   end
   # when use send each way, ex. send etc or etc.send, how does send work?
+  # how does .class work? does this mean you can use the method on any class?
 
   def name_as_slug
     name.downcase.gsub /[^-A-Za-z0-9]+/, '-'
   end
 end
+# what is a proper slug? how does the regex work here?

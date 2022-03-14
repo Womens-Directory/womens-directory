@@ -63,3 +63,6 @@ end
 # why are two classes in one file?
 # ActiveJob:https://api.rubyonrails.org/classes/ActiveJob/Base.html what does it do?
 # what are the indexes and how are they used?
+# when to use ApplicationRecord and ActiveRecord::Base, what is the diff?
+# what is an abstract class?
+# how does .set method work? where find docs

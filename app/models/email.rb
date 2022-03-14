@@ -21,3 +21,4 @@ class Email < ApplicationRecord
   belongs_to :location
   validates :address, presence: true, format: { with: /@.+\./ }
 end
+# why need format for emails? what happens if you don't have this?

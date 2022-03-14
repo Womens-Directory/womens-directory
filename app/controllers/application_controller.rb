@@ -56,3 +56,7 @@ class ApplicationController < ActionController::Base
     return [lat, lon]
   end
 end
+
+# what are ApplicationController < ActionController::Base, when do you use them and know what kind of methods to put in them
+# how does ApplicationController differ from other controllers (controller classes inherit from ApplicationController) The ApplicationController contains code that can be run in all your controllers and it inherits from Rails ActionController::Base class.
+# Where is the 
