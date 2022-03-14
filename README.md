@@ -1,4 +1,6 @@
-[<img src="app/assets/images/logo.svg" style="max-width: 200px;">](https://womensdirectory.org)
+<a href="https://womensdirectory.org">
+  <img src="app/assets/images/logo.svg" width="200" />
+</a>
 
 # [Women's Directory](https://womensdirectory.org)
 
@@ -19,7 +21,6 @@ This Rails app runs the Women's Directory [production website](https://womensdir
   - [Rails Admin dashboard](https://github.com/railsadminteam/rails_admin)
   - [Comfy CMS](https://github.com/comfy/comfortable-mexican-sofa)
   - [Birdseye](app/controllers/admin/birdseye_controller.rb)
-
 
 # Installation
 
@@ -58,7 +59,6 @@ This app is owned by the Women's Directory team in DigitalOcean. It is deployed 
 Commits that land in the `main` branch are automatically deployed to production. The DigitalOcean App Platform watches for these commits. It builds a new image using [Buildpack](https://docs.digitalocean.com/products/app-platform/concepts/buildpack/). It starts a new container from this image which replaces the previous WD container.
 
 If you land code that includes database migrations, you must run them manually in the DigitalOcean console. After the new instance is live in production, go to the App's [console](https://docs.digitalocean.com/products/app-platform/concepts/console/) and run `rails db:migrate`.
-
 
 # Environment Variables
 
