@@ -45,6 +45,7 @@ class Ahoy::Event < ApplicationRecord
   belongs_to :org, optional: true
   belongs_to :user, optional: true
 
+  # change the properties to symbols and get rid of the id?
   def associate
     properties.each do |k, v|
       if k.ends_with? '_id'
@@ -54,3 +55,8 @@ class Ahoy::Event < ApplicationRecord
     end
   end
 end
+# ? what are properties of an event, an example? ( tried using rails console and Ahoy.properties.first, didn't work)
+# not sure of purpose of .to_sym method, takes a symbols and returns symbol object?
+
+# what is the difference between an event and a visit? what exactly are they?
+#is there a way to see the tables like the SQL view?

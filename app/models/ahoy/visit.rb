@@ -35,7 +35,10 @@
 #  index_ahoy_visits_on_visit_token  (visit_token) UNIQUE
 #
 
+
 class ClearIpJob < ActiveJob::Base
+# delete the ip address for that visit
+# what is ActiveJob? https://api.rubyonrails.org/classes/ActiveJob/Base.html
   def perform(visit)
     visit.update! ip: nil
   end
@@ -49,8 +52,14 @@ class Ahoy::Visit < ApplicationRecord
 
   after_create :clear_ip
 
+  # what does optional: true do? associated object won't be validated? what is associated object why not validate?
+
   def clear_ip
     # Must wait a little bit before clearing the IP so that the visit can be geocoded
     ClearIpJob.set(wait: 5.seconds).perform_later(self)
   end
 end
+
+# why are two classes in one file?
+# ActiveJob:https://api.rubyonrails.org/classes/ActiveJob/Base.html what does it do?
+# what are the indexes and how are they used?
