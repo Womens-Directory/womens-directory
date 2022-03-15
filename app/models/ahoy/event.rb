@@ -1,10 +1,11 @@
+# reviewed with ML
 # == Schema Information
 #
 # Table name: ahoy_events
 #
 #  id          :bigint           not null, primary key
 #  name        :string
-#  properties  :jsonb
+#  properties  :jsonb # format to store data
 #  time        :datetime
 #  category_id :bigint
 #  feedback_id :bigint
@@ -45,7 +46,7 @@ class Ahoy::Event < ApplicationRecord
   belongs_to :org, optional: true
   belongs_to :user, optional: true
 
-  # change the properties to symbols and get rid of the id?
+  # this method pulls any id for other models out of the properties hash and then turns them into real Rails associations in the database
   def associate
     properties.each do |k, v|
       if k.ends_with? '_id'
@@ -55,8 +56,9 @@ class Ahoy::Event < ApplicationRecord
     end
   end
 end
-# ? what are properties of an event, an example? ( tried using rails console and Ahoy.properties.first, didn't work)
-# not sure of purpose of .to_sym method, takes a symbols and returns symbol object?
 
-# what is the difference between an event and a visit? what exactly are they?
-#is there a way to see the tables like the SQL view?
+# in digitalocean console, type: Ahoy::Events.where.not(category: nil).first
+# and then Ahoy::Event.where.not(category: nil).first, the not nil category
+# returns => #<Ahoy::Event id: 1, visit_id: 1, user_id: nil, name: "category_viewed", properties: {}, time: "2021-06-19 20:05:24.788742000 +0000", category_id: 8, feedback_id: nil, location_id: nil, org_id: nil>
+# irb(main):013:0> _.category
+#<Category id: 8, name: "Child Care and Early Education", created_at: "2021-04-25 23:10:01.856109000 +0000", updated_at: "2021-07-25 16:30:57.096075000 +0000", description: "Resources for women who need help getting access t...", visible: true>

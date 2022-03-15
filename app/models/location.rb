@@ -42,12 +42,14 @@ class Location < ApplicationRecord
   # tells PgSearch what to search in database
   attr_accessor :distance
 
+  # return website without https in front
   def website_without_protocol
     match = /https?:\/\/(.+)/.match website
     return website unless match
     match[1]
   end
 
+  # makes full address into a string
   def full_address
     [address1, address2, city, state, zip].select { |x| x }.join ', '
   end
@@ -79,3 +81,5 @@ class Location < ApplicationRecord
     end
   end
 end
+
+# need help reading last method, where does production? and .data methods come from?
