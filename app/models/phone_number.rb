@@ -38,3 +38,6 @@ class PhoneNumber < ApplicationRecord
     return "(#{flags.join(', ')})"
   end
 end
+
+# can you show me the data going into these methods and where they are fro 
+# i don't understand how the interface/admin forms work, only used to coding with params[x]

@@ -41,6 +41,9 @@ class Location < ApplicationRecord
   multisearchable against: %i[address1 address2 city desc name neighborhood state website zip]
   # tells PgSearch what to search in database
   attr_accessor :distance
+  # why is distance an attr_accessor as opposed to other attributes?
+
+  # ? why not have dependent: :destroy on category?
 
   # return website without https in front
   def website_without_protocol
@@ -65,6 +68,8 @@ class Location < ApplicationRecord
   def to_param
     "#{id}-#{name_as_slug}"
   end
+
+  # where are to_s
 
   # Don't break development apps when we're making fake locations locally
   if Rails.env.production?
