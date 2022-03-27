@@ -1,0 +1,26 @@
+<h1 class="is-size-3">Volunteer Form</h1>
+<%= form_tag do %>
+  <div class="field">
+    <label class="label" for="name">Name:</label>
+    <input class="input" type="text" id="name" name="name">
+  </div>
+
+  <div class="field">
+    <label class="label" for="contact">Email or phone number:</label>
+    <input class="input" type="text" id="contact" name="contact">
+  </div>
+
+  <div class="field">
+    <label class="label" for="hours">How many hours are you planning on volunteering per week?</label>
+    <input class="input" type="text" id="hours" name="hours">
+  </div>
+
+  <div class="field">
+    <label class="label" for="why">Why do you want to volunteer for Women's Directory?</label>
+    <textarea class="textarea" id="why" name="why"></textarea>
+  </div>
+
+  <div class="field">
+    <input type="submit" value="Submit" class="button is-info">
+  </div>
+<% end %>
