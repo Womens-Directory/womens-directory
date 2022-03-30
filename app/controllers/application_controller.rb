@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
+  # gem allows users to login with just email no password
   include Passwordless::ControllerHelpers
+  # 
   include Pagy::Backend
 
   helper_method :current_user, :require_user!, :crumbs, :markdown, :top_level_pages, :user_coords
@@ -37,16 +39,19 @@ class ApplicationController < ActionController::Base
   # take out blank objects in array, join objects in array with the arguement?
   # reject Returns a new Array whose elements are all those from self for which the block
   #returns false or nil:
-  # what does .html_safe do? what does escaping mean? 
+  # what does .html_safe do? what does escaping mean?
   def arrow_pipeline(bits)
     bits.reject(&:blank?).join(' &raquo; ').html_safe
   end
 
+  # Kramdown is a subset of Markdown
+  # where is this used and why?
   def markdown(text)
     body = Kramdown::Document.new(text).to_html
     "<div class=\"autostyle\">#{body}</div>".html_safe
   end
 
+  # what is Comfy and what is the method for?
   def root_page
     Comfy::Cms::Page.where parent_id: nil
   end
@@ -56,6 +61,7 @@ class ApplicationController < ActionController::Base
     Comfy::Cms::Page.published.where(parent_id: root_page).order :position
   end
 
+  # show users locations in latitutde and longitude
   def user_coords
     lat = session[:lat]
     lon = session[:lon]
@@ -63,7 +69,3 @@ class ApplicationController < ActionController::Base
     return [lat, lon]
   end
 end
-
-# what are ApplicationController < ActionController::Base, when do you use them and know what kind of methods to put in them
-# how does ApplicationController differ from other controllers (controller classes inherit from ApplicationController) The ApplicationController contains code that can be run in all your controllers and it inherits from Rails ActionController::Base class.
-# Where is the

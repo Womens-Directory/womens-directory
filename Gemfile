@@ -32,6 +32,7 @@ gem 'geocoder', '~> 1.6'
 gem 'kramdown', '~> 2.3'
 gem 'maxminddb', '~> 0.1.22'
 gem 'pagy', '~> 4.8'
+# https://ddnexus.github.io/pagy/#gsc.tab=0
 gem 'paper_trail-association_tracking', '~> 2.1'
 gem 'paper_trail', '~> 11.1'
 gem 'passwordless', '~> 0.10.0'

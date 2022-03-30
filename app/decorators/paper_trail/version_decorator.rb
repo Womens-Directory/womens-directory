@@ -1,4 +1,5 @@
 class PaperTrail::VersionDecorator < Draper::Decorator
+  # PaperTrail keeps record of how things in your database change any records
   include ActionView::Helpers::DateHelper
   include ActionView::Helpers::UrlHelper
 
@@ -6,6 +7,9 @@ class PaperTrail::VersionDecorator < Draper::Decorator
 
   delegate_all
 
+  # these methods are used in the view and they live on a decorated version
+
+  # 
   def item
     item_type.constantize.find item_id
   end
@@ -20,6 +24,7 @@ class PaperTrail::VersionDecorator < Draper::Decorator
     h
   end
 
+  # who made changes in database and what is their email
   def user_email
     whodunnit ? User.find(whodunnit).email : 'Unknown user'
   end
