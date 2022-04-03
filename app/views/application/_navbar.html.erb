@@ -4,21 +4,18 @@
       <a class="navbar-item py-0" href="/">
         <%= image_tag "logo.svg", style: "height: 3.25rem; max-height: 3.25rem;" %>
       </a>
-
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-items">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </a>
     </div>
-
     <div id="navbar-items" class="navbar-menu">
       <div class="navbar-start">
         <% top_level_pages.each do |page| %>
-        <a class="navbar-item" href="<%= page.full_path %>"><%= page.label %></a>
+          <a class="navbar-item" href="<%= page.full_path %>"><%= page.label %></a>
         <% end %>
       </div>
-
       <div class="navbar-end">
         <div class="navbar-item">
           <form action="/search" method="GET" class="form">
@@ -26,22 +23,22 @@
           </form>
         </div>
         <% if current_user %>
-        <div class="navbar-item has-dropdown is-hoverable has-background-danger">
-          <a class="navbar-link has-text-weight-bold">Admin</a>
-          <div class="navbar-dropdown">
-            <a class="navbar-item" href="/admin" target="_blank">Database</a>
-            <a class="navbar-item" href="/admin/birdseye/categories">Birdseye</a>
-            <% if current_user.can? :manage, :cms %>
-              <a class="navbar-item" href="/cms" target="_blank">CMS</a>
-            <% end %>
-            <a class="navbar-item" href="/admin/changes">Recent Changes</a>
-            <% if current_user.can? :manage, User %>
-              <a class="navbar-item" href="<%= admin_user_permissions_path %>" target="_blank">User Permissions</a>
-            <% end %>
-            <hr class="navbar-divider">
-            <a class="navbar-item" href="/users/sign_out">Sign out <%= current_user.email %></a>
+          <div class="navbar-item has-dropdown is-hoverable has-background-danger">
+            <a class="navbar-link has-text-weight-bold">Admin</a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="/admin" target="_blank">Database</a>
+              <a class="navbar-item" href="/admin/birdseye/categories">Birdseye</a>
+              <% if current_user.can? :manage, :cms %>
+                <a class="navbar-item" href="/cms" target="_blank">CMS</a>
+              <% end %>
+              <a class="navbar-item" href="/admin/changes">Recent Changes</a>
+              <% if current_user.can? :manage, :user_permissions %>
+                <a class="navbar-item" href="<%= admin_user_permissions_path %>" target="_blank">User Permissions</a>
+              <% end %>
+              <hr class="navbar-divider">
+              <a class="navbar-item" href="/users/sign_out">Sign out <%= current_user.email %></a>
+            </div>
           </div>
-        </div>
         <% end %>
       </div>
     </div>
