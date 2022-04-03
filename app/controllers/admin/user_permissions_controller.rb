@@ -11,6 +11,6 @@ class Admin::UserPermissionsController < ApplicationController
 
   def require_authorized_user!
     require_user!
-    authorize! :manage, User
+    authorize! :manage, :user_permissions
   end
 end
