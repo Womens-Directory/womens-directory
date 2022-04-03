@@ -15,7 +15,9 @@
           <tr>
             <td><%= user.email %></td>
             <% @roles.each do |role| %>
-              <td><%= f.check_box "#{user.id}-#{role}", checked: user.roles.include?(role) %></td>
+              <td>
+                <%= f.check_box "#{user.id}-#{role}", checked: user.roles.include?(role), disabled: user.superadmin? %>
+              </td>
             <% end %>
           </tr>
         <% end %>

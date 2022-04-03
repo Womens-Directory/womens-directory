@@ -1,4 +1,5 @@
 class Admin::UserPermissionsController < ApplicationController
+  include ActionView::Helpers::TextHelper
   before_action :require_authorized_user!
 
   def index
@@ -7,6 +8,14 @@ class Admin::UserPermissionsController < ApplicationController
   end
 
   def update
+    begin
+      count = UserPermissions.set_all! current_user, params
+      flash[:notice] = "Successfully updated permissions for #{pluralize count, 'users'}"
+    rescue => e
+      puts e
+      flash[:alert] = "Error setting user permissions: #{e}"
+    end
+    redirect_to request.path
   end
 
   def require_authorized_user!
