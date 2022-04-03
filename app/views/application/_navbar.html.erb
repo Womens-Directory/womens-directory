@@ -31,7 +31,9 @@
           <div class="navbar-dropdown">
             <a class="navbar-item" href="/admin" target="_blank">Database</a>
             <a class="navbar-item" href="/admin/birdseye/categories">Birdseye</a>
-            <a class="navbar-item" href="/cms" target="_blank">CMS</a>
+            <% if current_user.can? :manage, :cms %>
+              <a class="navbar-item" href="/cms" target="_blank">CMS</a>
+            <% end %>
             <a class="navbar-item" href="/admin/changes">Recent Changes</a>
             <hr class="navbar-divider">
             <a class="navbar-item" href="/users/sign_out">Sign out <%= current_user.email %></a>
