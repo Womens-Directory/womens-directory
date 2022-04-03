@@ -27,4 +27,9 @@ class User < ApplicationRecord
   def to_s
     "User #{id}: #{email}"
   end
+
+  # can? is a shorthand for checking CanCanCan permissions, e.g. `user.can? :create, Location # => true`
+  def can?(*args, **kwargs)
+    Ability.new(self).can? *args, **kwargs
+  end
 end
