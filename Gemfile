@@ -66,8 +66,15 @@ gem 'paper_trail', '~> 11.1'
 # authentication ( In authentication, the user or computer has to prove its identity to the server or client.) for Rails app without passwords
 # passwordless authentication: https://github.com/mikker/passwordless/
 gem 'passwordless', '~> 0.10.0'
+# Pg is the Ruby interface to the {PostgreSQL RDBMS}[http://www.postgresql.org/]. A PostgreSQL client library for Ruby (client library is a collection of code specific to one programming language that makes it easier to use an API. See, almost all web APIs communicate by means of HTTP, and pretty much every programming language supports HTTP)
+# Client libraries codify API requests and authentication processes as if they were native functionalities of the given programming language. What’s more, client libraries automatically format API responses to match the data types used in the programming language.
+# https://github.com/ged/ruby-pg
 gem 'pg', '~> 1.2'
+# helps search for things in Postgres so don't have to search whole database to find one thing: PgSearch builds Active Record named scopes (a scope is just a custom chain of active record methods. They are sets of pre-defined queries that can be chained to build other complex Queries.) that take advantage of PostgreSQL's full text search
+# https://github.com/Casecommons/pg_search/, is used for our search bar
 gem 'pg_search', '~> 2.3'
+# RailsAdmin is a Rails engine that provides an easy-to-use interface for managing your data.
+# https://github.com/railsadminteam/rails_admin
 gem 'rails_admin', '~> 2.0'
 gem 'rest-client', '~> 2.1'
 gem 'rexml', '~> 3.2'
