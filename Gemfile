@@ -47,15 +47,23 @@ gem 'font-awesome-rails', '~> 4.7'
 # Object geocoding (by street or IP address), reverse geocoding (coordinates to street address), distance queries for ActiveRecord and Mongoid, result caching (A result cache is an area of memory, either in the Shared Global Area (SGA) or client application memory, that stores the results of a database query or query block for reuse. The cached rows are shared across SQL statements and sessions unless they become stale.)
 # https://github.com/alexreisner/geocoder/
 gem 'geocoder', '~> 1.6'
-# 
+# another-markdown-parser (transforms markdown into html) (Markdown is a syntax—or, set of rules—that formats text on web pages) but fast, pure Ruby, using a strict syntax definition and supporting several common extensions
+# https://github.com/gettalong/kramdown/
 gem 'kramdown', '~> 2.3'
+# Pure Ruby MaxMind DB (GeoIP2) binary file reader. Data records are mapped to IPv4 and IPv6 addresses using the MaxMind DB file format, which is a binary search tree that maps IPv4 and IPv6 addresses.
+# is used to find internet visitors ip addresses using GeoIP data, https://github.com/yhirose/maxminddb/
 gem 'maxminddb', '~> 0.1.22'
 # pagy returns from the server a certain amount of pages from the requested page, instead of iterating through everything in the database, it saves processing time/effort, loading data time is constant
 # https://github.com/ddnexus/pagy
 gem 'pagy', '~> 4.8'
-# https://ddnexus.github.io/pagy/#gsc.tab=0
+# Plugin ( plugin is a software add-on that is installed on a program, enhancing its capabilities) for the PaperTrail gem to track and reify (To regard or treat (an abstraction) as if it had concrete or material existence.) associations
+# Reification is the process by which an abstract idea about a computer program is turned into an explicit data model or other object created in a programming language.
+# https://github.com/westonganger/paper_trail-association_tracking/
 gem 'paper_trail-association_tracking', '~> 2.1'
+# Track changes to your models, for auditing or versioning. See how a model looked at any stage in its lifecycle, revert it to any version, or restore it after it has been destroyed.
+# https://github.com/paper-trail-gem/paper_trail
 gem 'paper_trail', '~> 11.1'
+# authentication ( In authentication, the user or computer has to prove its identity to the server or client.) for Rails app without passwords
 # passwordless authentication: https://github.com/mikker/passwordless/
 gem 'passwordless', '~> 0.10.0'
 gem 'pg', '~> 1.2'
