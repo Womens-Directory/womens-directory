@@ -23,8 +23,11 @@ gem 'sprockets', '< 4'
 #First-party analytics for RailsTrack visits and events in Ruby, JavaScript, and native apps
 # https://github.com/ankane/ahoy
 gem 'ahoy_matey', '~> 3.2'
-# 
+# Annotates Rails/ActiveRecord Models, routes, fixtures, and others based on the database schema, in other words, adds comments that summarize the current schema at top of files such as model file
+# https://github.com/ctran/annotate_models/
 gem 'annotate', '~> 3.1'
+# Ruby debugging companion: pretty print Ruby objects to visualize their structure in color and with proper indentation
+# https://github.com/awesome-print/awesome_print/
 gem 'awesome_print', '~> 1.9'
 gem 'aws-sdk-s3', '~> 1.96', require: false
 gem 'comfortable_mexican_sofa', '~> 2.0'
@@ -34,10 +37,13 @@ gem 'font-awesome-rails', '~> 4.7'
 gem 'geocoder', '~> 1.6'
 gem 'kramdown', '~> 2.3'
 gem 'maxminddb', '~> 0.1.22'
+# pagy returns from the server a certain amount of pages from the requested page, instead of iterating through everything in the database, it saves processing time/effort, loading data time is constant
+# https://github.com/ddnexus/pagy
 gem 'pagy', '~> 4.8'
 # https://ddnexus.github.io/pagy/#gsc.tab=0
 gem 'paper_trail-association_tracking', '~> 2.1'
 gem 'paper_trail', '~> 11.1'
+# passwordless authentication: https://github.com/mikker/passwordless/
 gem 'passwordless', '~> 0.10.0'
 gem 'pg', '~> 1.2'
 gem 'pg_search', '~> 2.3'
