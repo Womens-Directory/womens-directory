@@ -97,6 +97,11 @@ end
 module ComfyAdminAuthentication
   def authenticate
     raise ActionController::RoutingError, 'Not Found' unless current_user
+
+    unless can? :manage, :cms
+      flash[:alert] = "Sorry, you're not authorized to access the CMS."
+      redirect_to '/'
+    end
   end
 end
 

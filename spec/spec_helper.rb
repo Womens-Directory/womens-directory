@@ -93,4 +93,7 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
+  # https://stackoverflow.com/questions/34967391/rspec-is-there-a-not-for-and-change-e-g-and-not-to-change#comment82631493_34969429
+  RSpec::Matchers.define_negated_matcher :not_change, :change
 end

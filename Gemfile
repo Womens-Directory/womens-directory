@@ -24,6 +24,7 @@ gem 'ahoy_matey', '~> 3.2'
 gem 'annotate', '~> 3.1'
 gem 'awesome_print', '~> 1.9'
 gem 'aws-sdk-s3', '~> 1.96', require: false
+gem 'cancancan', '~> 3.3'
 gem 'comfortable_mexican_sofa', '~> 2.0'
 gem 'draper', '~> 4.0'
 gem 'faker', '~> 2.17'
@@ -40,6 +41,7 @@ gem 'pg_search', '~> 2.3'
 gem 'rails_admin', '~> 2.0'
 gem 'rest-client', '~> 2.1'
 gem 'rexml', '~> 3.2'
+gem "role_model", '~> 0.8'
 gem 'rspec-rails', '~> 5.0'
 
 group :development, :test do
