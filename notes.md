@@ -1,0 +1,2 @@
+- should we get rid of gems we don't need like sqlite3?
+- 

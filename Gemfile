@@ -20,7 +20,10 @@ gem 'bootsnap', '>= 1.4.4', require: false
 # Fix segmentation fault on assets:precompile - https://github.com/sass/sassc-ruby/issues/207
 gem 'sprockets', '< 4'
 
+#First-party analytics for RailsTrack visits and events in Ruby, JavaScript, and native apps
+# https://github.com/ankane/ahoy
 gem 'ahoy_matey', '~> 3.2'
+# 
 gem 'annotate', '~> 3.1'
 gem 'awesome_print', '~> 1.9'
 gem 'aws-sdk-s3', '~> 1.96', require: false
