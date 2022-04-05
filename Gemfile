@@ -58,7 +58,7 @@ gem 'maxminddb', '~> 0.1.22'
 gem 'pagy', '~> 4.8'
 # Plugin ( plugin is a software add-on that is installed on a program, enhancing its capabilities) for the PaperTrail gem to track and reify (To regard or treat (an abstraction) as if it had concrete or material existence.) associations
 # Reification is the process by which an abstract idea about a computer program is turned into an explicit data model or other object created in a programming language.
-# https://github.com/westonganger/paper_trail-association_tracking/
+# https://github.c When mail is sent from your application, Letter Opener will open a preview in the browser instead of sending.om/westonganger/paper_trail-association_tracking/
 gem 'paper_trail-association_tracking', '~> 2.1'
 # Track changes to your models, for auditing or versioning. See how a model looked at any stage in its lifecycle, revert it to any version, or restore it after it has been destroyed.
 # https://github.com/paper-trail-gem/paper_trail
@@ -76,23 +76,43 @@ gem 'pg_search', '~> 2.3'
 # RailsAdmin is a Rails engine that provides an easy-to-use interface for managing your data.
 # https://github.com/railsadminteam/rails_admin
 gem 'rails_admin', '~> 2.0'
+# A simple HTTP and REST client for Ruby, inspired by the Sinatra microframework style of specifying actions: get, put, post, delete. A REpresentational State Transfer client is one of three components of the REST client-server web application architecture. The three components are the client application, the APIs, which ferry information back and forth between the client application and the web server, and the server upon which the data resides.
+# https://github.com/rest-client/rest-client/  Allows app to talk to API like Google Map
 gem 'rest-client', '~> 2.1'
+# An XML toolkit for Ruby. XML stands for eXtensible Markup Language · XML is a markup language much like HTML · XML was designed to store and transport data. XML stores data in plain text format. This provides a software- and hardware-independent way of storing, transporting, and sharing data.
+# https://github.com/ruby/rexml/
 gem 'rexml', '~> 3.2'
+# rspec-rails is a testing framework for Rails 5+.
+# https://github.com/rspec/rspec-rails/
 gem 'rspec-rails', '~> 5.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  # https://github.com/deivid-rodriguez/byebug/
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # Use Pry as your rails console
+  # https://github.com/pry/pry-rails
   gem 'pry-rails', '~> 0.3.9'
 end
 
 group :development do
+  # When mail is sent from your application, Letter Opener will open a preview in the browser instead of sending.This means you do not need to set up email delivery in your development environment
+  # https://github.com/ryanb/letter_opener/
   gem 'letter_opener', '~> 1.7'
+  # listens to file modifications and notifies you about the changes
+  # https://github.com/guard/listen/
   gem 'listen', '~> 3.3'
+  # Memory profiling routines for Ruby 2.5+
+  # https://github.com/SamSaffron/memory_profiler/
   gem 'memory_profiler'
+  # SQL prettifying and formatting. Niceql splits, indent and colorize SQL query and PG errors if any
+  # https://github.com/alekseyl/niceql/
   gem 'niceql', '~> 0.1.25'
+  # Profiling toolkit for Rack applications with Rails integration. Client Side profiling, DB profiling and Server profiling. software profiling") is a form of dynamic program analysis that measures, for example, the space (memory) or time complexity of a program, the usage of particular instructions, or the frequency and duration of function calls.
+  # https://github.com/MiniProfiler/rack-mini-profiler/
   gem 'rack-mini-profiler'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  # Spring speeds up development by keeping your application running in the background. Spring is a Rails application preloader. It speeds up development by keeping your application running in the background, so you don't need to boot it every time you run a test, rake task or migration.
+  #Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'stackprof'
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
