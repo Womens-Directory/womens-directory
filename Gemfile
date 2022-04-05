@@ -114,15 +114,24 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Spring is a Rails application preloader. It speeds up development by keeping your application running in the background, so you don't need to boot it every time you run a test, rake task or migration.
   #Read more: https://github.com/rails/spring
   gem 'spring'
+  # stackprof is a fast sampling profiler for ruby code, with cpu, wallclock and object allocation samplers. The Sampling profiler helps you make a quick overall look at the application's performance.
+  # The Sampling profiler polls the application during its execution and helps you estimate how much time the application spends inside each function, file or module.
+  # https://github.com/tmm1/stackprof/
   gem 'stackprof'
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
+  # https://github.com/rails/web-console/
   gem 'web-console', '>= 4.1.0'
 end
 
 group :test do
-  # Adds support for Capybara system testing and selenium driver
+  # Adds support for Capybara system testing and selenium driver. Capybara is an integration testing tool for rack based web applications. It simulates how a user would interact with a website
+  # https://github.com/teamcapybara/capybara/
   gem 'capybara', '>= 3.26'
+  # WebDriver is a tool for writing automated tests of websites. It aims to mimic the behaviour of a real user, and as such interacts with the HTML of the application.
+  # https://github.com/SeleniumHQ/selenium/
   gem 'selenium-webdriver'
+  # Run Selenium tests more easily with install and updates for all supported webdrivers.
   # Easy installation and use of web drivers to run system tests with browsers
+  # https://github.com/titusfortner/webdrivers/
   gem 'webdrivers'
 end
