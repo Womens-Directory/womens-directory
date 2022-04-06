@@ -5,6 +5,10 @@ class Admin::UserInvitesController < ApplicationController
   end
 
   def create
+    email = params[:email]
+    User.create! email: email, roles: [:data_contributor]
+    flash[:notice] = "Invitation sent to #{email}."
+    redirect_to request.path
   end
 
   def require_authorized_user!
