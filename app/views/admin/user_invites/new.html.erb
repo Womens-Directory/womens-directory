@@ -1,2 +1,19 @@
-<h1>Admin::UserInvites#new</h1>
-<p>Find me in app/views/admin/user_invites/new.html.erb</p>
+<h1 class="is-size-3 mb-1">Invite New Volunteer</h1>
+<p class="mb-1">
+  Enter the new volunteer's email address to create a new Women's Directory account for them.
+</p>
+<p class="mb-3">
+  The volunteer you invite will have the <strong>collaborator</strong> role.
+  They will be able to create new resources (e.g. Location, Org) but not modify or delete existing ones.
+  They will not be able to create new categories.
+</p>
+<div>
+  <%= form_with url: admin_user_permissions_path do |f| %>
+    <div class="mb-2">
+      <button class="button is-success has-text-weight-bold" type="submit">📨 Send Invite</button>
+    </div>
+    <div>
+      <a class="button" href="/">&laquo; Cancel</a>
+    </div>
+  <% end %>
+</div>
