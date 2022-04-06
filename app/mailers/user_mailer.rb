@@ -1,6 +1,5 @@
 class UserMailer < ApplicationMailer
   def welcome(user)
-    @greeting = "Hi"
-    mail to: user.email
+    mail from: 'signin@womensdirectory.org', to: user.email
   end
 end
