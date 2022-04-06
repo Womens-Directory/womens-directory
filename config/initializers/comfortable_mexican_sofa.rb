@@ -96,6 +96,7 @@ end
 # Uncomment this module and `config.admin_auth` above to use custom admin authentication
 module ComfyAdminAuthentication
   def authenticate
+    # if there isn't a user logged in, give them 404 error
     raise ActionController::RoutingError, 'Not Found' unless current_user
 
     unless can? :manage, :cms

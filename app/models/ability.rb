@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# if you write a string in this file, ruby won't let you change it, to prevent you from mutating a constant like a key
 
 # These core data models are the ones used throughout the website that present visible information to end users.
 CORE_DATA_MODELS = [
@@ -12,10 +13,12 @@ CORE_DATA_MODELS = [
 class Ability
   include CanCan::Ability
 
-  # Use core_models_can to apply a permission to a user class for all of the core data models.
+  # Use core_models_can to apply a permission to a user class for all of the core data models. ( kind is any actions such as :read)
   def core_models_can(kind, except: [])
     CORE_DATA_MODELS
+     # does the except array include m?
       .reject { |m| except.include? m }
+      # the action is permitted on this model
       .each { |model| can kind, model }
   end
 

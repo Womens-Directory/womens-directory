@@ -12,13 +12,14 @@ module UserPermissions
         next unless result = matcher.match(k) # ignore form keys like `authentication_token`
         id, role = result.captures
 
+        # gets users from database
         unless users_by_id[id]
           user = User.find(id)
           next if forbidden.include?(user)
           user.roles = []
           users_by_id[id] = user
         end
-
+        # assign the requested roles
         if v == '1'
           users_by_id[id].roles << role.to_sym
         elsif v == '0'
@@ -27,7 +28,7 @@ module UserPermissions
           raise "Invalid value #{v}"
         end
       end
-
+      # save the new roles to the database
       users = users_by_id.values
       ApplicationRecord.transaction { users.each(&:save!) }
       return users.count
