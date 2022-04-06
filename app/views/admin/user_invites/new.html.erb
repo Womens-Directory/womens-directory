@@ -1,0 +1,21 @@
+<h1 class="is-size-3 mb-1">Invite New Contributor</h1>
+<p class="mb-1">
+  Enter the contributor's email address to create a Women's Directory account for them.
+</p>
+<p class="mb-3">
+  Contributors can add new locations and organizations,
+  but new locations will not be visible until an editor approves them.
+</p>
+<div>
+  <%= form_with url: admin_user_invites_path do |f| %>
+    <div class="mb-2">
+      <%= f.text_field :email, class: 'input', type: :email, placeholder: 'name@example.com' %>
+    </div>
+    <div class="mb-2">
+      <button class="button is-success has-text-weight-bold" type="submit">📨 Send Invite</button>
+    </div>
+    <div>
+      <a class="button" href="/">&laquo; Cancel</a>
+    </div>
+  <% end %>
+</div>

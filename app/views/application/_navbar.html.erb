@@ -32,6 +32,9 @@
                 <a class="navbar-item" href="/cms" target="_blank">CMS</a>
               <% end %>
               <a class="navbar-item" href="/admin/changes">Recent Changes</a>
+              <% if current_user.can? :invite, User %>
+                <a class="navbar-item" href="<%= admin_user_invites_path %>" target="_blank">Invite New Contributor</a>
+              <% end %>
               <% if current_user.can? :manage, :user_permissions %>
                 <a class="navbar-item" href="<%= admin_user_permissions_path %>" target="_blank">User Permissions</a>
               <% end %>

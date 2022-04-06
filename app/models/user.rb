@@ -14,7 +14,7 @@ class User < ApplicationRecord
   # Do not reorder this list! Add new roles at the BOTTOM of the list only!
   roles %i[
     superadmin
-    user_editor
+    user_inviter
     cms_editor
     data_editor
     data_contributor
