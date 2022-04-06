@@ -33,10 +33,9 @@ class Ability
       can :manage, :all
     end
 
-    # User editors can invite and edit users.
+    # User inviters can invite new contributors.
     if user.user_inviter?
-      # TODO: Users should not be able to edit other user editors
-      can :manage, User
+      can :invite, User
     end
 
     # CMS editors can manage all pages and content within the CMS.
