@@ -6,7 +6,8 @@ class Admin::UserInvitesController < ApplicationController
 
   def create
     email = params[:email]
-    User.create! email: email, roles: [:data_contributor]
+    user = User.create! email: email, roles: [:data_contributor]
+    UserMailer.welcome(user).deliver_now
     flash[:notice] = "Invitation sent to #{email}."
     redirect_to request.path
   end
