@@ -34,7 +34,7 @@ class Ability
     end
 
     # User editors can invite and edit users.
-    if user.user_editor?
+    if user.user_inviter?
       # TODO: Users should not be able to edit other user editors
       can :manage, User
     end
