@@ -1,4 +1,4 @@
-# https://github.com/sferik/rails_admin/issues/887
+# https://github.com/railsadminteam/rails_admin/issues/887
 require "nested_form/engine"
 require "nested_form/builder_mixin"
 
@@ -24,7 +24,7 @@ HIDDEN_MODELS = %w[
 ]
 
 RailsAdmin.config do |config|
-  config.authorize_with do |controller|
+  config.authenticate_with do |controller|
     class RailsAdmin::MainController
       include Passwordless::ControllerHelpers
     end
@@ -43,7 +43,7 @@ RailsAdmin.config do |config|
   config.current_user_method { authenticate_by_session(User) }
 
   ## == CancanCan ==
-  # config.authorize_with :cancancan
+  config.authorize_with :cancancan
 
   ## == Pundit ==
   # config.authorize_with :pundit

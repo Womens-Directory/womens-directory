@@ -4,11 +4,11 @@ git_source(:github) { |repo| 'https://github.com/#{repo}.git' }
 ruby '3.0.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-gem 'rails', '~> 6.1.3', '>= 6.1.3.1'
+gem 'rails', '~> 6.1.5'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.4'
 # Use Puma as the app server
-gem 'puma', '~> 5.0'
+gem 'puma', '~> 5.6'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
@@ -32,6 +32,8 @@ gem 'awesome_print', '~> 1.9'
 # Official AWS Ruby gem for Amazon Simple Storage Service (Amazon S3). This gem is part of the AWS SDK for Ruby (The SDK helps take the complexity out of coding by providing Ruby classes for many AWS services)
 # https://github.com/aws/aws-sdk-ruby/
 gem 'aws-sdk-s3', '~> 1.96', require: false
+
+gem 'cancancan', '~> 3.3'
 # ComfortableMexicanSofa is a powerful Ruby on Rails 5.2+ CMS (Content Management System) Engine
 # https://github.com/comfy/comfortable-mexican-sofa
 gem 'comfortable_mexican_sofa', '~> 2.0'
@@ -82,6 +84,8 @@ gem 'rest-client', '~> 2.1'
 # An XML toolkit for Ruby. XML stands for eXtensible Markup Language · XML is a markup language much like HTML · XML was designed to store and transport data. XML stores data in plain text format. This provides a software- and hardware-independent way of storing, transporting, and sharing data.
 # https://github.com/ruby/rexml/
 gem 'rexml', '~> 3.2'
+
+gem "role_model", '~> 0.8'
 # rspec-rails is a testing framework for Rails 5+.
 # https://github.com/rspec/rspec-rails/
 gem 'rspec-rails', '~> 5.0'

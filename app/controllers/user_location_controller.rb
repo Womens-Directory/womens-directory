@@ -4,6 +4,7 @@ class UserLocationController < ApplicationController
   # json_body is what is posted by the browser to this end point (somewhere you call
 # to get data from or to, could be anything such as route or controller)
   def save
+    # if lat or lon are empty or nil return an error
     zip = json_body['zip']
     lat = json_body['lat']
     lon = json_body['lon']
@@ -17,6 +18,7 @@ class UserLocationController < ApplicationController
     #   return
     # end
 
+    # if lat or lon are empty latlong equals the geocode zip, return an error unless geocode zip matches lat, lon
     if !(lat && lon)
       # turn the zip code into a lat long using geocode
       latlon = geocode zip
@@ -29,6 +31,7 @@ class UserLocationController < ApplicationController
     session[:lon] = lon
     sort_by_distance
   end
+  # what does sort_by_distance do?
 
   def clear
     session.delete :lat
@@ -36,6 +39,7 @@ class UserLocationController < ApplicationController
     sort_by_name
   end
 
+  # what does sort_by_name do? where is it used?
   def sort_by_name
     session[:sort_by] = :name
     redirect_back fallback_location: Rails.root
@@ -53,6 +57,8 @@ class UserLocationController < ApplicationController
     # redirect_back is the method, fallback_location: Rails.root are the two arguments in a key/value pair
     redirect_back fallback_location: Rails.root
   end
+  # should we be asking a user if we can know their location?
+  # when and where is all of this happening? when a user clicks on a location?
 
   private
 

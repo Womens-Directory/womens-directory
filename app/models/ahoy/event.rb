@@ -62,3 +62,4 @@ end
 # returns => #<Ahoy::Event id: 1, visit_id: 1, user_id: nil, name: "category_viewed", properties: {}, time: "2021-06-19 20:05:24.788742000 +0000", category_id: 8, feedback_id: nil, location_id: nil, org_id: nil>
 # irb(main):013:0> _.category
 #<Category id: 8, name: "Child Care and Early Education", created_at: "2021-04-25 23:10:01.856109000 +0000", updated_at: "2021-07-25 16:30:57.096075000 +0000", description: "Resources for women who need help getting access t...", visible: true>
+# each event has a name and properties in ahoy (properties = jsonb) what is jsonb?

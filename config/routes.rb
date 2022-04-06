@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     get 'birdseye/categories'
     get 'birdseye/categories/:id', to: 'birdseye#category', as: 'birdseye_category'
     get 'changes', to: 'changes#changes', as: 'changes'
+    get 'user_permissions', to: 'user_permissions#index'
+    post 'user_permissions', to: 'user_permissions#update'
   end
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
