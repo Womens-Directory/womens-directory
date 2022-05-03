@@ -49,6 +49,7 @@ def create_all
         org_id: rand_org_id,
         category_ids: rand_category_ids,
 
+        visible: true,
         name: Faker::Company.name,
         desc: rand_desc,
         website: Faker::Internet.url,
