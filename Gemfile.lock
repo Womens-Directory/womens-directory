@@ -414,6 +414,7 @@ DEPENDENCIES
   maxminddb (~> 0.1.22)
   memory_profiler
   niceql (~> 0.1.25)
+  nokogiri (>= 1.13.4, < 2)
   pagy (~> 4.8)
   paper_trail (~> 11.1)
   paper_trail-association_tracking (~> 2.1)
