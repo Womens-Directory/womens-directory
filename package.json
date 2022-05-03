@@ -1,22 +1,49 @@
 {
-  "name": "womens-directory",
+  "name": "app",
   "private": true,
+  "version": "0.1.0",
   "dependencies": {
+    "@babel/core": "7",
+    "@babel/plugin-transform-runtime": "7",
+    "@babel/preset-env": "7",
     "@babel/preset-typescript": "^7.13.0",
+    "@babel/runtime": "7",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.4.3",
     "@types/leaflet": "^1.7.0",
+    "babel-loader": "8",
     "bulma": "^0.9.2",
+    "compression-webpack-plugin": "9",
+    "css-loader": "^6.7.1",
+    "css-minimizer-webpack-plugin": "^3.4.1",
     "leaflet": "^1.7.1",
+    "mini-css-extract-plugin": "^2.6.0",
+    "postcss": "^8.4.13",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-loader": "^6.2.1",
+    "postcss-preset-env": "^7.5.0",
+    "sass": "^1.51.0",
+    "sass-loader": "^12.6.0",
+    "shakapacker": "6.2.1",
+    "style-loader": "^3.3.1",
+    "terser-webpack-plugin": "5",
     "typescript": "^4.2.4",
     "vue": "^2.6.12",
     "vue-loader": "^15.9.6",
-    "vue-template-compiler": "^2.6.12"
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "5",
+    "webpack-assets-manifest": "5",
+    "webpack-cli": "4",
+    "webpack-merge": "5"
   },
-  "version": "0.1.0",
   "devDependencies": {
-    "webpack-dev-server": "^4.7.4"
+    "webpack-dev-server": "^4.8.1"
+  },
+  "babel": {
+    "presets": [
+      "./node_modules/shakapacker/package/babel/preset.js"
+    ]
   }
 }
