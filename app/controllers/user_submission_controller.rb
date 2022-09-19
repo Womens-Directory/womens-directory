@@ -4,6 +4,6 @@ class UserSubmissionController < ApplicationController
   end
 
   def create
-
+    @params = params
   end
 end

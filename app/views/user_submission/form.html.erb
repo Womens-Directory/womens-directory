@@ -1,4 +1,39 @@
-<p>This is the form page</p>
+<%# TODO: DO NOT MERGE until we get a contact page up to link to %>
 <%= form_with url: create_submission_path do %>
+  <h1 class="is-size-3">
+    Add Your Location
+  </h1>
+  <p>
+    We're glad you want to submit information to Women's Directory! We want to improve access to free and reduced-cost resources for women in need, and we want to help women find your organization.
+  </p>
+  <p>
+    Please fill out the following information so that we can list your location on our site.
+  </p>
+  <h1 class="is-size-3">
+    Your Organization
+  </h1>
+  <p>
+    Does your organization already have a location listed on Women's Directory, or will this be your first listing on the website?
+  </p>
+  <label for="org_exists_true" class="is-block">
+    <input type="radio" id="org_exists_true" name="org_exists" value="true" checked>
+    My organization is already listed on Women's Directory
+  </label>
+  <label for="org_exists_false" class="is-block">
+    <input type="radio" id="org_exists_false" name="org_exists" value="false">
+    We are not yet on Women's Directory
+  </label>
+  <h1 class="is-size-3">
+    Your Location
+  </h1>
+  <p>
+    Please fill out details for your location here. Be as complete as possible.
+  </p>
+  <h1 class="is-size-3">
+    Complete Your Submission
+  </h1>
+  <p>
+    By submitting this form, you give us permission to list your organization and location on Women's Directory. You can revoke this consent at any time. If you have any questions, please <a href="missing">contact us</a> and we will be happy to help.
+  </p>
   <button type="submit">Submit form</button>
 <% end %>
