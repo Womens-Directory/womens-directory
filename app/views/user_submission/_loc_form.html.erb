@@ -1,0 +1,57 @@
+<h1 class="is-size-3 mt-6">
+  Your Location
+</h1>
+<p>
+  Please fill out details for your location here. Be as complete as possible.
+</p>
+<label for="loc_name" class="has-text-weight-bold mt-3 is-block">
+  Name
+  <input type="text" class="input" name="loc_name" id="loc_name" placeholder="ABC Assistance - Denver Branch">
+</label>
+<label for="loc_website" class="has-text-weight-bold mt-3 is-block">
+  Website
+  <input type="text" class="input" name="loc_website" id="loc_website" placeholder="https://example.com">
+</label>
+<label for="loc_desc" class="has-text-weight-bold mt-3 is-block">
+  Description
+  <textarea name="loc_desc" id="loc_desc" cols="30" rows="8" class="textarea" placeholder="ABC Assistance provides the following services to women in need: ..."></textarea>
+</label>
+<label for="loc_email" class="has-text-weight-bold mt-3 is-block">
+  Contact Email (shown to the public)
+  <input type="email" class="input" name="loc_email" id="loc_email" placeholder="info@example.com">
+</label>
+<label for="loc_phone" class="has-text-weight-bold mt-3 is-block">
+  Phone Number (shown to the public)
+  <input type="tel" class="input" name="loc_phone" id="loc_phone" placeholder="(303) 555-1212">
+</label>
+<label for="loc_phone_can_call" class="is-block">
+  <input type="checkbox" name="loc_phone_can_call" id="loc_phone_can_call">
+  People can call this phone number
+</label>
+<label for="loc_phone_can_text" class="is-block">
+  <input type="checkbox" name="loc_phone_can_text" id="loc_phone_can_text">
+  People can text this phone number
+</label>
+<label for="loc_phone_247" class="is-block">
+  <input type="checkbox" name="loc_phone_247" id="loc_phone_247">
+  This phone number is staffed 24/7
+</label>
+<label class="mt-3 is-block">
+  <span class="has-text-weight-bold">Services Provided</span>
+  <% @services.each do |svc| %>
+    <label for="loc_svc_<%= svc.id %>" class="is-block">
+      <input type="checkbox" name="loc_svc_<%= svc.id %>" id="loc_svc_<%= svc.id %>">
+      <%= svc.name %>
+    </label>
+  <% end %>
+</label>
+<label for="loc_additional_info" class="has-text-weight-bold mt-3 is-block">
+  Additional info – is there anything else we need to know?
+  <textarea name="loc_additional_info" id="loc_additional_info" cols="30" rows="4" class="textarea" placeholder="This section is optional."></textarea>
+</label>
+<label for="loc_email" class="mt-3 is-block">
+  <span class="has-text-weight-bold">Your Email (this stays private)</span>
+  <br>
+  <em>We will send you a confirmation link which you must click to complete your submission. We will also contact you here if we have any questions.</em>
+  <input type="email" class="input" name="loc_email" id="loc_email" placeholder="info@example.com">
+</label>
