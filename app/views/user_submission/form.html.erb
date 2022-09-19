@@ -23,12 +23,67 @@
     <input type="radio" id="org_exists_false" name="org_exists" value="false">
     We are not yet on Women's Directory
   </label>
+  <div id="org-exists-true-form">
+    Org exists form
+  </div>
+  <div id="org-exists-false-form" class="is-hidden">
+    Org does not exist form
+  </div>
   <h1 class="is-size-3">
     Your Location
   </h1>
   <p>
     Please fill out details for your location here. Be as complete as possible.
   </p>
+  <label for="loc_name" class="has-text-weight-bold">
+    Name
+    <input type="text" class="input" name="loc_name" id="loc_name" placeholder="ABC Assistance - Denver Branch">
+  </label>
+  <label for="loc_website" class="has-text-weight-bold">
+    Website
+    <input type="text" class="input" name="loc_website" id="loc_website" placeholder="https://example.com">
+  </label>
+  <label for="loc_desc" class="has-text-weight-bold">
+    Description
+    <textarea name="loc_desc" id="loc_desc" cols="30" rows="8" class="textarea" placeholder="ABC Assistance provides the following services to women in need: ..."></textarea>
+  </label>
+  <label for="loc_email" class="has-text-weight-bold">
+    Contact Email (shown to the public)
+    <input type="email" class="input" name="loc_email" id="loc_email" placeholder="info@example.com">
+  </label>
+  <label for="loc_phone" class="has-text-weight-bold">
+    Phone Number (shown to the public)
+    <input type="tel" class="input" name="loc_phone" id="loc_phone" placeholder="(303) 555-1212">
+  </label>
+  <label for="loc_phone_can_call" class="is-block">
+    <input type="checkbox" name="loc_phone_can_call" id="loc_phone_can_call">
+    People can call this phone number
+  </label>
+  <label for="loc_phone_can_text" class="is-block">
+    <input type="checkbox" name="loc_phone_can_text" id="loc_phone_can_text">
+    People can text this phone number
+  </label>
+  <label for="loc_phone_247" class="is-block">
+    <input type="checkbox" name="loc_phone_247" id="loc_phone_247">
+    This phone number is staffed 24/7
+  </label>
+  <label class="has-text-weight-bold">Services Provided</label>
+  <% @services.each do |svc| %>
+    <label for="loc_svc_<%= svc.id %>" class="is-block">
+      <input type="checkbox" name="loc_svc_<%= svc.id %>" id="loc_svc_<%= svc.id %>">
+      <%= svc.name %>
+    </label>
+  <% end %>
+  <label for="loc_additional_info" class="has-text-weight-bold">
+    Additional info – is there anything else we need to know?
+    <textarea name="loc_additional_info" id="loc_additional_info" cols="30" rows="4" class="textarea" placeholder="This section is optional."></textarea>
+  </label>
+  <label for="loc_email">
+    <span class="has-text-weight-bold">Your Email (this stays private)</span>
+    <br>
+    <em>We will send you a confirmation link which you must click to complete your submission. We will also contact you here if we have any questions.</em>
+    <input type="email" class="input" name="loc_email" id="loc_email" placeholder="info@example.com">
+  </label>
   <h1 class="is-size-3">
     Complete Your Submission
   </h1>
@@ -37,3 +92,16 @@
   </p>
   <button type="submit">Submit form</button>
 <% end %>
+<script>
+  document.querySelectorAll("input[name='org_exists']").forEach(r => {
+    r.addEventListener("change", e => {
+      if (e.target.value === "true") {
+        document.querySelector("#org-exists-true-form").classList.remove("is-hidden");
+        document.querySelector("#org-exists-false-form").classList.add("is-hidden");
+      } else {
+        document.querySelector("#org-exists-true-form").classList.add("is-hidden");
+        document.querySelector("#org-exists-false-form").classList.remove("is-hidden");
+      }
+    });
+  })
+</script>
