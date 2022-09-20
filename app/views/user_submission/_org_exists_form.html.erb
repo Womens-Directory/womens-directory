@@ -1,1 +1,24 @@
-Org exists form
+<label for="organization">
+  <p class="has-text-weight-bold">
+    Pick Your Organization
+  </p>
+  <select id="organization" name="org_id">
+    <option value="" disabled selected>(no organization selected)</option>
+    <% @orgs.each do |org| %>
+      <option value="<%= org.id %>"><%= org.name %></option>
+    <% end %>
+  </select>
+</label>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+<script>
+  $(document).ready(function() {
+    $('select#organization').select2();
+  });
+</script>
+<style>
+  .select2-container, select#organization {
+  width: 100%;
+  }
+</style>

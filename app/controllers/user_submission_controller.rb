@@ -1,6 +1,7 @@
 class UserSubmissionController < ApplicationController
   def form
-    @services = Category.all.order(:name)
+    @cats = Category.all.order(:name)
+    @orgs = Org.all.order(:name)
   end
 
   def create

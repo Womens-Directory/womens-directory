@@ -38,10 +38,10 @@
 </label>
 <label class="mt-3 is-block">
   <span class="has-text-weight-bold">Services Provided</span>
-  <% @services.each do |svc| %>
-    <label for="loc_svc_<%= svc.id %>" class="is-block">
-      <input type="checkbox" name="loc_svc_<%= svc.id %>" id="loc_svc_<%= svc.id %>">
-      <%= svc.name %>
+  <% @cats.each do |cat| %>
+    <label for="loc_cat_<%= cat.id %>" class="is-block">
+      <input type="checkbox" name="loc_cat_<%= cat.id %>" id="loc_cat_<%= cat.id %>">
+      <%= cat.name %>
     </label>
   <% end %>
 </label>
