@@ -1,0 +1,106 @@
+require 'rails_helper'
+
+RSpec.describe UserSubmissionController::Params do
+  subject { UserSubmissionController::Params.new params }
+
+  context 'given an email address' do
+    let(:params) { { loc_email: 'test@example.com' } }
+    it 'builds the Email record' do
+      expect(subject.emails.count).to eq 1
+      expect(subject.emails.first.address).to eq 'test@example.com'
+    end
+  end
+
+  context 'given a phone number' do
+    let(:params) do
+      {
+        loc_phone: '555-555-5555',
+        loc_phone_can_call: 'on',
+        loc_phone_247: 'on',
+      }
+    end
+    let(:pn) { subject.phone_numbers.first }
+
+    it 'builds the PhoneNumber record' do
+      expect(subject.phone_numbers.count).to eq 1
+      expect(pn.number).to eq '555-555-5555'
+      expect(pn.call).to eq true
+      expect(pn.sms).to eq false
+      expect(pn.always_open).to eq true
+    end
+  end
+
+  context 'org' do
+    let(:org) { subject.org }
+
+    context 'given a new org' do
+      let(:params) do
+        {
+          org_exists: 'false',
+          org_name: 'Test Org',
+          org_website: 'http://example.com',
+          org_desc: 'Test Org Description',
+        }
+      end
+
+      it 'builds the Org record' do
+        expect(org.name).to eq 'Test Org'
+        expect(org.website).to eq 'http://example.com'
+        expect(org.desc).to eq 'Test Org Description'
+      end
+    end
+
+    context 'given an existing org' do
+      let(:org) do
+        Org.create!(
+          name: 'Test Org',
+          website: 'http://example.com',
+          desc: 'Test Org Description',
+        )
+      end
+      let(:params) { { org_exists: 'true', org_id: org.id } }
+
+      it 'uses the existing Org record' do
+        expect(org.id).to eq org.id
+        expect(org.name).to eq 'Test Org'
+        expect(org.website).to eq 'http://example.com'
+        expect(org.desc).to eq 'Test Org Description'
+      end
+    end
+  end
+
+  context 'given a full form' do
+    let(:params) do
+      {
+        loc_email: 'test@example.com',
+
+        loc_phone: '555-555-5555',
+        loc_phone_can_call: 'on',
+        loc_phone_247: 'on',
+
+        org_exists: 'false',
+        org_name: 'Test Org',
+        org_website: 'http://example.com',
+        org_desc: 'Test Org Description',
+
+        loc_name: 'Test Location',
+        loc_desc: 'Test Location Description',
+        loc_website: 'http://example.com',
+      }
+    end
+    let(:email) { loc.emails.first }
+    let(:pn) { loc.phone_numbers.first }
+    let(:org) { loc.org }
+    let(:loc) { subject.location }
+
+    it 'builds the Location record' do
+      expect(email.address).to eq 'test@example.com'
+      expect(pn.number).to eq '555-555-5555'
+      expect(org.name).to eq 'Test Org'
+
+      expect(loc.name).to eq 'Test Location'
+      expect(loc.desc).to eq 'Test Location Description'
+      expect(loc.website).to eq 'http://example.com'
+    end
+  end
+end
