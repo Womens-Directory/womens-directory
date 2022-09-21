@@ -16,8 +16,9 @@ class UserSubmissionController < ApplicationController
       @raw = raw
     end
 
-    def category_ids
-      @raw.keys.map { |k| k.match(/^loc_cat_(\d+)$/) }.compact.map { |m| m[1].to_i }
+    def categories
+      ids = @raw.keys.map { |k| k.match(/^loc_cat_(\d+)$/) }.compact.map { |m| m[1].to_i }
+      Category.where(id: ids)
     end
 
     def org

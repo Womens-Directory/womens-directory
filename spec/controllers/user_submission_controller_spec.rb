@@ -60,12 +60,24 @@ RSpec.describe UserSubmissionController::Params do
       end
       let(:params) { { org_exists: 'true', org_id: org.id } }
 
-      it 'uses the existing Org record' do
+      it 'fetches the existing Org record' do
         expect(org.id).to eq org.id
         expect(org.name).to eq 'Test Org'
         expect(org.website).to eq 'http://example.com'
         expect(org.desc).to eq 'Test Org Description'
       end
+    end
+  end
+
+  context 'given category ids' do
+    before do
+      Category.create! id: 12, name: 'Test Category 1'
+      Category.create! id: 24, name: 'Test Category 2'
+      Category.create! id: 36, name: 'Test Category 3'
+    end
+    let(:params) { { loc_cat_12: 'on', loc_cat_36: 'on' } }
+    it 'fetches the existing Category records' do
+      expect(subject.categories).to contain_exactly Category.find(12), Category.find(36)
     end
   end
 
