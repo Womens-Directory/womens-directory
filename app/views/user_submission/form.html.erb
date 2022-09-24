@@ -1,48 +1,19 @@
 <%# TODO: DO NOT MERGE until we get a contact page up to link to %>
-<%= form_with url: create_submission_path, id: 'subnmission-form', local: false do |f| %>
+<%= form_with url: create_submission_path, id: 'submission-form' do |f| %>
   <h1 class="is-size-3">
     Add Your Location
   </h1>
-  <p>
-    We're glad you want to submit information to Women's Directory! We want to improve access to free and reduced-cost resources for women in need, and we want to help women find your organization.
-  </p>
-  <p>
-    Please fill out the following information so that we can list your location on our site.
-  </p>
-  <h1 class="is-size-3 mt-6">
-    Your Organization
-  </h1>
-  <p>
-    Does your organization already have another location listed on Women's Directory, or will this be your first listing on the website?
-  </p>
-  <div class="mt-3">
-    <label for="org_exists_true" class="is-block">
-      <input type="radio" id="org_exists_true" name="org_exists" value="true" checked>
-      My organization is already listed on Women's Directory, but this location is new
-    </label>
-    <label for="org_exists_false" class="is-block">
-      <input type="radio" id="org_exists_false" name="org_exists" value="false">
-      We are not yet on Women's Directory at all
-    </label>
-  </div>
-  <div class="mt-3">
-    <div id="org-exists-true-form">
-      <%= render partial: "org_exists_form" %>
-    </div>
-    <div id="org-exists-false-form" class="is-hidden">
-      <%= render partial: "org_dne_form" %>
-    </div>
-  </div>
-  <div class="mt-6">
-    <%= render partial: "loc_form" %>
-  </div>
+
+  <%= render partial: 'loc_form' %>
+
   <h1 class="is-size-3 mt-6">
     Complete Your Submission
   </h1>
   <p>
     By submitting this form, you give us permission to list your organization and location on Women's Directory. You can revoke this consent at any time. If you have any questions, please <a href="missing">contact us</a> and we will be happy to help.
   </p>
-  <%= f.submit 'Submit Form' %>
+
+  <%= f.submit 'Submit Form', class: 'button is-info mt-3' %>
 <% end %>
 <script>
   document.querySelectorAll("input[name='org_exists']").forEach(r => {
@@ -67,13 +38,12 @@
   //   console.log({status, xhr, error})
   // });
 
-  $(document).on("ajax:complete", "form", function(status, response){
-    console.log({status, response})
-    response = JSON.parse(response.responseText);
-    if (response.error)
-      console.log("error")
-    else
-      console.log("success")
-  })
-
+  // $(document).on("ajax:complete", "form", function(status, response){
+  //   console.log({status, response})
+  //   response = JSON.parse(response.responseText);
+  //   if (response.error)
+  //     console.log("error")
+  //   else
+  //     console.log("success")
+  // })
 </script>

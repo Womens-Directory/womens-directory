@@ -1,38 +1,38 @@
 class UserSubmissionController < ApplicationController
   def form
+    @loc = Location.new
+    @org = Org.new
+    @sub = Submission.new
     @cats = Category.all.order(:name)
     @orgs = Org.all.order(:name)
   end
 
   def create
-    begin
-      save_records
-    rescue NoOrgSelectedError
-      flash.alert = "No organization selected. Please select your organization from the drop-down list."
-      redirect_to submission_form_path
+    ap params.permit!
+    @loc = Location.new location_params
+    @org = Org.new org_params
+    @sub = Submission.new submission_params
+
+    unless @loc.save
+      flash.alert = "Please fix the following issues: #{@loc.errors.full_messages.join(', ')}"
+      @cats = Category.all.order(:name)
+      @orgs = Org.all.order(:name)
+      render 'form'
     end
   end
 
   private
 
-  def save_records
-    respond_to do |format|
-      format.json do
-        render json: {errors: []}, status: :not_found
-      end
-    end
-    # usp = Params.new params
-    # loc = usp.location
-    # org = loc.org
+  def location_params
+    params.require(:location).permit %i[name desc address1 address2 city state zip website]
+  end
 
-    # ap loc
-    # ap loc.phone_numbers
-    # ap loc.emails
+  def org_params
+    params.permit(:org).permit %i[id name website desc]
+  end
 
-    # unless loc.save
-    #   flash.alert = "Please fix the following issues with your submission: #{loc.errors.full_messages.join(', ')}"
-    #   redirect_to submission_form_path
-    # end
+  def submission_params
+    params.require(:submission).permit %i[additional_notes contact_email]
   end
 
   class Params
