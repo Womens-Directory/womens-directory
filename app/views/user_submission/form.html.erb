@@ -1,5 +1,5 @@
 <%# TODO: DO NOT MERGE until we get a contact page up to link to %>
-<%= form_with url: create_submission_path do %>
+<%= form_with url: create_submission_path, id: 'subnmission-form', local: false do |f| %>
   <h1 class="is-size-3">
     Add Your Location
   </h1>
@@ -42,7 +42,7 @@
   <p>
     By submitting this form, you give us permission to list your organization and location on Women's Directory. You can revoke this consent at any time. If you have any questions, please <a href="missing">contact us</a> and we will be happy to help.
   </p>
-  <button type="submit">Submit form</button>
+  <%= f.submit 'Submit Form' %>
 <% end %>
 <script>
   document.querySelectorAll("input[name='org_exists']").forEach(r => {
@@ -56,4 +56,24 @@
       }
     });
   })
+
+  // $("#submission-form")
+  // $("form")
+  // .on("ajax:success", function(e, data, status, xhr) {
+  //   console.log("success");
+  //   console.log({data, status, xhr})
+  // }).on("ajax:error", function(e, xhr, status, error) {
+  //   console.log("error");
+  //   console.log({status, xhr, error})
+  // });
+
+  $(document).on("ajax:complete", "form", function(status, response){
+    console.log({status, response})
+    response = JSON.parse(response.responseText);
+    if (response.error)
+      console.log("error")
+    else
+      console.log("success")
+  })
+
 </script>

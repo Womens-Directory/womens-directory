@@ -37,6 +37,7 @@ class Location < ApplicationRecord
   has_many :events, class_name: 'Ahoy::Event', dependent: :destroy
   has_one :submission
   validates_presence_of :city, :desc, :name, :state, :zip
+  validates_associated :org, :categories, :phone_numbers, :emails
   has_paper_trail
   strips_spaces_from_string_fields
   multisearchable against: %i[address1 address2 city desc name neighborhood state website zip]

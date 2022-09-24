@@ -5,10 +5,34 @@ class UserSubmissionController < ApplicationController
   end
 
   def create
-    usp = Params.new params
-    @out = usp.category_ids
+    begin
+      save_records
+    rescue NoOrgSelectedError
+      flash.alert = "No organization selected. Please select your organization from the drop-down list."
+      redirect_to submission_form_path
+    end
+  end
 
+  private
 
+  def save_records
+    respond_to do |format|
+      format.json do
+        render json: {errors: []}, status: :not_found
+      end
+    end
+    # usp = Params.new params
+    # loc = usp.location
+    # org = loc.org
+
+    # ap loc
+    # ap loc.phone_numbers
+    # ap loc.emails
+
+    # unless loc.save
+    #   flash.alert = "Please fix the following issues with your submission: #{loc.errors.full_messages.join(', ')}"
+    #   redirect_to submission_form_path
+    # end
   end
 
   class Params
@@ -34,12 +58,12 @@ class UserSubmissionController < ApplicationController
     end
 
     def emails
-      return [] unless @raw[:loc_email]
+      return nil unless @raw[:loc_email] != ''
       [Email.new(address: @raw[:loc_email])]
     end
 
     def phone_numbers
-      return [] unless @raw[:loc_phone]
+      return nil unless @raw[:loc_phone] != ''
       [PhoneNumber.new(
         number: @raw[:loc_phone],
         call: @raw.has_key?(:loc_phone_can_call),
@@ -55,16 +79,27 @@ class UserSubmissionController < ApplicationController
 
     def org
       if @raw[:org_exists] == 'true'
-        Org.find(@raw[:org_id])
+        existing_org
       elsif @raw[:org_exists] == 'false'
-        Org.new(
-          name: @raw[:org_name],
-          website: @raw[:org_website],
-          desc: @raw[:org_desc],
-        )
+        new_org
       else
         throw 'org_exists must be true or false'
       end
     end
+
+    def existing_org
+      raise NoOrgSelectedError.new unless oid = @raw[:org_id]
+      Org.find(@raw[:org_id])
+    end
+
+    def new_org
+      Org.new(
+        name: @raw[:org_name],
+        website: @raw[:org_website],
+        desc: @raw[:org_desc],
+      )
+    end
   end
+
+  class NoOrgSelectedError < StandardError; end
 end
