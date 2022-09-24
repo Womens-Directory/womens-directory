@@ -132,9 +132,6 @@ RSpec.describe UserSubmissionController::Params do
       expect(loc.zip).to eq '80202'
 
       expect(loc.categories).to contain_exactly Category.find(12), Category.find(36)
-
-      loc.valid?
-      puts loc.errors.full_messages
       expect(loc.valid?).to eq true
     end
   end
