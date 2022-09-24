@@ -84,12 +84,6 @@ RSpec.describe UserSubmissionController::Params do
   context 'given a full form' do
     let(:params) do
       {
-        loc_email: 'test@example.com',
-
-        loc_phone: '555-555-5555',
-        loc_phone_can_call: 'on',
-        loc_phone_247: 'on',
-
         org_exists: 'false',
         org_name: 'Test Org',
         org_website: 'http://example.com',
@@ -98,12 +92,30 @@ RSpec.describe UserSubmissionController::Params do
         loc_name: 'Test Location',
         loc_desc: 'Test Location Description',
         loc_website: 'http://example.com',
+        loc_address1: '123 Main St',
+        loc_address2: 'Suite 1',
+        loc_city: 'Denver',
+        loc_state: 'CO',
+        loc_zip: '80202',
+
+        loc_email: 'test@example.com',
+        loc_phone: '555-555-5555',
+        loc_phone_can_call: 'on',
+        loc_phone_247: 'on',
+
+        loc_cat_12: 'on',
+        loc_cat_36: 'on',
       }
     end
     let(:email) { loc.emails.first }
     let(:pn) { loc.phone_numbers.first }
     let(:org) { loc.org }
     let(:loc) { subject.location }
+    before do
+      Category.create! id: 12, name: 'Test Category 1'
+      Category.create! id: 24, name: 'Test Category 2'
+      Category.create! id: 36, name: 'Test Category 3'
+    end
 
     it 'builds the Location record' do
       expect(email.address).to eq 'test@example.com'
@@ -113,6 +125,17 @@ RSpec.describe UserSubmissionController::Params do
       expect(loc.name).to eq 'Test Location'
       expect(loc.desc).to eq 'Test Location Description'
       expect(loc.website).to eq 'http://example.com'
+      expect(loc.address1).to eq '123 Main St'
+      expect(loc.address2).to eq 'Suite 1'
+      expect(loc.city).to eq 'Denver'
+      expect(loc.state).to eq 'CO'
+      expect(loc.zip).to eq '80202'
+
+      expect(loc.categories).to contain_exactly Category.find(12), Category.find(36)
+
+      loc.valid?
+      puts loc.errors.full_messages
+      expect(loc.valid?).to eq true
     end
   end
 end
