@@ -1,22 +1,34 @@
 class UserSubmissionController < ApplicationController
   def form
+    @cats = Category.all.order(:name)
+    @org_exists = true
+    @orgs = Org.all.order(:name)
+
     @loc = Location.new
     @org = Org.new
     @sub = Submission.new
-    @cats = Category.all.order(:name)
-    @orgs = Org.all.order(:name)
     # TODO: phone, email
   end
 
   def create
+    @cats = Category.all.order(:name)
+    @orgs = Org.all.order(:name)
+
     @loc = Location.new location_params
-    @sub = Submission.new submission_params
     @org = existing_org || Org.new(org_params)
+    @org.id = nil unless org_exists?
     @loc.org = @org
-    ap @loc
-    # @loc.submission = @sub
+    @sub = Submission.new submission_params
+
+    @org_exists = org_exists?
+
+    @loc.org = @org
     # TODO: phone, email
-    # TODO: sub association test
+    ap @loc
+    ap @org
+    ap @loc.org
+    # @loc.submission = @sub
+    # TODO: fix sub association
 
     unless @loc.save
       flash.alert = "Please fix the following issues: #{@loc.errors.full_messages.join(', ')}"
@@ -41,9 +53,13 @@ class UserSubmissionController < ApplicationController
   end
 
   def existing_org
-    params.permit(:org_exists)
-    return nil unless params[:org_exists] == 'true'
+    return nil unless org_exists?
     Org.find org_params[:id]
+  end
+
+  def org_exists?
+    params.permit(:org_exists)
+    params[:org_exists] == 'true'
   end
 
   class Params

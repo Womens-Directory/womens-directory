@@ -12,11 +12,11 @@
   </p>
   <div class="mt-3">
     <label for="org_exists_true" class="is-block">
-      <input type="radio" id="org_exists_true" name="org_exists" value="true" checked>
+      <input type="radio" class="org-exists" id="org_exists_true" name="org_exists" value="true" <% if @org_exists %>checked <% end %> >
       My organization is already listed on Women's Directory, but this location is new
     </label>
     <label for="org_exists_false" class="is-block">
-      <input type="radio" id="org_exists_false" name="org_exists" value="false">
+      <input type="radio" class="org-exists" id="org_exists_false" name="org_exists" value="false" <% unless @org_exists %>checked <% end %> >
       We are not yet on Women's Directory at all
     </label>
   </div>
@@ -41,15 +41,16 @@
   <%= f.submit 'Submit Form', class: 'button is-info mt-3' %>
 <% end %>
 <script>
-  document.querySelectorAll("input[name='org_exists']").forEach(r => {
-    r.addEventListener("change", e => {
-      if (e.target.value === "true") {
-        document.querySelector("#org-exists-true-form").classList.remove("is-hidden");
-        document.querySelector("#org-exists-false-form").classList.add("is-hidden");
-      } else {
-        document.querySelector("#org-exists-true-form").classList.add("is-hidden");
-        document.querySelector("#org-exists-false-form").classList.remove("is-hidden");
-      }
-    });
-  })
+  function updateOrgForm() {
+    if (document.querySelector('#org_exists_true').checked) {
+      document.querySelector("#org-exists-true-form").classList.remove("is-hidden")
+      document.querySelector("#org-exists-false-form").classList.add("is-hidden")
+    } else {
+      document.querySelector("#org-exists-true-form").classList.add("is-hidden")
+      document.querySelector("#org-exists-false-form").classList.remove("is-hidden")
+    }
+  }
+
+  document.querySelectorAll("input.org-exists").forEach(m => m.addEventListener("change", updateOrgForm))
+  document.addEventListener("DOMContentLoaded", updateOrgForm);
 </script>
