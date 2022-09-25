@@ -4,6 +4,31 @@
     Add Your Location
   </h1>
 
+  <h1 class="is-size-3 mt-6">
+    Your Organization
+  </h1>
+  <p>
+    Does your organization already have another location listed on Women's Directory, or will this be your first listing on the website?
+  </p>
+  <div class="mt-3">
+    <label for="org_exists_true" class="is-block">
+      <input type="radio" id="org_exists_true" name="org_exists" value="true" checked>
+      My organization is already listed on Women's Directory, but this location is new
+    </label>
+    <label for="org_exists_false" class="is-block">
+      <input type="radio" id="org_exists_false" name="org_exists" value="false">
+      We are not yet on Women's Directory at all
+    </label>
+  </div>
+  <div class="mt-3">
+    <div id="org-exists-true-form">
+      <%= render partial: "org_exists_form" %>
+    </div>
+    <div id="org-exists-false-form" class="is-hidden">
+      <%= render partial: "org_dne_form" %>
+    </div>
+  </div>
+
   <%= render partial: 'loc_form' %>
 
   <h1 class="is-size-3 mt-6">
@@ -27,23 +52,4 @@
       }
     });
   })
-
-  // $("#submission-form")
-  // $("form")
-  // .on("ajax:success", function(e, data, status, xhr) {
-  //   console.log("success");
-  //   console.log({data, status, xhr})
-  // }).on("ajax:error", function(e, xhr, status, error) {
-  //   console.log("error");
-  //   console.log({status, xhr, error})
-  // });
-
-  // $(document).on("ajax:complete", "form", function(status, response){
-  //   console.log({status, response})
-  //   response = JSON.parse(response.responseText);
-  //   if (response.error)
-  //     console.log("error")
-  //   else
-  //     console.log("success")
-  // })
 </script>

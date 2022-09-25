@@ -2,12 +2,7 @@
   <p class="has-text-weight-bold">
     Pick Your Organization
   </p>
-  <select id="organization" name="org_id">
-    <option value="" disabled selected>(no organization selected)</option>
-    <% @orgs.each do |org| %>
-      <option value="<%= org.id %>"><%= org.name %></option>
-    <% end %>
-  </select>
+  <%= select_tag 'org[id]', options_from_collection_for_select(@orgs, :id, :name, @org.id), id: 'organization', prompt: '(no organization selected)' %>
 </label>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>

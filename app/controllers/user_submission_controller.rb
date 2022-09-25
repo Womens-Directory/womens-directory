@@ -5,13 +5,18 @@ class UserSubmissionController < ApplicationController
     @sub = Submission.new
     @cats = Category.all.order(:name)
     @orgs = Org.all.order(:name)
+    # TODO: phone, email
   end
 
   def create
-    ap params.permit!
     @loc = Location.new location_params
-    @org = Org.new org_params
     @sub = Submission.new submission_params
+    @org = existing_org || Org.new(org_params)
+    @loc.org = @org
+    ap @loc
+    # @loc.submission = @sub
+    # TODO: phone, email
+    # TODO: sub association test
 
     unless @loc.save
       flash.alert = "Please fix the following issues: #{@loc.errors.full_messages.join(', ')}"
@@ -28,11 +33,17 @@ class UserSubmissionController < ApplicationController
   end
 
   def org_params
-    params.permit(:org).permit %i[id name website desc]
+    params.require(:org).permit %i[name website desc]
   end
 
   def submission_params
     params.require(:submission).permit %i[additional_notes contact_email]
+  end
+
+  def existing_org
+    params.permit(:org_exists)
+    return nil unless params[:org_exists] == 'true'
+    Org.find params[:org][:id]
   end
 
   class Params
