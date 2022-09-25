@@ -33,7 +33,7 @@ class UserSubmissionController < ApplicationController
   end
 
   def org_params
-    params.require(:org).permit %i[name website desc]
+    params.require(:org).permit %i[id name website desc]
   end
 
   def submission_params
@@ -43,7 +43,7 @@ class UserSubmissionController < ApplicationController
   def existing_org
     params.permit(:org_exists)
     return nil unless params[:org_exists] == 'true'
-    Org.find params[:org][:id]
+    Org.find org_params[:id]
   end
 
   class Params
