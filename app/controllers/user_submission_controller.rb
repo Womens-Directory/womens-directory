@@ -27,14 +27,22 @@ class UserSubmissionController < ApplicationController
     ap @loc
     ap @org
     ap @loc.org
-    # @loc.submission = @sub
-    # TODO: fix sub association
 
-    unless @loc.save
-      flash.alert = "Please fix the following issues: #{@loc.errors.full_messages.join(', ')}"
+    @sub.owner = @loc
+    # TODO: categories
+
+    success = false
+    ApplicationRecord.transaction do
+      success = @org.save && @loc.save && @sub.save
+    end
+
+    unless success
+      error_messages = [@org, @loc, @sub].map(&:errors).flat_map(&:full_messages)
+      flash.alert = "Please fix the following issues: #{error_messages.join(', ')}"
       @cats = Category.all.order(:name)
       @orgs = Org.all.order(:name)
       render 'form'
+      return
     end
   end
 
