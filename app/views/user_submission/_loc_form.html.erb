@@ -79,8 +79,8 @@
   <label class="mt-3 is-block">
     <span class="has-text-weight-bold">Services Provided</span>
     <% @cats.each do |cat| %>
-      <label for="location_cat_<%= cat.id %>" class="is-block">
-        <input type="checkbox" name="location[cat][<%= cat.id %>]" id="location_cat_<%= cat.id %>">
+      <label for="category_<%= cat.id %>" class="is-block">
+        <input type="checkbox" name="category_<%= cat.id %>" id="category_<%= cat.id %>">
         <%= cat.name %>
       </label>
     <% end %>

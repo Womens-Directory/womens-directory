@@ -23,6 +23,12 @@ class UserSubmissionController < ApplicationController
     @org.id = nil unless org_exists?
     @loc.org = @org
 
+    @loc.category_ids = category_ids
+    if @loc.category_ids.empty?
+      render_error "Please select the categories of services that your location provides."
+      return
+    end
+
     @phone = PhoneNumber.new phone_params
     @loc.phone_numbers << @phone if @phone.number.present?
 
@@ -92,6 +98,10 @@ class UserSubmissionController < ApplicationController
   def org_exists?
     params.permit(:org_exists)
     params[:org_exists] == 'true'
+  end
+
+  def category_ids
+    params.permit!.keys.map { |k| /^category_(\d+)$/.match(k) }.compact.map { |m| m[1].to_i }
   end
 
   class NoOrgSelectedError < StandardError; end

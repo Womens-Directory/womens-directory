@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe 'User Submission', type: :system do
   before do
     driven_by(:rack_test)
+
+    Category.create! id: 1, name: 'Diapers'
+    Category.create! id: 2, name: 'Energy Assistance'
+    Category.create! id: 3, name: 'Food Banks'
   end
 
   def fill_in_new_org
@@ -25,6 +29,25 @@ RSpec.describe 'User Submission', type: :system do
     fill_in 'location[city]', with: 'Los Angeles'
     fill_in 'location[state]', with: 'CA'
     fill_in 'location[zip]', with: '90012'
+  end
+
+  def fill_in_categories
+    check 'Diapers'
+    check 'Food Banks'
+  end
+
+  def submit
+    click_on 'Submit'
+  end
+
+  def submit_successfully
+    submit
+    expect(page).to have_content 'Thank you!'
+  end
+
+  def submit_for_error
+    submit
+    expect(page).to have_content 'Please fix the following issues:'
   end
 
   def expect_location_to_match
@@ -54,19 +77,21 @@ RSpec.describe 'User Submission', type: :system do
     check 'phone_number[call]'
     check 'phone_number[always_open]'
 
+    fill_in_categories
+
     fill_in 'submission[contact_email]', with: 'outreach@acmewomens.org'
     fill_in 'submission[additional_notes]', with: 'Other stuff you need to know about this location...'
 
-    expect { click_on 'Submit' }.
+    expect { submit_successfully }.
       to change { Location.count }.by(1).
       and change { Org.count }.by(1).
       and change { PhoneNumber.count }.by(1).
       and change { Email.count }.by(1).
       and change { Submission.count }.by(1)
 
-    # TODO: check content of page
-
     expect_location_to_match
+
+    expect(Location.last.categories).to contain_exactly Category.find(1), Category.find(3)
 
     expect(Org.last).to have_attributes(
       # visible: false, # TODO
@@ -102,19 +127,16 @@ RSpec.describe 'User Submission', type: :system do
     expect(page).to have_content 'Add Your Location'
 
     fill_in_location
-
     fill_in_new_org
-
+    fill_in_categories
     fill_in 'submission[contact_email]', with: 'outreach@acmewomens.org'
 
-    expect { click_on 'Submit' }.
+    expect { submit_successfully }.
       to change { Location.count }.by(1).
       and change { Org.count }.by(1).
       and change { PhoneNumber.count }.by(0).
       and change { Email.count }.by(0).
       and change { Submission.count }.by(1)
-
-    # TODO: check content of page
 
     expect_location_to_match
 
@@ -125,16 +147,25 @@ RSpec.describe 'User Submission', type: :system do
       website: 'https://acmewomens.org',
     )
     expect(Location.last.org).to eq Org.last
-
     expect(Location.last.phone_numbers).to be_empty
-
     expect(Location.last.emails).to be_empty
-
     expect(Submission.last).to have_attributes(
       contact_email: 'outreach@acmewomens.org',
     )
     expect(Location.last.submission).to eql Submission.last
     # expect(Org.last.submission).to eql Submission.last # TODO: m2m poly?
+  end
+
+  it 'returns the expected error when categories are unselected' do
+    visit '/submission'
+    expect(page).to have_content 'Add Your Location'
+
+    fill_in_location
+    fill_in_new_org
+    fill_in 'submission[contact_email]', with: 'outreach@acmewomens.org'
+
+    submit_for_error
+    expect(page).to have_content 'Please select the categories of services that your location provides.'
   end
 
   context 'with an existing org' do
@@ -151,28 +182,21 @@ RSpec.describe 'User Submission', type: :system do
       expect(page).to have_content 'Add Your Location'
 
       fill_in_location
-
       fill_in_existing_org
-
+      fill_in_categories
       fill_in 'submission[contact_email]', with: 'outreach@acmewomens.org'
 
-      expect { click_on 'Submit' }.
+      expect { submit_successfully }.
         to change { Location.count }.by(1).
         and change { Org.count }.by(0).
         and change { PhoneNumber.count }.by(0).
         and change { Email.count }.by(0).
         and change { Submission.count }.by(1)
 
-      # TODO: check content of page
-
       expect_location_to_match
-
       expect(Location.last.org).to eq Org.last
-
       expect(Location.last.phone_numbers).to be_empty
-
       expect(Location.last.emails).to be_empty
-
       expect(Submission.last).to have_attributes(
         contact_email: 'outreach@acmewomens.org',
       )
