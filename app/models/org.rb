@@ -22,7 +22,6 @@
 class Org < ApplicationRecord
   include PgSearch::Model
 
-  # TODO: Make hideable
   belongs_to :submission, optional: true
   has_many :locations, dependent: :destroy
   has_many :events, class_name: 'Ahoy::Event', dependent: :destroy
