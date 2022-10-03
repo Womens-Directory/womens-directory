@@ -146,7 +146,7 @@ RSpec.describe 'User Submission', type: :system do
       )
     end
 
-    it 'submits a location with an existing org successfully' do
+    it 'submits a location successfully' do
       visit '/submission'
       expect(page).to have_content 'Add Your Location'
 
