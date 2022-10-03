@@ -5,6 +5,7 @@
 #  id            :bigint           not null, primary key
 #  desc          :text             not null
 #  name          :string           not null
+#  visible       :boolean          default(FALSE), not null
 #  website       :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null

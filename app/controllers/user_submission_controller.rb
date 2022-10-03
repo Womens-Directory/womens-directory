@@ -55,7 +55,7 @@ class UserSubmissionController < ApplicationController
 
   def render_form
     @cats = Category.all.order(:name)
-    @orgs = Org.all.order(:name)
+    @orgs = Org.where(visible: true).order(:name)
     render 'form'
   end
 

@@ -7,6 +7,14 @@ RSpec.describe 'User Submission', type: :system do
     Category.create! id: 1, name: 'Diapers'
     Category.create! id: 2, name: 'Energy Assistance'
     Category.create! id: 3, name: 'Food Banks'
+
+    Org.create! visible: false, name: 'User-submitted org that is not yet visible', desc: '...', website: '...'
+  end
+
+  def load_form
+    visit '/submission'
+    expect(page).to have_content 'Add Your Location'
+    expect(page).to_not have_content 'User-submitted org'
   end
 
   def fill_in_new_org
@@ -63,21 +71,27 @@ RSpec.describe 'User Submission', type: :system do
     )
   end
 
+  def expect_org_to_match
+    expect(Org.last).to have_attributes(
+      visible: false,
+      name: 'ACME Womens Assistance',
+      desc: 'ACME Womens Assistance is a...',
+      website: 'https://acmewomens.org',
+    )
+  end
+
   it 'submits a location with a new org successfully' do
-    visit '/submission'
-    expect(page).to have_content 'Add Your Location'
+    load_form
 
     fill_in_location
-
     fill_in_new_org
+    fill_in_categories
 
     fill_in 'email[address]', with: 'denver@acmewomens.org'
 
     fill_in 'phone_number[number]', with: '555-555-5555'
     check 'phone_number[call]'
     check 'phone_number[always_open]'
-
-    fill_in_categories
 
     fill_in 'submission[contact_email]', with: 'outreach@acmewomens.org'
     fill_in 'submission[additional_notes]', with: 'Other stuff you need to know about this location...'
@@ -90,15 +104,9 @@ RSpec.describe 'User Submission', type: :system do
       and change { Submission.count }.by(1)
 
     expect_location_to_match
-
     expect(Location.last.categories).to contain_exactly Category.find(1), Category.find(3)
 
-    expect(Org.last).to have_attributes(
-      # visible: false, # TODO
-      name: 'ACME Womens Assistance',
-      desc: 'ACME Womens Assistance is a...',
-      website: 'https://acmewomens.org',
-    )
+    expect_org_to_match
     expect(Location.last.org).to eq Org.last
 
     expect(PhoneNumber.last).to have_attributes(
@@ -123,8 +131,7 @@ RSpec.describe 'User Submission', type: :system do
   end
 
   it 'submits a location with a new org without optional data successfully' do
-    visit '/submission'
-    expect(page).to have_content 'Add Your Location'
+    load_form
 
     fill_in_location
     fill_in_new_org
@@ -139,14 +146,9 @@ RSpec.describe 'User Submission', type: :system do
       and change { Submission.count }.by(1)
 
     expect_location_to_match
-
-    expect(Org.last).to have_attributes(
-      # visible: false, # TODO
-      name: 'ACME Womens Assistance',
-      desc: 'ACME Womens Assistance is a...',
-      website: 'https://acmewomens.org',
-    )
+    expect_org_to_match
     expect(Location.last.org).to eq Org.last
+
     expect(Location.last.phone_numbers).to be_empty
     expect(Location.last.emails).to be_empty
     expect(Submission.last).to have_attributes(
@@ -157,8 +159,7 @@ RSpec.describe 'User Submission', type: :system do
   end
 
   it 'returns the expected error when categories are unselected' do
-    visit '/submission'
-    expect(page).to have_content 'Add Your Location'
+    load_form
 
     fill_in_location
     fill_in_new_org
@@ -171,6 +172,7 @@ RSpec.describe 'User Submission', type: :system do
   context 'with an existing org' do
     before do
       Org.create!(
+        visible: true,
         name: 'ACME Womens Assistance',
         desc: 'ACME Womens Assistance is a...',
         website: 'https://acmewomens.org',
@@ -178,8 +180,7 @@ RSpec.describe 'User Submission', type: :system do
     end
 
     it 'submits a location successfully' do
-      visit '/submission'
-      expect(page).to have_content 'Add Your Location'
+      load_form
 
       fill_in_location
       fill_in_existing_org
