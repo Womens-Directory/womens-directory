@@ -2,10 +2,10 @@ class UserSubmissionController < ApplicationController
   def form
     @loc = Location.new
     @org = Org.new
-    @sub = Submission.new
     @phone = PhoneNumber.new
     @email = Email.new
-    @org_exists = false
+    @sub = Submission.new
+    @org_exists = true
     render_form
   end
 
@@ -13,6 +13,7 @@ class UserSubmissionController < ApplicationController
     @org_exists = org_exists?
 
     @loc = Location.new location_params
+
     @org = org_from_params
     if !@org
       @org = Org.new
@@ -21,21 +22,25 @@ class UserSubmissionController < ApplicationController
     end
     @org.id = nil unless org_exists?
     @loc.org = @org
+
+    @phone = PhoneNumber.new phone_params
+    @loc.phone_numbers << @phone if @phone.number.present?
+
+    @email = Email.new email_params
+    @loc.emails << @email if @email.address.present?
+
     @sub = Submission.new submission_params
-    # TODO: phone, email
-
-
-    @loc.org = @org
-    # TODO: location categories
     @sub.owner = @loc
 
+    # TODO: location categories
+
+    records = [@org, @loc, @sub]
     success = false
     ApplicationRecord.transaction do
-      success = @org.save && @loc.save && @sub.save
+      success = records.all?(&:save)
     end
-
     unless success
-      error_messages = [@org, @loc, @sub].map(&:errors).flat_map(&:full_messages)
+      error_messages = records.map(&:errors).flat_map(&:full_messages)
       render_error error_messages.join(', ')
       return
     end
@@ -60,6 +65,14 @@ class UserSubmissionController < ApplicationController
 
   def org_params
     params.require(:org).permit %i[id name website desc]
+  end
+
+  def phone_params
+    params.require(:phone_number).permit %i[number call sms always_open]
+  end
+
+  def email_params
+    params.require(:email).permit %i[address]
   end
 
   def submission_params

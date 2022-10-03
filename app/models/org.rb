@@ -12,6 +12,7 @@
 class Org < ApplicationRecord
   include PgSearch::Model
 
+  # TODO: Make hideable
   has_many :locations, dependent: :destroy
   has_many :events, class_name: 'Ahoy::Event', dependent: :destroy
   has_one :submission
