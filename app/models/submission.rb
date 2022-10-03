@@ -17,4 +17,5 @@
 #
 class Submission < ApplicationRecord
   belongs_to :owner, polymorphic: true
+  # TODO: NOT NULL contact_email
 end

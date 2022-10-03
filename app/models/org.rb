@@ -15,7 +15,7 @@ class Org < ApplicationRecord
   # TODO: Make hideable
   has_many :locations, dependent: :destroy
   has_many :events, class_name: 'Ahoy::Event', dependent: :destroy
-  has_one :submission
+  has_one :submission, as: :owner
   validates_presence_of :desc, :name, :website
   has_paper_trail
   strips_spaces_from_string_fields

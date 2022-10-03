@@ -35,7 +35,7 @@ class Location < ApplicationRecord
   has_many :phone_numbers, dependent: :destroy
   has_many :emails, dependent: :destroy
   has_many :events, class_name: 'Ahoy::Event', dependent: :destroy
-  has_one :submission
+  has_one :submission, as: :owner
   validates_presence_of :city, :desc, :name, :state, :zip
   validates_associated :org, :categories, :phone_numbers, :emails
   has_paper_trail
