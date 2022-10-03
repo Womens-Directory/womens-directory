@@ -119,7 +119,7 @@ RSpec.describe 'User Submission', type: :system do
       contact_email: 'outreach@acmewomens.org',
     )
     expect(Location.last.submission).to eql Submission.last
-    # expect(Org.last.submission).to eql Submission.last # TODO: m2m poly?
+    expect(Org.last.submission).to eql Submission.last
   end
 
   it 'submits a location with a new org without optional data successfully' do
@@ -153,7 +153,7 @@ RSpec.describe 'User Submission', type: :system do
       contact_email: 'outreach@acmewomens.org',
     )
     expect(Location.last.submission).to eql Submission.last
-    # expect(Org.last.submission).to eql Submission.last # TODO: m2m poly?
+    expect(Org.last.submission).to eql Submission.last
   end
 
   it 'returns the expected error when categories are unselected' do

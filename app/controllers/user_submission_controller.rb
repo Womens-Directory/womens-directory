@@ -36,9 +36,8 @@ class UserSubmissionController < ApplicationController
     @loc.emails << @email if @email.address.present?
 
     @sub = Submission.new submission_params
-    @sub.owner = @loc
-
-    # TODO: location categories
+    @loc.submission = @sub
+    @org.submission = @sub
 
     records = [@org, @loc, @sub]
     success = false

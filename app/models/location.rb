@@ -2,40 +2,43 @@
 #
 # Table name: locations
 #
-#  id           :bigint           not null, primary key
-#  address1     :string
-#  address2     :string
-#  city         :string           not null
-#  desc         :text             not null
-#  latitude     :decimal(9, 6)
-#  longitude    :decimal(9, 6)
-#  name         :string           not null
-#  neighborhood :string
-#  state        :string           not null
-#  visible      :boolean          default(FALSE), not null
-#  website      :string
-#  zip          :string           not null
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  org_id       :bigint           not null
+#  id            :bigint           not null, primary key
+#  address1      :string
+#  address2      :string
+#  city          :string           not null
+#  desc          :text             not null
+#  latitude      :decimal(9, 6)
+#  longitude     :decimal(9, 6)
+#  name          :string           not null
+#  neighborhood  :string
+#  state         :string           not null
+#  visible       :boolean          default(FALSE), not null
+#  website       :string
+#  zip           :string           not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  org_id        :bigint           not null
+#  submission_id :bigint
 #
 # Indexes
 #
-#  index_locations_on_org_id  (org_id)
+#  index_locations_on_org_id         (org_id)
+#  index_locations_on_submission_id  (submission_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (org_id => orgs.id)
+#  fk_rails_...  (submission_id => submissions.id)
 #
 class Location < ApplicationRecord
   include PgSearch::Model
 
   belongs_to :org
+  belongs_to :submission, optional: true
   has_and_belongs_to_many :categories
   has_many :phone_numbers, dependent: :destroy
   has_many :emails, dependent: :destroy
   has_many :events, class_name: 'Ahoy::Event', dependent: :destroy
-  has_one :submission, as: :owner
   validates_presence_of :city, :desc, :name, :state, :zip
   validates_associated :org, :categories, :phone_numbers, :emails
   has_paper_trail

@@ -262,7 +262,9 @@ ActiveRecord::Schema.define(version: 2022_09_19_214711) do
     t.decimal "latitude", precision: 9, scale: 6
     t.decimal "longitude", precision: 9, scale: 6
     t.boolean "visible", default: false, null: false
+    t.bigint "submission_id"
     t.index ["org_id"], name: "index_locations_on_org_id"
+    t.index ["submission_id"], name: "index_locations_on_submission_id"
   end
 
   create_table "orgs", force: :cascade do |t|
@@ -271,6 +273,8 @@ ActiveRecord::Schema.define(version: 2022_09_19_214711) do
     t.text "desc", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "submission_id"
+    t.index ["submission_id"], name: "index_orgs_on_submission_id"
   end
 
   create_table "passwordless_sessions", force: :cascade do |t|
@@ -309,14 +313,11 @@ ActiveRecord::Schema.define(version: 2022_09_19_214711) do
   end
 
   create_table "submissions", force: :cascade do |t|
-    t.string "owner_type", null: false
-    t.bigint "owner_id", null: false
-    t.string "contact_email"
-    t.text "additional_notes"
+    t.string "contact_email", null: false
+    t.text "additional_notes", default: "", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["contact_email"], name: "index_submissions_on_contact_email"
-    t.index ["owner_type", "owner_id"], name: "index_submissions_on_owner"
   end
 
   create_table "users", force: :cascade do |t|
@@ -357,4 +358,6 @@ ActiveRecord::Schema.define(version: 2022_09_19_214711) do
   add_foreign_key "ahoy_events", "orgs"
   add_foreign_key "emails", "locations"
   add_foreign_key "locations", "orgs"
+  add_foreign_key "locations", "submissions"
+  add_foreign_key "orgs", "submissions"
 end
