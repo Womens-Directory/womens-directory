@@ -3,7 +3,12 @@
     Pick Your Organization
     <%= render partial: 'required' %>
   </p>
-  <%= select_tag 'org[id]', options_from_collection_for_select(@orgs, :id, :name, @org.id), id: 'organization', prompt: '(no organization selected)' %>
+  <select id="organization" name="org[id]">
+    <option value="" disabled <%= 'selected' unless @org.id %>>(no organization selected)</option>
+    <% @orgs.each do |org| %>
+      <option value="<%= org.id %>" <%= 'selected' if org.id == @org.id %>><%= org.name %></option>
+    <% end %>
+  </select>
 </label>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
