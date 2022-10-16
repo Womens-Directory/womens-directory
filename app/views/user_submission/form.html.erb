@@ -1,8 +1,7 @@
 <%# TODO: DO NOT MERGE until we get a contact page up to link to %>
 <%= form_with url: create_submission_path, id: 'submission-form' do |f| %>
   <h1 class="is-size-3">
-    <%# TODO: move to Title Bar attr %>
-    Add Your Organization And Location
+    Add Your Organization and Location
   </h1>
   <p class="mb-3">
     Fields marked with
@@ -55,7 +54,7 @@
       document.querySelector("#org-exists-false-form").classList.remove("is-hidden")
     }
   }
-  
+
   document.querySelectorAll("input.org-exists").forEach(m => m.addEventListener("change", updateOrgForm))
   document.addEventListener("DOMContentLoaded", updateOrgForm);
 </script>

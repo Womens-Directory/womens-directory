@@ -13,7 +13,7 @@ RSpec.describe 'User Submission', type: :system do
 
   def load_form
     visit '/submission'
-    expect(page).to have_content 'Add Your Location'
+    expect(page).to have_content 'Add Your Organization and Location'
     expect(page).to_not have_content 'User-submitted org'
   end
 

@@ -49,11 +49,13 @@ class UserSubmissionController < ApplicationController
       render_error error_messages.join(', ')
       return
     end
+    @title = "Thank you!"
   end
 
   private
 
   def render_form
+    @title = "Add Org and Location"
     @cats = Category.all.order(:name)
     @orgs = Org.where(visible: true).order(:name)
     render 'form'
