@@ -21,7 +21,7 @@ class PaperTrail::VersionDecorator < Draper::Decorator
   end
 
   def user_email
-    whodunnit ? User.find(whodunnit).email : 'Unknown user'
+    whodunnit ? User.find(whodunnit).email : 'System'
   end
 
   def summary
