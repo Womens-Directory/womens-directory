@@ -20,8 +20,16 @@ class PaperTrail::VersionDecorator < Draper::Decorator
     h
   end
 
+  def submitter_email
+    return nil unless item.respond_to? :submission
+    return nil unless item.submission
+    item.submission.contact_email
+  end
+
   def user_email
-    whodunnit ? User.find(whodunnit).email : 'System'
+    return submitter_email if submitter_email
+    return User.find(whodunnit).email if whodunnit
+    'System'
   end
 
   def summary

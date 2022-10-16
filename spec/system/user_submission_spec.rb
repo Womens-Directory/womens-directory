@@ -18,14 +18,14 @@ RSpec.describe 'User Submission', type: :system do
   end
 
   def fill_in_new_org
-    choose 'org_exists_false'
+    choose 'org_exist_false'
     fill_in 'org[name]', with: 'ACME Womens Assistance'
     fill_in 'org[desc]', with: 'ACME Womens Assistance is a...'
     fill_in 'org[website]', with: 'https://acmewomens.org'
   end
 
   def fill_in_existing_org
-    choose 'org_exists_true'
+    choose 'org_exist_true'
     select 'ACME Womens Assistance', from: 'org[id]'
   end
 
@@ -202,6 +202,7 @@ RSpec.describe 'User Submission', type: :system do
         contact_email: 'outreach@acmewomens.org',
       )
       expect(Location.last.submission).to eql Submission.last
+      expect(Org.last.submission).to be_nil
     end
   end
 end

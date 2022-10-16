@@ -18,18 +18,18 @@
   <p class="mb-3">First, check to see if your organization already has a location on Women's Directory. Enter your organization's name into the <em>Search for Resources</em> box at the top of the page. If you don't see this box, click on the three bars at the top of the page to show it.</p>
   <p>Is this your first listing on the website?</p>
   <div>
-    <label for="org_exists_true" class="is-block">
-      <input type="radio" class="org-exists" id="org_exists_true" name="org_exists" value="true" <% if @org_exists %>checked <% end %> >
+    <label for="org_exist_true" class="is-block">
+      <input type="radio" class="org-exists" id="org_exist_true" name="org_exist" value="true" <% if @org_exist %>checked <% end %> >
       My organization is already listed on Women's Directory, but this location is new
     </label>
-    <label for="org_exists_false" class="is-block">
-      <input type="radio" class="org-exists" id="org_exists_false" name="org_exists" value="false" <% unless @org_exists %>checked <% end %> >
+    <label for="org_exist_false" class="is-block">
+      <input type="radio" class="org-exists" id="org_exist_false" name="org_exist" value="false" <% unless @org_exist %>checked <% end %> >
       We are not yet on Women's Directory at all
     </label>
   </div>
   <div class="mt-3">
     <div id="org-exists-true-form">
-      <%= render partial: "org_exists_form" %>
+      <%= render partial: "org_exist_form" %>
     </div>
     <div id="org-exists-false-form" class="is-hidden">
       <%= render partial: "org_dne_form" %>
@@ -46,7 +46,7 @@
 <% end %>
 <script>
   function updateOrgForm() {
-    if (document.querySelector('#org_exists_true').checked) {
+    if (document.querySelector('#org_exist_true').checked) {
       document.querySelector("#org-exists-true-form").classList.remove("is-hidden")
       document.querySelector("#org-exists-false-form").classList.add("is-hidden")
     } else {

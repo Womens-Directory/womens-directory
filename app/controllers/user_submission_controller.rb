@@ -5,12 +5,12 @@ class UserSubmissionController < ApplicationController
     @phone = PhoneNumber.new
     @email = Email.new
     @sub = Submission.new
-    @org_exists = true
+    @org_exist = true
     render_form
   end
 
   def create
-    @org_exists = org_exists?
+    @org_exist = org_exist?
 
     @loc = Location.new location_params
 
@@ -20,7 +20,7 @@ class UserSubmissionController < ApplicationController
       render_error "Organization cannot be blank. Please select an existing organization or enter details for a new one."
       return
     end
-    @org.id = nil unless org_exists?
+    @org.id = nil unless org_exist?
     @loc.org = @org
 
     @loc.category_ids = category_ids
@@ -37,9 +37,9 @@ class UserSubmissionController < ApplicationController
 
     @sub = Submission.new submission_params
     @loc.submission = @sub
-    @org.submission = @sub
+    @org.submission = @sub if @org.new_record?
 
-    records = [@org, @loc, @sub]
+    records = [@sub, @org, @loc]
     success = false
     ApplicationRecord.transaction do
       success = records.all?(&:save)
@@ -87,18 +87,18 @@ class UserSubmissionController < ApplicationController
   end
 
   def org_from_params
-    return existing_org if org_exists?
+    return existing_org if org_exist?
     Org.new org_params
   end
 
   def existing_org
-    return nil unless org_exists?
+    return nil unless org_exist?
     Org.find_by id: org_params[:id]
   end
 
-  def org_exists?
-    params.permit(:org_exists)
-    params[:org_exists] == 'true'
+  def org_exist?
+    params.permit(:org_exist)
+    params[:org_exist] == 'true'
   end
 
   def category_ids
