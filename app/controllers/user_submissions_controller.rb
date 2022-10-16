@@ -1,4 +1,4 @@
-class UserSubmissionController < ApplicationController
+class UserSubmissionsController < ApplicationController
   def form
     @loc = Location.new
     @org = Org.new
