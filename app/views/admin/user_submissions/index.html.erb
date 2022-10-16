@@ -1,0 +1,37 @@
+<div class="autostyle">
+  <h1 class="mb-3">Pending User Submissions</h1>
+  <p>
+    Items in this list have been submitted by users and are awaiting approval.
+  </p>
+  <p class="mb-3">
+    Clear them from this list by doing one of the following:
+    <ul>
+      <li>rejecting the submission</li>
+      <li>editing the submission in Admin, double-checking the data, and marking it <strong>visible</strong> to approve it</li>
+    </ul>
+  </p>
+  <% @subs.each do |sub| %>
+    <div class="mb-3">
+      <strong><%= time_ago_in_words sub.created_at %> ago</strong> by <%= sub.contact_email %>
+      <% sub.targets.each do |t| %>
+        <details>
+          <summary><%= t.class.name %>: <a href="<%= Route.admin_show_path_for t %>" target="_blank"><%= t.name %></a></summary>
+          <div class="mb-1">
+            <table class="table is-bordered">
+              <% slim_attributes(t).each do |k, v| %>
+                <tr>
+                  <td class="has-text-weight-bold has-text-right"><%= k %></td>
+                  <td><%= v %></td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+          <div class="mb-3">
+            <a href="<%= admin_user_submissions_reject_form_path id: t.id, klass: t.class.to_s.downcase %>" class="button is-danger"><i class="fa fa-trash"></i>&nbsp;Reject</a>
+            <a href="<%= Route.admin_edit_path_for t %>" target="_blank" class="button is-info"><i class="fa fa-pencil"></i>&nbsp;Edit in Admin</a>
+          </div>
+        </details>
+      <% end %>
+    </div>
+  <% end %>
+</div>

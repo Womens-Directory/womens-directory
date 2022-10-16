@@ -17,4 +17,8 @@ class Submission < ApplicationRecord
   has_one :org
   # TODO: user email confirmation code and controller
   # TODO: destroy at expiry period
+
+  def targets
+    [org, location].compact
+  end
 end

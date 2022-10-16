@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     post 'user_invites', to: 'user_invites#create'
     get 'user_permissions', to: 'user_permissions#index'
     post 'user_permissions', to: 'user_permissions#update'
+    get 'user_submissions', to: 'user_submissions#index'
+    get 'user_submissions/reject/:klass/:id', to: 'user_submissions#reject_form', as: 'user_submissions_reject_form'
   end
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
