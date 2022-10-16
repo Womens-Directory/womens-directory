@@ -38,8 +38,7 @@ class PaperTrail::VersionDecorator < ApplicationDecorator
 
   def summary
     ago = "<span class=\"has-text-weight-bold\">#{time_ago_in_words created_at} ago:</span>"
-    path = RailsAdmin::Engine.routes.url_helpers.show_path item.class.name.underscore.to_sym, item.id
-    return [ago, user_email, "#{event_proper}d", link_to(item, path)].join(' ').html_safe
+    return [ago, user_email, "#{event_proper}d", link_to(item, Route.admin_show_path_for(item), target: '_blank')].join(' ').html_safe
   end
 
   private
