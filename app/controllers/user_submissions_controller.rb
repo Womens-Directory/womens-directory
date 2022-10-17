@@ -54,7 +54,9 @@ class UserSubmissionsController < ApplicationController
   end
 
   def confirm
-    @token = params[:token]
+    subm = Submission.find_by confirmation_token: params[:token]
+    render 'confirm_not_found', status: 404 and return unless subm
+    subm.update! confirmed: true
   end
 
   private
