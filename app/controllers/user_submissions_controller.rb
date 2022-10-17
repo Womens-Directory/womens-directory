@@ -50,7 +50,9 @@ class UserSubmissionsController < ApplicationController
       end
       UserSubmissionsMailer.confirm(@sub).deliver_now
     end
+
     @title = "Thank you!"
+    @email = @sub.contact_email
   end
 
   def confirm
