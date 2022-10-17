@@ -3,6 +3,8 @@ class CreateSubmissions < ActiveRecord::Migration[6.1]
     create_table :submissions do |t|
       t.string :contact_email, null: false
       t.text :additional_notes, null: false, default: ''
+      t.boolean :confirmed, null: false, default: false
+      t.string :confirmation_token, null: false
 
       t.timestamps
     end

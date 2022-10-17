@@ -80,6 +80,21 @@ RSpec.describe 'User Submission', type: :system do
     )
   end
 
+  def expect_confirmation_email_to_match
+    mail = ActionMailer::Base.deliveries.last
+    subm = Submission.last
+    expect(mail).to have_attributes(
+      from: ['confirm@womensdirectory.org'],
+      to: [subm.contact_email],
+      subject: 'Confirm your submission',
+    )
+    body = mail.body.encoded
+    expect(body).to include 'Please click the following link to confirm your email address'
+    expect(body).to include "http://test.womensdirectory.org/submission/confirm/#{subm.confirmation_token}"
+    expect(body).to include '• Location: ACME Womens Assistance - Denver'
+    expect(body).to include '• Org: ACME Womens Assistance' if Submission.last.org
+  end
+
   it 'submits a location with a new org successfully' do
     load_form
 
@@ -101,7 +116,8 @@ RSpec.describe 'User Submission', type: :system do
       and change { Org.count }.by(1).
       and change { PhoneNumber.count }.by(1).
       and change { Email.count }.by(1).
-      and change { Submission.count }.by(1)
+      and change { Submission.count }.by(1).
+      and change { ActionMailer::Base.deliveries.count }.by(1)
 
     expect_location_to_match
     expect(Location.last.categories).to contain_exactly Category.find(1), Category.find(3)
@@ -128,6 +144,8 @@ RSpec.describe 'User Submission', type: :system do
     )
     expect(Location.last.submission).to eql Submission.last
     expect(Org.last.submission).to eql Submission.last
+
+    expect_confirmation_email_to_match
   end
 
   it 'submits a location with a new org without optional data successfully' do
@@ -143,7 +161,8 @@ RSpec.describe 'User Submission', type: :system do
       and change { Org.count }.by(1).
       and change { PhoneNumber.count }.by(0).
       and change { Email.count }.by(0).
-      and change { Submission.count }.by(1)
+      and change { Submission.count }.by(1).
+      and change { ActionMailer::Base.deliveries.count }.by(1)
 
     expect_location_to_match
     expect_org_to_match
@@ -156,6 +175,7 @@ RSpec.describe 'User Submission', type: :system do
     )
     expect(Location.last.submission).to eql Submission.last
     expect(Org.last.submission).to eql Submission.last
+    expect_confirmation_email_to_match
   end
 
   it 'returns the expected error when categories are unselected' do
@@ -192,7 +212,8 @@ RSpec.describe 'User Submission', type: :system do
         and change { Org.count }.by(0).
         and change { PhoneNumber.count }.by(0).
         and change { Email.count }.by(0).
-        and change { Submission.count }.by(1)
+        and change { Submission.count }.by(1).
+        and change { ActionMailer::Base.deliveries.count }.by(1)
 
       expect_location_to_match
       expect(Location.last.org).to eq Org.last
@@ -203,6 +224,7 @@ RSpec.describe 'User Submission', type: :system do
       )
       expect(Location.last.submission).to eql Submission.last
       expect(Org.last.submission).to be_nil
+      expect_confirmation_email_to_match
     end
   end
 end

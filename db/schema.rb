@@ -316,6 +316,8 @@ ActiveRecord::Schema.define(version: 2022_10_03_040256) do
   create_table "submissions", force: :cascade do |t|
     t.string "contact_email", null: false
     t.text "additional_notes", default: "", null: false
+    t.boolean "confirmed", default: false, null: false
+    t.string "confirmation_token", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["contact_email"], name: "index_submissions_on_contact_email"

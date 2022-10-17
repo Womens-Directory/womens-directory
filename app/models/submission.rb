@@ -2,11 +2,13 @@
 #
 # Table name: submissions
 #
-#  id               :bigint           not null, primary key
-#  additional_notes :text             default(""), not null
-#  contact_email    :string           not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id                 :bigint           not null, primary key
+#  additional_notes   :text             default(""), not null
+#  confirmation_token :string           not null
+#  confirmed          :boolean          default(FALSE), not null
+#  contact_email      :string           not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
 #
 # Indexes
 #

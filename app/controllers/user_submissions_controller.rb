@@ -36,20 +36,25 @@ class UserSubmissionsController < ApplicationController
     @loc.emails << @email if @email.address.present?
 
     @sub = Submission.new submission_params
+    @sub.confirmation_token = Random.urlsafe_base64
     @loc.submission = @sub
     @org.submission = @sub if @org.new_record?
 
     records = [@sub, @org, @loc]
-    success = false
     ApplicationRecord.transaction do
       success = records.all?(&:save)
-    end
-    unless success
-      error_messages = records.map(&:errors).flat_map(&:full_messages)
-      render_error error_messages.join(', ')
-      return
+      unless success
+        error_messages = records.map(&:errors).flat_map(&:full_messages)
+        render_error error_messages.join(', ')
+        return
+      end
+      UserSubmissionsMailer.confirm(@sub).deliver_now
     end
     @title = "Thank you!"
+  end
+
+  def confirm
+    @token = params[:token]
   end
 
   private
