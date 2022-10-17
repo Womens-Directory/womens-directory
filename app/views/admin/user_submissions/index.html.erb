@@ -19,14 +19,7 @@
         <details>
           <summary><%= t.class.name %>: <a href="<%= Route.admin_show_path_for t %>" target="_blank"><%= t.name %></a></summary>
           <div class="mb-1">
-            <table class="table is-bordered">
-              <% slim_attributes(t).each do |k, v| %>
-                <tr>
-                  <td class="has-text-weight-bold has-text-right"><%= k %></td>
-                  <td><%= v %></td>
-                </tr>
-              <% end %>
-            </table>
+            <%= render 'shared/kv_table', kvs: slim_attributes(t) %>
           </div>
           <div class="mb-3">
             <a href="<%= admin_user_submissions_reject_form_path id: t.id, klass: t.class.to_s.downcase %>" class="button is-danger"><i class="fa fa-trash"></i>&nbsp;Reject</a>
