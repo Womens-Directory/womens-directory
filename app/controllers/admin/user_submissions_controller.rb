@@ -10,16 +10,19 @@ class Admin::UserSubmissionsController < ApplicationController
 
   def index
     @title = 'User Submissions'
-    @pagy, @subs = pagy Submission.where(confirmed: true).order(created_at: :desc)
+    confirmed = Submission.where(confirmed: true)
+    @sub_count = confirmed.count
+    @pagy, @subs = pagy confirmed.order(created_at: :desc)
   end
 
   def reject_form
     @title = 'Reject Submission'
-    set_target
+    render_invalid_class_error and return unless set_target
   end
 
   def reject
-    set_target
+    render_invalid_class_error and return unless set_target
+    # TODO: this is a circular error in rendering this page, must fix.
 
     method = params[:notify_method]
     reason = params[:notify_reason]&.strip
@@ -42,8 +45,13 @@ class Admin::UserSubmissionsController < ApplicationController
   def set_target
     id = params[:id]
     klass = VALID_CLASS_TARGETS[params[:class]]
-    render_error "Invalid class: #{params[:class]}, expected one of: #{VALID_CLASS_TARGETS.keys.join(', ')}" and return unless klass
+    return false unless klass
     @target = klass.find(id)
+    return true
+  end
+
+  def render_invalid_class_error
+    render_error "Invalid class: #{params[:class]}, expected one of: #{VALID_CLASS_TARGETS.keys.join(', ')}"
   end
 
   def render_error(msg)
