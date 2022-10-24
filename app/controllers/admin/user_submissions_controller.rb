@@ -1,4 +1,6 @@
 class Admin::UserSubmissionsController < ApplicationController
+  before_action :require_authorized_user!
+
   VALID_NOTIFY_METHODS = %w[none no_reason with_reason]
   # Prevent admins with "manage submissions" permission from hacking us by calling other Rails classes
   VALID_CLASS_TARGETS = {
@@ -52,5 +54,10 @@ class Admin::UserSubmissionsController < ApplicationController
   def notify_with(method, reason)
     return if method == 'none'
     UserSubmissionsMailer.reject(@target.submission, @target, reason).deliver_now
+  end
+
+  def require_authorized_user!
+    require_user!
+    authorize! :manage, :user_submissions
   end
 end
