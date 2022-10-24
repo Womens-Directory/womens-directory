@@ -1,5 +1,10 @@
 class Admin::UserSubmissionsController < ApplicationController
   VALID_NOTIFY_METHODS = %w[none no_reason with_reason]
+  # Prevent admins with "manage submissions" permission from hacking us by calling other Rails classes
+  VALID_CLASS_TARGETS = {
+    'Location' => Location,
+    'Org' => Org,
+  }
 
   def index
     @title = 'User Submissions'
@@ -34,7 +39,8 @@ class Admin::UserSubmissionsController < ApplicationController
 
   def set_target
     id = params[:id]
-    klass = params[:klass].classify.constantize
+    klass = VALID_CLASS_TARGETS[params[:class]]
+    render_error "Invalid class: #{params[:class]}, expected one of: #{VALID_CLASS_TARGETS.keys.join(', ')}" and return unless klass
     @target = klass.find(id)
   end
 
