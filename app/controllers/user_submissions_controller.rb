@@ -28,6 +28,7 @@ class UserSubmissionsController < ApplicationController
       render_error "Please select the categories of services that your location provides."
       return
     end
+    @category_ids = @loc.category_ids
 
     @phone = PhoneNumber.new phone_params
     @loc.phone_numbers << @phone if @phone.number.present?
