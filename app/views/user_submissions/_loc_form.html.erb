@@ -79,7 +79,7 @@
     </p>
     <% @cats.each do |cat| %>
       <label for="category_<%= cat.id %>" class="is-block">
-        <input type="checkbox" name="category_<%= cat.id %>" id="category_<%= cat.id %>">
+        <input type="checkbox" name="category_<%= cat.id %>" id="category_<%= cat.id %>" <% if @category_ids&.include?(cat.id) %> checked <% end %> >
         <%= cat.name %>
       </label>
     <% end %>
