@@ -4,12 +4,15 @@
     <p>
       Items in this list have been submitted by users and are awaiting approval.
     </p>
-    <p class="mb-0">
+    <p class="mb-3">
       Clear them from this list by doing one of the following:
       <ul>
         <li>rejecting the submission using the <strong>Reject</strong> button</li>
         <li><strong>editing</strong> the submission in Admin, double-checking and correcting the data, and marking it <strong>visible</strong> to approve it</li>
       </ul>
+    </p>
+    <p class="mb-0">
+      <%= pluralize @sub_count, 'user submission' %> to review
     </p>
   </div>
   <% @subs.each do |sub| %>
@@ -30,4 +33,6 @@
     </div>
   <% end %>
 </div>
-<%== pagy_bulma_nav @pagy %>
+<div class="mt-6">
+  <%== pagy_bulma_nav @pagy %>
+</div>
