@@ -84,7 +84,7 @@ RSpec.describe 'User Submission', type: :system do
     mail = ActionMailer::Base.deliveries.last
     subm = Submission.last
     expect(mail).to have_attributes(
-      from: ['confirm@womensdirectory.org'],
+      from: ['submissions@womensdirectory.org'],
       to: [subm.contact_email],
       subject: 'Confirm your submission',
     )
