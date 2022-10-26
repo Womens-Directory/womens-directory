@@ -1,0 +1,37 @@
+<div class="autostyle">
+  <h1>Reject Submission</h1>
+  <p>You are about to reject this <%= @target.class.to_s.downcase %>, submitted by <%= @target.submission.contact_email %>:</p>
+  <%= render 'shared/kv_table', kvs: slim_attributes(@target) %>
+  <%= form_with url: admin_user_submissions_reject_path do |f| %>
+    <div class="mb-5">
+      <p class="has-text-weight-bold">How should we notify the submitter of the rejection?</p>
+      <p>You do not have to send an email. If you choose to send an email, it will let the submitter know that we have rejected their submission, and that they can contact us for more info.</p>
+      <div>
+        <input type="radio" id="notify_method_none" name="notify_method" value="none" onchange="toggleNotifyReason(this)">
+        <label for="notify_method_none">Do not send an email</label>
+      </div>
+      <div>
+        <input type="radio" id="notify_method_no_reason" name="notify_method" value="no_reason" onchange="toggleNotifyReason(this)">
+        <label for="notify_method_no_reason">Send an email with no reason given</label>
+      </div>
+      <div>
+        <input type="radio" id="notify_method_with_reason" name="notify_method" value="with_reason" onchange="toggleNotifyReason(this)">
+        <label for="notify_method_with_reason">Send an email with the following reason:</label>
+      </div>
+      <div>
+        <textarea class="textarea" id="notify_reason" name="notify_reason" rows="4" disabled placeholder="Write a brief message that will be included with the email here."></textarea>
+      </div>
+    </div>
+    <a href="<%= admin_user_submissions_path %>" class="button">&laquo; Cancel</a>
+    <%= button_tag type: 'submit', class: 'button is-danger', data: { confirm: 'Are you sure you want to reject this submission?' } do %>
+      <i class="fa fa-trash"></i>&nbsp;Reject
+    <% end %>
+  <% end %>
+</div>
+<script>
+  function toggleNotifyReason(el) {
+    const withReason = el.value === 'with_reason'
+    const reasonArea = document.getElementById('notify_reason')
+    reasonArea.disabled = !withReason;
+  }
+</script>

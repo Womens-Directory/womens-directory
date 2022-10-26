@@ -1,0 +1,38 @@
+<div class="autostyle mb-3">
+  <h1>Pending User Submissions</h1>
+  <div class="mb-3">
+    <p>
+      Items in this list have been submitted by users and are awaiting approval.
+    </p>
+    <p class="mb-3">
+      Clear them from this list by doing one of the following:
+      <ul>
+        <li>rejecting the submission using the <strong>Reject</strong> button</li>
+        <li><strong>editing</strong> the submission in Admin, double-checking and correcting the data, and marking it <strong>visible</strong> to approve it</li>
+      </ul>
+    </p>
+    <p class="mb-0">
+      <%= pluralize @sub_count, 'user submission' %> to review
+    </p>
+  </div>
+  <% @subs.each do |sub| %>
+    <div class="mb-3">
+      <strong><%= time_ago_in_words sub.created_at %> ago</strong> by <%= sub.contact_email %>
+      <% sub.targets.each do |t| %>
+        <details>
+          <summary><%= t.class.name %>: <a href="<%= Route.admin_show_path_for t %>" target="_blank"><%= t.name %></a></summary>
+          <div class="mb-1">
+            <%= render 'shared/kv_table', kvs: slim_attributes(t) %>
+          </div>
+          <div class="mb-3">
+            <a href="<%= admin_user_submissions_reject_form_path id: t.id, klass: t.class.to_s.downcase %>" class="button is-danger"><i class="fa fa-trash"></i>&nbsp;Reject</a>
+            <a href="<%= Route.admin_edit_path_for t %>" target="_blank" class="button is-info"><i class="fa fa-pencil"></i>&nbsp;Edit in Admin</a>
+          </div>
+        </details>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+<div class="mt-6">
+  <%== pagy_bulma_nav @pagy %>
+</div>

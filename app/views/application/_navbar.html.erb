@@ -38,6 +38,15 @@
               <% if current_user.can? :manage, :user_permissions %>
                 <a class="navbar-item" href="<%= admin_user_permissions_path %>" target="_blank">User Permissions</a>
               <% end %>
+              <% if current_user.can? :manage, :user_submissions %>
+                <a class="navbar-item" href="<%= admin_user_submissions_path %>" target="_blank">
+                  User Submissions
+                  <% c = Submission.where(confirmed: true).count %>
+                  <% if c > 0 %>
+                    <span class="pill ml-2"><%= c %></span>
+                  <% end %>
+                </a>
+              <% end %>
               <hr class="navbar-divider">
               <a class="navbar-item" href="/users/sign_out">Sign out <%= current_user.email %></a>
             </div>
