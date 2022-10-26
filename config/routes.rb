@@ -29,5 +29,9 @@ Rails.application.routes.draw do
   get 'search', to: 'search#search'
   post 'feedback', to: 'feedback#save', as: 'save_feedback'
 
+  get 'submission', to: 'user_submissions#form', as: 'submission_form'
+  post 'submission', to: 'user_submissions#create', as: 'create_submission'
+  get 'submission/confirm/:token', to: 'user_submissions#confirm', as: 'confirm_submission'
+
   comfy_route_cms path: '/'
 end
