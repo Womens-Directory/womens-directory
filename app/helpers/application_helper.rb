@@ -42,4 +42,8 @@ module ApplicationHelper
   def link_to_record(record)
     send "show_#{record.class.name.underscore}_path".to_sym, record
   end
+
+  def slim_attributes(record)
+    record.attributes.compact.select { |k, v| v.present? }
+  end
 end

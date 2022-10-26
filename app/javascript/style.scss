@@ -91,7 +91,7 @@ details summary {
 }
 
 // Placeholders in input boxes are too light to be accessible
-input.input::placeholder {
+input.input::placeholder, textarea.textarea::placeholder {
   opacity: 0.4;
   color: rgba(0, 0, 0, 1);
 }

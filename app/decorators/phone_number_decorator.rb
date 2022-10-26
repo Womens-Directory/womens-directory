@@ -1,4 +1,4 @@
-class PhoneNumberDecorator < Draper::Decorator
+class PhoneNumberDecorator < ApplicationDecorator
   delegate_all
 
   def pretty
