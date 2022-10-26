@@ -19,6 +19,8 @@ class Category < ApplicationRecord
   strips_spaces_from_string_fields
   multisearchable against: %i[description name]
 
+  scope :visible, -> { where(visible: true) }
+
   def to_s
     "Category #{id}: #{name}"
   end

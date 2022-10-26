@@ -1,7 +1,7 @@
 class CategoryController < ApplicationController
   def show
-    @category = Category.find(params[:id])
-    @locations = @category.locations.order :name
+    @category = Category.visible.find(params[:id])
+    @locations = @category.locations.visible.order :name
 
     if session[:sort_by] == 'distance' && user_coords
       @locations.each do |loc|
