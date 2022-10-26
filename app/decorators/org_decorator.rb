@@ -1,4 +1,4 @@
-class OrgDecorator < Draper::Decorator
+class OrgDecorator < ApplicationDecorator
   delegate_all
 
   def website_pretty
