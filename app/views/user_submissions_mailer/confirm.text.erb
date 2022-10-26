@@ -1,0 +1,17 @@
+Hello from Women's Directory!
+
+We recieved a submission with this email address for the following:
+
+<% @records.each do |r| %>
+• <%= r.class %>: <%= r.name %>
+<% end %>
+
+Please click the following link to confirm your email address:
+
+<%= confirm_submission_url token: @confirmation_token %>
+
+If you did not make this submission, you can ignore this email.
+
+Thanks,
+Women's Directory
+https://womensdirectory.org/
