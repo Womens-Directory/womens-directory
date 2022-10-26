@@ -46,6 +46,8 @@ class Location < ApplicationRecord
   multisearchable against: %i[address1 address2 city desc name neighborhood state website zip]
   attr_accessor :distance
 
+  scope :visible, -> { where(visible: true) }
+
   def website_without_protocol
     match = /https?:\/\/(.+)/.match website
     return website unless match

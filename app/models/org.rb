@@ -30,6 +30,8 @@ class Org < ApplicationRecord
   strips_spaces_from_string_fields
   multisearchable against: %i[desc name website]
 
+  scope :visible, -> { where(visible: true) }
+
   def to_s
     "Org #{id}: #{name}"
   end
