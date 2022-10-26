@@ -36,11 +36,11 @@ end
 
 def create_all
   category_count.times do
-    puts Category.create! name: Faker::Space.meteorite, description: rand_desc
+    puts Category.create! visible: true, name: Faker::Space.meteorite, description: rand_desc
   end
 
   org_count.times do
-    puts Org.create! name: Faker::Company.name, desc: rand_desc, website: Faker::Internet.url
+    puts Org.create! visible: true, name: Faker::Company.name, desc: rand_desc, website: Faker::Internet.url
   end
 
   Category.all.each do |cat|
@@ -88,6 +88,6 @@ end
 if User.any?
   puts "#{User.count} users already exist. Not creating dev users."
 else
-  User.create! email: 'dev@womensdirectory.org'
+  User.create! email: 'dev@womensdirectory.org', roles: %i[superadmin]
   puts 'Sign into your dev user as dev@womensdirectory.org'
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_01_220554) do
+ActiveRecord::Schema.define(version: 2022_10_03_040256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -262,7 +262,9 @@ ActiveRecord::Schema.define(version: 2022_04_01_220554) do
     t.decimal "latitude", precision: 9, scale: 6
     t.decimal "longitude", precision: 9, scale: 6
     t.boolean "visible", default: false, null: false
+    t.bigint "submission_id"
     t.index ["org_id"], name: "index_locations_on_org_id"
+    t.index ["submission_id"], name: "index_locations_on_submission_id"
   end
 
   create_table "orgs", force: :cascade do |t|
@@ -271,6 +273,9 @@ ActiveRecord::Schema.define(version: 2022_04_01_220554) do
     t.text "desc", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "submission_id"
+    t.boolean "visible", default: false, null: false
+    t.index ["submission_id"], name: "index_orgs_on_submission_id"
   end
 
   create_table "passwordless_sessions", force: :cascade do |t|
@@ -306,6 +311,16 @@ ActiveRecord::Schema.define(version: 2022_04_01_220554) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["location_id"], name: "index_phone_numbers_on_location_id"
+  end
+
+  create_table "submissions", force: :cascade do |t|
+    t.string "contact_email", null: false
+    t.text "additional_notes", default: "", null: false
+    t.boolean "confirmed", default: false, null: false
+    t.string "confirmation_token", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contact_email"], name: "index_submissions_on_contact_email"
   end
 
   create_table "users", force: :cascade do |t|
@@ -346,4 +361,6 @@ ActiveRecord::Schema.define(version: 2022_04_01_220554) do
   add_foreign_key "ahoy_events", "orgs"
   add_foreign_key "emails", "locations"
   add_foreign_key "locations", "orgs"
+  add_foreign_key "locations", "submissions"
+  add_foreign_key "orgs", "submissions"
 end
