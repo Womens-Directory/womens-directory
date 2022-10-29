@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     get 'birdseye/categories'
     get 'birdseye/categories/:id', to: 'birdseye#category', as: 'birdseye_category'
     get 'changes', to: 'changes#changes', as: 'changes'
+    mount Flipper::UI.app(Flipper) => '/flipper'
     get 'user_invites', to: 'user_invites#new'
     post 'user_invites', to: 'user_invites#create'
     get 'user_permissions', to: 'user_permissions#index'

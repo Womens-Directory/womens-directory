@@ -38,6 +38,16 @@
               <% if current_user.can? :manage, :user_permissions %>
                 <a class="navbar-item" href="<%= admin_user_permissions_path %>" target="_blank">User Permissions</a>
               <% end %>
+              <% if current_user.can? :manage, :features %>
+                <%# TODO %>
+              <% end %>
+              <div class="navbar-item">
+                <% if Features.user_submissions? %>
+                  User submissions are enabled
+                <% else %>
+                  User submissions are disabled
+                <% end %>
+              </div>
               <hr class="navbar-divider">
               <a class="navbar-item" href="/users/sign_out">Sign out <%= current_user.email %></a>
             </div>
