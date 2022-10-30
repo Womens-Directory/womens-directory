@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include Passwordless::ControllerHelpers
   include Pagy::Backend
 
-  helper_method :current_user, :require_user!, :crumbs, :markdown, :top_level_pages, :user_coords
+  helper_method :current_user, :require_user!, :crumbs, :markdown, :user_coords
   before_action :set_paper_trail_whodunnit
 
   private
@@ -38,15 +38,6 @@ class ApplicationController < ActionController::Base
   def markdown(text)
     body = Kramdown::Document.new(text).to_html
     "<div class=\"autostyle\">#{body}</div>".html_safe
-  end
-
-  def root_page
-    Comfy::Cms::Page.where parent_id: nil
-  end
-
-  # List all CMS pages that are "top level" - immediate children of the root page, excluding the root page
-  def top_level_pages
-    Comfy::Cms::Page.published.where(parent_id: root_page).order :position
   end
 
   def user_coords

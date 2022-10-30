@@ -3,4 +3,6 @@
 
 require_relative "config/application"
 
+ENV['RAKE'] = 'true'
+
 Rails.application.load_tasks
