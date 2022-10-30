@@ -1,14 +1,8 @@
 def setup_flipper
   return if in_rake?
 
-  if ActiveRecord::Base.connection.migration_context.needs_migration?
-    puts 'Cannot initialize Flipper features. Please run migrations.'
-  end
-
-  # Ensure all features are registered in the UI
-  Features::FEATURES.each do |feature, _|
-    Flipper.add feature
-  end
+  # Register all known features
+  Features::FEATURES.keys.each { |f| Flipper.add f }
 
   Flipper::UI.configure do |config|
     config.descriptions_source = ->(keys) do
@@ -22,6 +16,8 @@ def in_rake?
   !ENV['RAKE']
 end
 
-def needs_migration?
-  ActiveRecord::Base.connection.migration_context.needs_migration?
+begin
+  setup_flipper
+rescue StandardError => e
+  Rails.logger.error "Failed to setup Flipper: #{e}"
 end
