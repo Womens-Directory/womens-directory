@@ -9,6 +9,17 @@ class Features
     end
   end
 
+  # FeatureAuthorizer authorizes a route if the named feature is enabled.
+  class FeatureAuthorizer
+    def initialize(feature)
+      @feature = feature
+    end
+
+    def matches?(request)
+      return Flipper.enabled? @feature
+    end
+  end
+
   class AdminAuthorizer
     def current_user(request)
       session = Passwordless::Session.find_by id: request.session['passwordless_session_id--user']
