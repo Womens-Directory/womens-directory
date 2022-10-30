@@ -9,6 +9,12 @@ RSpec.describe 'User Submission', type: :system do
     Category.create! id: 3, name: 'Food Banks'
 
     Org.create! visible: false, name: 'User-submitted org that is not yet visible', desc: '...', website: '...'
+
+    Flipper.enable :user_submissions
+  end
+
+  after do
+    Flipper.disable :user_submissions
   end
 
   def load_form
@@ -95,6 +101,11 @@ RSpec.describe 'User Submission', type: :system do
     expect(body).to include '• Org: ACME Womens Assistance' if Submission.last.org
   end
 
+  def confirmation_link
+    m = /\/submission\/confirm\/[a-zA-Z0-9\-_]+/.match ActionMailer::Base.deliveries.last.body.encoded
+    m ? m[0] : nil
+  end
+
   it 'submits a location with a new org successfully' do
     load_form
 
@@ -176,6 +187,7 @@ RSpec.describe 'User Submission', type: :system do
     expect(Location.last.submission).to eql Submission.last
     expect(Org.last.submission).to eql Submission.last
     expect_confirmation_email_to_match
+    expect { visit confirmation_link }.to change { Submission.last.confirmed }.from(false).to(true)
   end
 
   it 'returns the expected error when categories are unselected' do
@@ -225,6 +237,7 @@ RSpec.describe 'User Submission', type: :system do
       expect(Location.last.submission).to eql Submission.last
       expect(Org.last.submission).to be_nil
       expect_confirmation_email_to_match
+      expect { visit confirmation_link }.to change { Submission.last.confirmed }.from(false).to(true)
     end
   end
 end

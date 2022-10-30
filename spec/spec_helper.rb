@@ -96,4 +96,8 @@ RSpec.configure do |config|
 
   # https://stackoverflow.com/questions/34967391/rspec-is-there-a-not-for-and-change-e-g-and-not-to-change#comment82631493_34969429
   RSpec::Matchers.define_negated_matcher :not_change, :change
+
+  config.before(:each) do
+    Flipper.instance = Flipper.new(Flipper::Adapters::Memory.new)
+  end
 end
