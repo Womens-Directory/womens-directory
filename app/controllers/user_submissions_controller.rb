@@ -1,5 +1,7 @@
 class UserSubmissionsController < ApplicationController
   def form
+    render 'disabled' and return unless Features.user_submissions?
+
     @loc = Location.new
     @org = Org.new
     @phone = PhoneNumber.new
