@@ -1,8 +1,8 @@
 def setup_flipper
-  return if in_rake?
-
-  # Register all known features
-  Features::FEATURES.keys.each { |f| Flipper.add f }
+  if in_rake?
+    Rails.logger.info "Refusing to setup Flipper in a Rake task"
+    return
+  end
 
   Flipper::UI.configure do |config|
     config.descriptions_source = ->(keys) do
@@ -10,10 +10,13 @@ def setup_flipper
     end
     config.show_feature_description_in_list = true
   end
+
+  # Register all known features
+  Features::FEATURES.keys.each { |f| Flipper.add f }
 end
 
 def in_rake?
-  !ENV['RAKE']
+  !!$RAKE_TASK
 end
 
 begin
