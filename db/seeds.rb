@@ -75,12 +75,18 @@ end
 if Comfy::Cms::Page.any?
   puts "#{Comfy::Cms::Page} pages already exist. Not creating initial pages."
 else
+  content = <<~EOF
+    <!-- {{ cms:checkbox show_in_top_nav }} -->
+    Welcome to your Women's Directory dev instance!
+    <a href="/users/sign_in">Sign in here</a> with the email
+    <code>dev@womensdirectory.org</code>.
+    {{ cms:partial "shared/categories" }}
+  EOF
   site = Comfy::Cms::Site.create! identifier: 'site', label: 'site', hostname: 'localhost'
   layout = Comfy::Cms::Layout.create!(
     site: site, identifier: 'default', label: 'default',
-    app_layout: 'application', content: '{{ cms:partial "shared/categories" }}',
+    app_layout: 'application', content: content,
   )
-  # TODO: fill page with basic content and categories snippet
   page = Comfy::Cms::Page.create!(site: site, layout: layout, label: 'Home')
   ap page
 end
@@ -89,5 +95,10 @@ if User.any?
   puts "#{User.count} users already exist. Not creating dev users."
 else
   User.create! email: 'dev@womensdirectory.org', roles: %i[superadmin]
-  puts 'Sign into your dev user as dev@womensdirectory.org'
+  puts <<~EOF
+    Created your new dev user!
+
+    Sign into the admin panel by visiting http://localhost:3000/users/sign_in
+    with the email address `dev@womensdirectory.org`.
+  EOF
 end

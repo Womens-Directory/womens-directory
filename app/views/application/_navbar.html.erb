@@ -12,8 +12,8 @@
     </div>
     <div id="navbar-items" class="navbar-menu">
       <div class="navbar-start">
-        <% top_level_pages.each do |page| %>
-          <a class="navbar-item" href="<%= page.full_path %>"><%= page.label %></a>
+        <% Navbar.items.each do |page| %>
+          <a class="navbar-item" href="<%= page[1] %>"><%= page[0] %></a>
         <% end %>
       </div>
       <div class="navbar-end">
