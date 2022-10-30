@@ -9,7 +9,7 @@ class Features
     end
   end
 
-  class AuthorizedAdmin
+  class AdminAuthorizer
     def current_user(request)
       session = Passwordless::Session.find_by id: request.session['passwordless_session_id--user']
       return nil unless session
@@ -21,4 +21,6 @@ class Features
       Ability.new(current_user(request)).can? :manage, :features
     end
   end
+
+  AdminAuthorized = AdminAuthorizer.new
 end
