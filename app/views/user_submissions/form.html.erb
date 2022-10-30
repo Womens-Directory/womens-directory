@@ -1,4 +1,3 @@
-<%# TODO: DO NOT MERGE until we get a contact page up to link to %>
 <%= form_with url: create_submission_path, id: 'submission-form' do |f| %>
   <h1 class="is-size-3">
     Add Your Organization and Location
@@ -8,9 +7,8 @@
     <%= render partial: 'required' %>
     are required.
   </p>
-  <%# TODO: DO NOT MERGE until CMS page link exists for focus-on %>
   <p class="mb-3">
-    Note: Women's Directory is currently only active in Denver, CO. Please only submit locations in the Denver area. <a href="#">Learn more.</a>
+    Note: Women's Directory is currently only active in Denver, CO. Please only submit locations in the Denver area. <a href="/areas">Learn more.</a>
   </p>
   <h1 class="is-size-3 mt-6">
     Your Organization
@@ -40,7 +38,7 @@
     Complete Your Submission
   </h1>
   <p>
-    By submitting this form, you give us permission to list your organization and location on Women's Directory. If you want us to remove your location from Women's Directory, please <a href="missing">contact us</a> and we will be happy to help. Thank you!
+    By submitting this form, you give us permission to list your organization and location on Women's Directory. If you want us to remove your location from Women's Directory, please <a href="/contact">contact us</a> and we will be happy to help. Thank you!
   </p>
   <%= f.submit 'Submit Form', class: 'button is-info mt-3', data: { confirm: 'Are you ready to complete this submission?' } %>
 <% end %>
