@@ -35,6 +35,8 @@ def addr
 end
 
 def create_all
+  return if Rails.env.test?
+
   category_count.times do
     puts Category.create! visible: true, name: Faker::Space.meteorite, description: rand_desc
   end
