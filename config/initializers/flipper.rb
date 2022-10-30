@@ -20,7 +20,7 @@ def in_rake?
 end
 
 begin
-  setup_flipper
+  Rails.application.reloader.to_prepare { setup_flipper }
 rescue StandardError => e
   Rails.logger.error "Failed to setup Flipper: #{e}"
 end
