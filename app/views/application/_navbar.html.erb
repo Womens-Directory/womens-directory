@@ -38,6 +38,9 @@
               <% if current_user.can? :manage, :user_permissions %>
                 <a class="navbar-item" href="<%= admin_user_permissions_path %>" target="_blank">User Permissions</a>
               <% end %>
+              <% if current_user.can? :manage, :features %>
+                <a class="navbar-item" href="<%= admin_flipper_path %>" target="_blank">Site Features</a>
+              <% end %>
               <hr class="navbar-divider">
               <a class="navbar-item" href="/users/sign_out">Sign out <%= current_user.email %></a>
             </div>
