@@ -37,7 +37,14 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: yarn
       - name: Create DB
-        run: bin/rails db:prepare
+        run: bundle exec rails db:prepare
+      - name: Precompile assets
+        run: bundle exec rails assets:precompile
       - name: Run tests
         run: bundle exec rspec
