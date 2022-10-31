@@ -11,36 +11,36 @@ RSpec.describe UserPermissions do
     end
 
     context 'with a user who is a superadmin' do
-      let(:current_user) { User.create! id: 0, email: '0', roles: [:superadmin] }
-      let!(:user_1) { User.create! id: 1, email: '1' }
-      let!(:user_2) { User.create! id: 2, email: '2' }
-      let!(:user_3) { User.create! id: 3, email: '3', roles: [:data_editor] }
-      let!(:user_4) { User.create! id: 4, email: '4', roles: [:superadmin] }
+      let(:current_user) { User.create! id: 8085860000, email: '0', roles: [:superadmin] }
+      let!(:user_1) { User.create! id: 8085860001, email: '1' }
+      let!(:user_2) { User.create! id: 8085860002, email: '2' }
+      let!(:user_3) { User.create! id: 8085860003, email: '3', roles: [:data_editor] }
+      let!(:user_4) { User.create! id: 8085860004, email: '4', roles: [:superadmin] }
       let(:params) do
         {
-          '1-superadmin' => '1',
-          '1-user_inviter' => '0',
-          '1-cms_editor' => '0',
-          '1-data_editor' => '0',
-          '1-data_contributor' => '0',
+          '8085860001-superadmin' => '1',
+          '8085860001-user_inviter' => '0',
+          '8085860001-cms_editor' => '0',
+          '8085860001-data_editor' => '0',
+          '8085860001-data_contributor' => '0',
 
-          '2-superadmin' => '0',
-          '2-user_inviter' => '1',
-          '2-cms_editor' => '1',
-          '2-data_editor' => '1',
-          '2-data_contributor' => '0',
+          '8085860002-superadmin' => '0',
+          '8085860002-user_inviter' => '1',
+          '8085860002-cms_editor' => '1',
+          '8085860002-data_editor' => '1',
+          '8085860002-data_contributor' => '0',
 
-          '3-superadmin' => '0',
-          '3-user_inviter' => '0',
-          '3-cms_editor' => '0',
-          '3-data_editor' => '0',
-          '3-data_contributor' => '1',
+          '8085860003-superadmin' => '0',
+          '8085860003-user_inviter' => '0',
+          '8085860003-cms_editor' => '0',
+          '8085860003-data_editor' => '0',
+          '8085860003-data_contributor' => '1',
 
-          '4-superadmin' => '0',
-          '4-user_inviter' => '0',
-          '4-cms_editor' => '0',
-          '4-data_editor' => '0',
-          '4-data_contributor' => '0',
+          '8085860004-superadmin' => '0',
+          '8085860004-user_inviter' => '0',
+          '8085860004-cms_editor' => '0',
+          '8085860004-data_editor' => '0',
+          '8085860004-data_contributor' => '0',
         }
       end
 
@@ -54,7 +54,7 @@ RSpec.describe UserPermissions do
       end
 
       context 'with invalid value' do
-        let(:params) { { '2-user_inviter' => 'true' } }
+        let(:params) { { '8085860002-user_inviter' => 'true' } }
         it 'raises the expected error' do
           expect { subject }.to raise_error "Invalid value true"
         end
