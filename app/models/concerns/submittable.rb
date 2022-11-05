@@ -3,7 +3,7 @@ module Submittable
 
   def check_and_unlink_submission
     yield and return unless visible? # Once a submitted record has been made visible, we have accepted it.
-    yield and return unless submission?
+    yield and return unless submission
 
     s = submission
     submitter_email = s.contact_email
