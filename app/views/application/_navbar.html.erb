@@ -12,8 +12,8 @@
     </div>
     <div id="navbar-items" class="navbar-menu">
       <div class="navbar-start">
-        <% top_level_pages.each do |page| %>
-          <a class="navbar-item" href="<%= page.full_path %>"><%= page.label %></a>
+        <% Navbar.items.each do |page| %>
+          <a class="navbar-item" href="<%= page[1] %>"><%= page[0] %></a>
         <% end %>
       </div>
       <div class="navbar-end">
@@ -25,7 +25,7 @@
         <% if current_user %>
           <div class="navbar-item has-dropdown is-hoverable has-background-danger">
             <a class="navbar-link has-text-weight-bold">Admin</a>
-            <div class="navbar-dropdown">
+            <div class="navbar-dropdown is-right">
               <a class="navbar-item" href="/admin" target="_blank">Database</a>
               <a class="navbar-item" href="/admin/birdseye/categories">Birdseye</a>
               <% if current_user.can? :manage, :cms %>
@@ -46,6 +46,9 @@
                     <span class="pill ml-2"><%= c %></span>
                   <% end %>
                 </a>
+              <% end %>
+              <% if current_user.can? :manage, :features %>
+                <a class="navbar-item" href="<%= admin_flipper_path %>" target="_blank">Site Features</a>
               <% end %>
               <hr class="navbar-divider">
               <a class="navbar-item" href="/users/sign_out">Sign out <%= current_user.email %></a>

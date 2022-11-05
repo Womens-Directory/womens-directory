@@ -3,4 +3,6 @@
 
 require_relative "config/application"
 
+$RAKE_TASK = true
+
 Rails.application.load_tasks

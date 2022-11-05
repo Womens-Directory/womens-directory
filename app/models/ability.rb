@@ -21,6 +21,9 @@ class Ability
 
   # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
   def initialize(user)
+    # Anonymous users cannot do anything.
+    return unless user
+
     # Every user can sign into the admin dashboard.
     can :access, :rails_admin
     can :read, :dashboard

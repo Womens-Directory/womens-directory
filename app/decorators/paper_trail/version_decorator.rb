@@ -1,4 +1,4 @@
-class PaperTrail::VersionDecorator < Draper::Decorator
+class PaperTrail::VersionDecorator < ApplicationDecorator
   include ActionView::Helpers::DateHelper
   include ActionView::Helpers::UrlHelper
 
