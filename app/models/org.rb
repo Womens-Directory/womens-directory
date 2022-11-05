@@ -21,8 +21,10 @@
 #
 class Org < ApplicationRecord
   include PgSearch::Model
+  include Submittable
 
   belongs_to :submission, optional: true
+  around_save :check_and_unlink_submission
   has_many :locations, dependent: :destroy
   has_many :events, class_name: 'Ahoy::Event', dependent: :destroy
   validates_presence_of :desc, :name, :website

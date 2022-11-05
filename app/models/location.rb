@@ -32,9 +32,11 @@
 #
 class Location < ApplicationRecord
   include PgSearch::Model
+  include Submittable
 
   belongs_to :org
   belongs_to :submission, optional: true
+  around_save :check_and_unlink_submission
   has_and_belongs_to_many :categories
   has_many :phone_numbers, dependent: :destroy
   has_many :emails, dependent: :destroy
