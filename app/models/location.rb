@@ -70,6 +70,10 @@ class Location < ApplicationRecord
     "#{id}-#{name_as_slug}"
   end
 
+  def parent
+    org
+  end
+
   # Don't break development apps when we're making fake locations locally
   if Rails.env.production?
     after_validation :geocode

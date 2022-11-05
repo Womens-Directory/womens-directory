@@ -12,7 +12,7 @@ class Admin::UserSubmissionsController < ApplicationController
     @title = 'User Submissions'
     confirmed = Submission.where(confirmed: true)
     @sub_count = confirmed.count
-    @pagy, @subs = pagy confirmed.order(created_at: :desc)
+    @pagy, @subs = pagy confirmed.order(created_at: :asc), items: 3
   end
 
   def reject_form
