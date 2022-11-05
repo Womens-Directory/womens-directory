@@ -5,13 +5,11 @@ namespace :dev do
 
   desc 'Generate dummy user submissions for local testing'
   task :generate_dummy_submissions, [:count] => :environment do |_, args|
-    count = 1
-    count = args[:count].to_i if args[:count]
+    raise 'Refusing to generate dummy user submissions outside of development' unless Rails.env.development?
 
-    ApplicationRecord.transaction do
-      count.times do
-        raise 'Refusing to generate dummy user submissions outside of development' unless Rails.env.development?
-
+    count = args[:count] ? args[:count].to_i : 1
+    count.times do
+      ApplicationRecord.transaction do
         subm = Submission.create!(
           additional_notes: 'Created by generate_dummy_submissions',
           contact_email: Faker::Internet.email,
