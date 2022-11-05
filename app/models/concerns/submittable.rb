@@ -9,15 +9,9 @@ module Submittable
     submitter_email = s.contact_email
 
     ApplicationRecord.transaction do
-      # Unlink the record from the submission.
-      assign_attributes submission: nil if visible?
-
+      assign_attributes submission: nil if visible? # unlink
       yield # save record
-
-      # We do not need the submission once we have accepted all of its records.
-      s.destroy! if s.reload.targets.empty?
-
-      # Let the user know we have accepted their submission.
+      s.destroy! if s.reload.targets.empty? # We do not need the submission once we have accepted all of its records.
       UserSubmissionsMailer.accept(submitter_email, self).deliver_now
     end
   end
