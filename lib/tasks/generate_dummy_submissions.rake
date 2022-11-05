@@ -1,8 +1,4 @@
 namespace :dev do
-  task :test, [:count] => :environment do |_, args|
-    ap args
-  end
-
   desc 'Generate dummy user submissions for local testing'
   task :generate_dummy_submissions, [:count] => :environment do |_, args|
     raise 'Refusing to generate dummy user submissions outside of development' unless Rails.env.development?
