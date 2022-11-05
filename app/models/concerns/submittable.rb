@@ -2,13 +2,13 @@ module Submittable
   extend ActiveSupport::Concern
 
   def check_and_unlink_submission
+    yield and return unless visible? # Once a submitted record has been made visible, we have accepted it.
+    yield and return unless submission?
+
+    s = submission
+    submitter_email = s.contact_email
+
     ApplicationRecord.transaction do
-      return unless visible?
-
-      # Once a submitted record has been made visible, we have accepted it.
-      s = submission
-      submitter_email = s.contact_email
-
       # Unlink the record from the submission.
       assign_attributes submission: nil if visible?
 
