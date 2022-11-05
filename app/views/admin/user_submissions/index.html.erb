@@ -35,7 +35,7 @@
             <% end %>
           </div>
           <div class="mb-2">
-            <%= render 'shared/kv_table', kvs: slim_attributes(t, omit: %i[id name submission_id org_id created_at updated_at]) %>
+            <%= render 'shared/kv_table', kvs: slim_attributes(t, omit: %i[id name submission_id org_id created_at updated_at latitude longitude]) %>
           </div>
           <div class="mb-3">
             <a href="<%= admin_user_submissions_reject_form_path id: t.id, klass: t.class.to_s.downcase %>" class="button is-danger"><i class="fa fa-trash"></i>&nbsp;Reject</a>
