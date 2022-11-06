@@ -7,10 +7,10 @@ class UserSubmissionsMailer < ApplicationMailer
     mail from: FROM, to: submission.contact_email, subject: "Confirm your submission"
   end
 
-  def reject(submission, record, reason)
-    @desc = "#{record.class.to_s.downcase} \"#{record.name}\""
+  def reject(submitter_email, records, reason)
+    @records = records
     @reason = reason
-    mail from: FROM, to: submission.contact_email, subject: 'Submission declined'
+    mail from: FROM, to: submitter_email, subject: 'Submission declined'
   end
 
   def accept(submitter_email, record)

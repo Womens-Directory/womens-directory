@@ -31,4 +31,14 @@ class Submission < ApplicationRecord
   def can_confirm_now?(target)
     target == primary_target
   end
+
+  def reject!(reason)
+    ApplicationRecord.transaction do
+      ce = contact_email
+      records = targets
+      targets.each(&:destroy!)
+      destroy!
+      UserSubmissionsMailer.reject(ce, records, reason).deliver_now
+    end
+  end
 end
