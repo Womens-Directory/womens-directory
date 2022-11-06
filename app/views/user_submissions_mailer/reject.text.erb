@@ -1,6 +1,6 @@
 Hello from Women's Directory,
 
-Sorry, but we've chosen not to add your submission for <%= @desc %> to the website.
+Sorry, but we've chosen not to add your <%= 'submission'.pluralize @records.count %> for <%= @records.map {|r| "#{r.class}: #{r.name}"}.join(', ') %> to the website.
 
 <% if @reason %>
 <%= @reason %>
