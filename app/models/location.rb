@@ -79,7 +79,7 @@ class Location < ApplicationRecord
   def additional_display_attributes
     {
       categories: Category.where(id: category_ids).pluck(:name).sort.join('; '),
-      location: [address1, address2, neighborhood, city, state, zip].compact.join(', '),
+      location: [address1, address2, neighborhood, city, state, zip].select(&:present?).join(', '),
     }
   end
 
