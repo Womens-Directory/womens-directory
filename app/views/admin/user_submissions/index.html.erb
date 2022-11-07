@@ -26,6 +26,9 @@
         </p>
       </div>
       <div class="rounded-box">
+        <% if sub.additional_notes %>
+          <p>Notes: <em><%= sub.additional_notes %></em></p>
+        <% end %>
         <% sub.targets.each do |t| %>
           <div class="mb-1">
             <%= t.class.name %>: <strong><a href="<%= Route.admin_show_path_for t %>" target="_blank"><%= t.name %></a></strong>
