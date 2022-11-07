@@ -18,6 +18,7 @@ class User < ApplicationRecord
     cms_editor
     data_editor
     data_contributor
+    feature_manager
   ]
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }
