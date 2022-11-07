@@ -1,7 +1,16 @@
 <div class="autostyle">
   <h1>Reject Submission</h1>
-  <p>You are about to reject this <%= @target.class.to_s.downcase %>, submitted by <%= @target.submission.contact_email %>:</p>
-  <%= render 'shared/kv_table', kvs: slim_attributes(@target) %>
+  <p>You are about to reject
+    <a class="has-text-weight-bold" href="<%= Route.admin_show_path_for @submission %>" target="_blank">Submission <%= @submission.id %></a>
+    which contains the following <%= 'record'.pluralize @submission.targets.count %>:</p>
+  <ul>
+    <% @submission.targets.each do |t| %>
+      <li>
+        <%= t.class.name %>:
+        <a class="has-text-weight-bold" href="<%= Route.admin_show_path_for t %>" target="_blank"><%= t.name %></a>
+      </li>
+    <% end %>
+  </ul>
   <%= form_with url: admin_user_submissions_reject_path do |f| %>
     <div class="mb-5">
       <p class="has-text-weight-bold">How should we notify the submitter of the rejection?</p>

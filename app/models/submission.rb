@@ -32,13 +32,17 @@ class Submission < ApplicationRecord
     target == primary_target
   end
 
-  def reject!(reason)
+  def reject!(notify, reason)
+
     ApplicationRecord.transaction do
       ce = contact_email
       records = targets
       targets.each(&:destroy!)
       destroy!
-      UserSubmissionsMailer.reject(ce, records, reason).deliver_now
+
+      if notify
+        UserSubmissionsMailer.reject(ce, records, reason).deliver_now
+      end
     end
   end
 end

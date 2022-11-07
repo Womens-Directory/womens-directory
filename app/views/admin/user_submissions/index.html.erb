@@ -38,7 +38,6 @@
             <%= render 'shared/kv_table', kvs: slim_attributes(t, omit: %i[id name submission_id org_id created_at updated_at latitude longitude]) %>
           </div>
           <div class="mb-3">
-            <a href="<%= admin_user_submissions_reject_form_path id: t.id, klass: t.class.to_s.downcase %>" class="button is-danger"><i class="fa fa-trash"></i>&nbsp;Reject</a>
             <% if sub.can_confirm_now? t %>
               <a href="<%= Route.admin_edit_path_for t %>" target="_blank" class="button is-info"><i class="fa fa-pencil"></i>&nbsp;Edit in Admin</a>
             <% else %>
@@ -46,6 +45,7 @@
             <% end %>
           </div>
         <% end %>
+        <a href="<%= admin_user_submissions_reject_form_path id: sub.id %>" class="button is-danger"><i class="fa fa-trash"></i>&nbsp;Reject Submission</a>
       </div>
     </div>
   <% end %>
