@@ -76,6 +76,13 @@ class Location < ApplicationRecord
     org
   end
 
+  def additional_display_attributes
+    {
+      categories: Category.where(id: category_ids).pluck(:name).sort.join('; '),
+      location: [address1, address2, neighborhood, city, state, zip].compact.join(', '),
+    }
+  end
+
   # Don't break development apps when we're making fake locations locally
   if Rails.env.production?
     after_validation :geocode

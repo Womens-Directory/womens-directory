@@ -44,7 +44,12 @@ module ApplicationHelper
   end
 
   def slim_attributes(record, omit: [])
-    omit = omit.map(&:to_s)
-    record.attributes.compact.select { |k, v| v.present? }.reject { |k, v| omit.include? k }
+    addl = record.respond_to?(:additional_display_attributes) ? record.additional_display_attributes : {}
+    record.
+      attributes.
+      compact.
+      select { |k, v| v.present? }.
+      reject { |k, v| omit.map(&:to_s).include? k }.
+      merge(addl)
   end
 end
