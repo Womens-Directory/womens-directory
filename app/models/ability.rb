@@ -49,6 +49,7 @@ class Ability
     # Data editors can manage all core data on the site.
     if user.data_editor?
       core_models_can :manage
+      can :manage, :user_submissions # You need access to Data Admin to accept a user submission
     end
 
     # Data contributors are able to create new Locations. Their locations will be hidden from public view until a

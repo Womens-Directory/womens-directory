@@ -20,6 +20,28 @@ class Submission < ApplicationRecord
   # TODO: destroy old submissions at expiry period
 
   def targets
+    # Targets are ordered by dependency, e.g. you cannot create a Location unless its Org already exists
     [org, location].compact
+  end
+
+  def primary_target
+    targets.first
+  end
+
+  def can_confirm_now?(target)
+    target == primary_target
+  end
+
+  def reject!(notify, reason)
+    ApplicationRecord.transaction do
+      ce = contact_email
+      records = targets
+      targets.each(&:destroy!)
+      destroy!
+
+      if notify
+        UserSubmissionsMailer.reject(ce, records, reason).deliver_now
+      end
+    end
   end
 end

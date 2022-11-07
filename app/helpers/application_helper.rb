@@ -43,7 +43,8 @@ module ApplicationHelper
     send "show_#{record.class.name.underscore}_path".to_sym, record
   end
 
-  def slim_attributes(record)
-    record.attributes.compact.select { |k, v| v.present? }
+  def slim_attributes(record, omit: [])
+    omit = omit.map(&:to_s)
+    record.attributes.compact.select { |k, v| v.present? }.reject { |k, v| omit.include? k }
   end
 end

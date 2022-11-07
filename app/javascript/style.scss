@@ -85,6 +85,13 @@ details summary {
   }
 }
 
+// Rounded boxes for admin pages
+.rounded-box { // .changes .values,
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  padding: 12px 18px;
+}
+
 // Navbar color matches logo
 .navbar.is-info {
   background-color: #0057bf;

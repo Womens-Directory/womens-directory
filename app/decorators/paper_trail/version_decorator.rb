@@ -20,14 +20,25 @@ class PaperTrail::VersionDecorator < ApplicationDecorator
     h
   end
 
+  def submission
+    return nil unless item.respond_to? :submission
+    item.submission
+  end
+
   def user_email
-    whodunnit ? User.find(whodunnit).email : 'Unknown user'
+    return submission.contact_email if submission
+    return User.find(whodunnit).email if whodunnit
+    'System'
+  end
+
+  def event_proper
+    return 'submitte' if event == 'create' && submission
+    event
   end
 
   def summary
     ago = "<span class=\"has-text-weight-bold\">#{time_ago_in_words created_at} ago:</span>"
-    path = RailsAdmin::Engine.routes.url_helpers.show_path item.class.name.underscore.to_sym, item.id
-    return [ago, user_email, "#{event}d", link_to(item, path)].join(' ').html_safe
+    return [ago, user_email, "#{event_proper}d", link_to(item, Route.admin_show_path_for(item), target: '_blank')].join(' ').html_safe
   end
 
   private
