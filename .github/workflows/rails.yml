@@ -1,11 +1,12 @@
 # https://docs.knapsackpro.com/2021/how-to-load-ruby-gems-from-cache-on-github-actions
 
-name: Main
+name: Rails
 
 on: [push]
 
 jobs:
-  test:
+  rspec:
+    name: RSpec
     runs-on: ubuntu-latest
 
     services:
