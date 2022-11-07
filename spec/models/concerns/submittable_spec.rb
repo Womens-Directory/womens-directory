@@ -58,7 +58,7 @@ RSpec.describe 'Submittable' do
     context 'when org has been accepted and location has been rejected' do
       subject do
         org.update! visible: true
-        subm.reject! nil
+        subm.reject! true, nil
       end
 
       it 'sends emails and deletes the submission' do
@@ -68,7 +68,7 @@ RSpec.describe 'Submittable' do
     end
 
     context 'when org and location have been rejected' do
-      subject { subm.reject! nil }
+      subject { subm.reject! true, nil }
 
       it 'sends an email and deletes the submission' do
         expect { subject }.to change { Submission.count }.from(1).to(0)

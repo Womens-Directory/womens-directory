@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Submission, type: :model do
   describe '#reject!' do
-    subject { subm.reject! reason }
+    subject { subm.reject! true, reason }
     let(:subm) { Submission.create! contact_email: 'harkness@westview.org', confirmation_token: 'dont_care' }
     let(:reason) { nil }
 

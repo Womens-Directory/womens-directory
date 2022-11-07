@@ -33,7 +33,6 @@ class Submission < ApplicationRecord
   end
 
   def reject!(notify, reason)
-
     ApplicationRecord.transaction do
       ce = contact_email
       records = targets
