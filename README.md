@@ -71,6 +71,14 @@ If you land code that includes database migrations, you must run them manually i
 | `INSECURE`            | If set, uses HTTP for URLs; if unset (default), uses HTTPS                                           |
 | `SENDGRID_API_KEY`    | The API key for sending emails via [SendGrid](https://sendgrid.com/)                                 |
 
+# Permissions
+
+Roles are created in [user.rb](app/models/user.rb). They are stored in a Postgres `bigint` (8 bytes) as an ordered bitfield, so do not reorder existing roles!
+
+Roles are granted abilities which allow them to access specific kinds of data and perform specific operations. For example, a `superadmin` is allowed to do anything; a `data_contributor` is only allowed to create some kinds of records. Abilities are granted permissions in [ability.rb](app/models/ability.rb).
+
+Superadmins can manage permissions for non-superadmin users at [`/admin/user_permissions`](http://localhost:3000/admin/user_permissions).
+
 ## Support
 
 Problems, suggestions, or contributions? Please [open an issue](https://github.com/AARodgers/womens-directory/issues) or [submit a pull request](https://github.com/AARodgers/womens-directory/pulls).

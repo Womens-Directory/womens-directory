@@ -58,5 +58,10 @@ class Ability
       # Don't let contributors create new Categories. Creating everything else is fine.
       core_models_can :create, except: [Category]
     end
+
+    # Feature managers can manage the enabled features on the site.
+    if user.feature_manager?
+      can :manage, :features
+    end
   end
 end
