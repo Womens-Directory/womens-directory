@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe UserSubmissionsMailer do
   describe 'reject' do
-    subject { described_class.reject(subm, records, reason).deliver_now }
+    subject { described_class.reject(user, records, reason).deliver_now }
     let(:user) { 'harkness@westview.org' }
     let(:subm) { Submission.new contact_email: user }
     let(:records) {[
