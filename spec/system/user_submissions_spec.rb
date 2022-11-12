@@ -41,7 +41,7 @@ RSpec.describe 'User Submission', type: :system do
     fill_in 'location[address1]', with: '123 Main St'
     fill_in 'location[address2]', with: 'Apt 2'
     fill_in 'location[city]', with: 'Los Angeles'
-    fill_in 'location[state]', with: 'CA'
+    select 'California', from: 'State'
     fill_in 'location[zip]', with: '90012'
   end
 

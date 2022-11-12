@@ -35,11 +35,7 @@
     <%= render partial: 'required' %>
     <%= lf.text_field :city, class: 'input', placeholder: "Denver" %>
   </label>
-  <label for="location_state" class="has-text-weight-bold mt-3 is-block">
-    State
-    <%= render partial: 'required' %>
-    <%= lf.text_field :state, class: 'input', placeholder: "CO" %>
-  </label>
+  <%= render partial: 'shared/state_picker', locals: { name: 'location[state]' } %>
   <label for="location_zip" class="has-text-weight-bold mt-3 is-block">
     Zip Code
     <%= render partial: 'required' %>
