@@ -15,8 +15,10 @@ class Admin::Fresh::LocationsController < ApplicationController
     end
 
     flash.notice = notice_msg @location
+    org_id = @location.org_id
     @title = 'Create New Location'
     @location = Location.new
+    @location.org_id = org_id
     render :new
   end
 
