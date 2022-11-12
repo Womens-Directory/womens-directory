@@ -1,0 +1,6 @@
+<div class="autostyle">
+  <h1><%= @title %></h1>
+  <% if can? :create, Location %>
+    <%= link_to 'Create Location »', admin_fresh_create_location_path, class: 'button mb-3' %>
+  <% end %>
+</div>

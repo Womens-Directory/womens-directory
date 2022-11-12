@@ -1,6 +1,16 @@
 <div class="autostyle">
   <h1><%= @title %></h1>
+  <%= link_to '« Back', admin_fresh_path, class: 'button mb-3' %>
   <%= form_with(model: @location, url: admin_fresh_create_location_path) do |f| %>
+    <label for="organization">
+      <span class="has-text-weight-bold">Organization</span>
+      <select id="organization" name="location[org_id]">
+        <option value="" disabled <%= 'selected' unless @location.org_id %>>(no organization selected)</option>
+        <% Org.visible.order(:name).each do |org| %>
+          <option value="<%= org.id %>" <%= 'selected' if org.id == @location.org_id %>><%= org.name %></option>
+        <% end %>
+      </select>
+    </label>
     <label for="location_name" class="has-text-weight-bold mt-3 is-block">
       Name
       <%= f.text_field :name, class: 'input', placeholder: "Food Bank of the Rockies – Mobile Food Pantry" %>
@@ -25,7 +35,7 @@
       City
       <%= f.text_field :city, class: 'input', placeholder: "Denver" %>
     </label>
-    <%= render partial: 'shared/state_picker', locals: { name: 'location_state' } %>
+    <%= render partial: 'shared/state_picker', locals: { name: 'location[state]' } %>
     <label for="location_zip" class="has-text-weight-bold mt-3 is-block">
       Zip Code
       <%= f.text_field :zip, class: 'input', placeholder: "80204" %>
@@ -34,6 +44,14 @@
       <%= f.check_box :visible, class: 'checkbox', checked: true %>
       Visible
     </label>
-    <%= f.submit 'Create Location', class: 'button is-info mt-3' %>
+    <%= f.submit class: 'button is-info mt-3' %>
   <% end %>
 </div>
+<script>
+  $(document).ready(() => $('select#organization').select2())
+</script>
+<style>
+  .select2-container, select#organization {
+    width: 100% !important;
+  }
+</style>
