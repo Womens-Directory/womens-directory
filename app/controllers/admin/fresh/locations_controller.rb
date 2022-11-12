@@ -7,7 +7,6 @@ class Admin::Fresh::LocationsController < ApplicationController
   end
 
   def create
-    ap location_params
     @location = Location.new location_params
     unless @location.save
       flash.alert = "Please fix the following issues: #{@location.errors.full_messages.join(', ')}"

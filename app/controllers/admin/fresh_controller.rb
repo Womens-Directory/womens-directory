@@ -2,7 +2,7 @@ class Admin::FreshController < ApplicationController
   before_action :require_authorized_user!
 
   def index
-    @title = 'Create New Record'
+    @title = 'Quick Create'
   end
 
   private
