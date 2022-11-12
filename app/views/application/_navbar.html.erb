@@ -29,7 +29,7 @@
               <a class="navbar-item" href="/admin" target="_blank">Database</a>
               <a class="navbar-item" href="/admin/birdseye/categories">Birdseye</a>
               <% if current_user.can? :create, Location %>
-                <a class="navbar-item" href="<% admin_fresh_path %>">Quick Create...</a>
+                <a class="navbar-item" href="<%= admin_fresh_path %>">Quick Create...</a>
               <% end %>
               <% if current_user.can? :manage, :cms %>
                 <a class="navbar-item" href="/cms" target="_blank">CMS</a>
