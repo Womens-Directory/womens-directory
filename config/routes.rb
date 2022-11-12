@@ -13,6 +13,12 @@ Rails.application.routes.draw do
     get 'user_submissions', to: 'user_submissions#index'
     get 'user_submissions/reject/:id', to: 'user_submissions#reject_form', as: 'user_submissions_reject_form'
     post 'user_submissions/reject/:id', to: 'user_submissions#reject', as: 'user_submissions_reject'
+
+    get 'fresh', to: 'fresh#index'
+    namespace :fresh do
+      get 'location', to: 'locations#new', as: 'new_location'
+      post 'location', to: 'locations#create', as: 'create_location'
+    end
   end
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
