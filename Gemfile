@@ -45,6 +45,8 @@ gem 'rest-client', '~> 2.1'
 gem 'rexml', '~> 3.2'
 gem "role_model", '~> 0.8'
 gem 'rspec-rails', '~> 5.0'
+gem 'sentry-ruby', '~> 5.6'
+gem 'sentry-rails', '~> 5.6'
 gem 'shakapacker', '~> 6.2'
 
 group :development, :test do
