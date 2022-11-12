@@ -1,4 +1,4 @@
-<nav class="navbar is-info mb-3" role="navigation" aria-label="main navigation">
+<nav class="navbar <% if Rails.env.development? %>is-light<% else %>is-info<% end %> mb-3" role="navigation" aria-label="main navigation">
   <div class="container is-max-desktop">
     <div class="navbar-brand">
       <a class="navbar-item py-0" href="/">
