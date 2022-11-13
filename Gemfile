@@ -25,6 +25,7 @@ gem 'aws-sdk-s3', '~> 1.96', require: false
 gem 'cancancan', '~> 3.3'
 gem 'comfortable_mexican_sofa', '~> 2.0'
 gem 'draper', '~> 4.0'
+gem 'factory_bot_rails', '~> 6.2'
 gem 'faker', '~> 2.17'
 gem 'flipper', '~> 0.25.2'
 gem 'flipper-active_record', '~> 0.25.2'
