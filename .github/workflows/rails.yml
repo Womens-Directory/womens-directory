@@ -44,7 +44,7 @@ jobs:
           node-version: 16
           cache: yarn
       - name: Create DB
-        run: bundle exec rails db:prepare
+        run: bundle exec rake db:prepare
       - name: Precompile assets
         run: bundle exec rails assets:precompile
       - name: Run tests
