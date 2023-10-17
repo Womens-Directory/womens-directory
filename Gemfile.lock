@@ -219,6 +219,7 @@ GEM
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     marcel (1.0.2)
+    matrix (0.4.2)
     maxminddb (0.1.22)
     memory_profiler (1.0.0)
     method_source (1.0.0)
@@ -230,15 +231,19 @@ GEM
       rake
     mini_magick (4.11.0)
     mini_mime (1.1.2)
+    mini_portile2 (2.8.4)
     minitest (5.15.0)
     msgpack (1.4.2)
     nested_form (0.3.2)
+    net-protocol (0.2.1)
+      timeout
+    net-smtp (0.4.0)
+      net-protocol
     netrc (0.11.0)
     niceql (0.1.25)
     nio4r (2.5.8)
-    nokogiri (1.13.9-arm64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.13.9-x86_64-linux)
+    nokogiri (1.13.9)
+      mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     pagy (4.8.0)
     paper_trail (11.1.0)
@@ -249,7 +254,7 @@ GEM
     passwordless (0.11.0)
       bcrypt (~> 3.1.11)
       rails (>= 5.1.4)
-    pg (1.2.3)
+    pg (1.5.4)
     pg_search (2.3.5)
       activerecord (>= 5.2)
       activesupport (>= 5.2)
@@ -399,6 +404,7 @@ GEM
     temple (0.8.2)
     thor (1.2.1)
     tilt (2.0.10)
+    timeout (0.4.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unf (0.1.4)
@@ -449,8 +455,10 @@ DEPENDENCIES
   kramdown (~> 2.3)
   letter_opener (~> 1.7)
   listen (~> 3.3)
+  matrix (~> 0.4.2)
   maxminddb (~> 0.1.22)
   memory_profiler
+  net-smtp (~> 0.4.0)
   niceql (~> 0.1.25)
   nokogiri (>= 1.13.4, < 2)
   pagy (~> 4.8)
@@ -482,7 +490,7 @@ DEPENDENCIES
   webdrivers
 
 RUBY VERSION
-   ruby 3.0.0p0
+   ruby 3.2.2p53
 
 BUNDLED WITH
    2.4.20
