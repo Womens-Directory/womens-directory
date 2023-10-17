@@ -62,6 +62,7 @@ group :development do
   gem 'memory_profiler'
   gem 'niceql', '~> 0.1.25'
   gem 'rack-mini-profiler'
+  gem 'ruby-lsp', require: false
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'stackprof'
