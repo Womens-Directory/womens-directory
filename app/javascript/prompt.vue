@@ -6,18 +6,18 @@
     <div class="frame"></div>
     <!-- Preliminary Form -->
     <div class="box framed">
-      <div v-if="formName == 'consent'" class="block">
+      <div class="block">
         <article class="media">
           <div class="media-content">
             <div class="content prompt-external-link-display has-text-weight-semibold">
               <!-- Prompts pulled from prompt-external-link html classes -->
-              <p>{{ prompt.get('text') }}</p>
+              <p>{{ text }}</p>
             </div>
           </div>
         </article>
       </div>
       <div class="buttons block">
-        <a :href="`${prompt.get('link')}`" target="_blank" class="button">Yes</a>
+        <a :href="`${link}`" target="_blank" class="button" @click="hidePrompt">Yes</a>
         <button class="button" @click="hidePrompt">Not Now</button>
       </div>
     </div>
@@ -29,26 +29,23 @@
 <script lang="ts">
 export default {
   props: {
-    prompt: { type: Map, required: false }
+    link: { type: String, required: true },
+    text: { type: String, required: true },
+    promptOn: { type: Boolean, required: false, default: false },
   },
   data() {
     return {
-      formName: 'consent',
-      // Set on a timer initially false
       isActive: false,
     }
   },
   methods: {
-    nextStep() {
-      this.formName = 'questionnaire';
-    },
     hidePrompt() {
       this.isActive = false
     }
   },
   mounted() {
     setTimeout(() => { 
-      if (this.prompt.size > 0) 
+      if (this.promptOn && this.link && this.text)
         this.isActive = true 
     }, 4000);
   }
@@ -70,5 +67,23 @@ export default {
     height: 77%;
     width: 89%;
     z-index: 41;
+  }
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  .modal.is-active {
+    animation: fadeIn 0.5s;
+    -webkit-animation: fadeIn 0.5s;
+    -moz-animation: fadeIn 0.5s;
+    -o-animation: fadeIn 0.5s;
+    -ms-animation: fadeIn 0.5s;
+  }
+  @media only screen and (max-width: 600px) {
+    .frame {
+      height: 70%;
+      margin: 10px 20px;
+      width: 75%
+    }
   }
 </style>

@@ -2,8 +2,17 @@ import Vue from "vue";
 import Prompt from "../prompt.vue";
 
 document.addEventListener("DOMContentLoaded", () => {
+  const prompt = userPrompt.prompt()
+  const promptIsOn = userPrompt.promptOn()
+  
+  if (promptIsOn) {
+    userPrompt.setPromptPageVisit()
+  }
+
   const props = {
-    prompt: getPrompt()
+    link: prompt.get('link'),
+    text: prompt.get('text'),
+    promptOn: promptIsOn,
   }
 
   const comp = new Vue({
@@ -12,14 +21,41 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.appendChild(comp.$el);
 });
 
-function getPrompt() {
-  let prompts = document.querySelectorAll('.prompt-external-link');
-  let promptHash = new Map();
+const userPrompt = (() => {
+  const hasVisited = getCookie() !== null;
 
-  prompts.forEach((p) => {
-    promptHash.set('link', p.attributes['data-link'].value);
-    promptHash.set('text', p.attributes['data-text'].value);
-  })
+  const getPrompt = () => {
+    let promptMap = new Map();
+    let prompt = document.querySelector('.prompt-external-link');
+  
+    promptMap.set('link', prompt ? prompt.attributes['data-link'].value : "");
+    promptMap.set('text', prompt ? prompt.attributes['data-text'].value : "");
+  
+    return promptMap
+  }
 
-  return promptHash
-}
+  const promptOn = () => {
+    let prompt = getPrompt()
+    let linkEmpty = prompt.get('link') === ""
+    let textEmpty = prompt.get('text') === ""
+
+    return !hasVisited && !linkEmpty && !textEmpty
+  }
+
+  const setCookie = () => {
+    if (!hasVisited) {
+      let date = Date.now().toString()
+      localStorage.setItem('wd_visitedLocationShowPage', date)
+    }
+  }
+  
+  function getCookie() {
+    return localStorage.getItem('wd_visitedLocationShowPage');
+  }
+
+  return {
+    setPromptPageVisit: () => setCookie(),
+    prompt: () => getPrompt(),
+    promptOn: () => promptOn(),
+  }
+})();
