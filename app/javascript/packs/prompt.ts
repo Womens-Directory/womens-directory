@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const userPrompt = (() => {
   const hasVisited = getCookie() !== null;
+  const cookieName = 'wd_visitedLocationShowPage';
 
   const getPrompt = () => {
     let promptMap = new Map();
@@ -45,12 +46,12 @@ const userPrompt = (() => {
   const setCookie = () => {
     if (!hasVisited) {
       let date = Date.now().toString()
-      localStorage.setItem('wd_visitedLocationShowPage', date)
+      localStorage.setItem(cookieName, date)
     }
   }
   
   function getCookie() {
-    return localStorage.getItem('wd_visitedLocationShowPage');
+    return localStorage.getItem(cookieName);
   }
 
   return {
