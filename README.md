@@ -1,7 +1,4 @@
 <a href="https://womensdirectory.org">
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
   <img src="app/assets/images/logo.svg" width="200" />
 </a>
 
@@ -12,6 +9,10 @@ Women's Directory is a non-profit organization. Our website shows women in need 
 This Rails app runs the Women's Directory [production website](https://womensdirectory.org).
 
 # Contributors
+
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
