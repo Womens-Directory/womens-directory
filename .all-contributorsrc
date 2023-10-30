@@ -1,0 +1,26 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "katjimeno",
+      "name": "katjimeno",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13637435?v=4",
+      "profile": "https://github.com/katjimeno",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "womens-directory",
+  "projectOwner": "Womens-Directory"
+}
