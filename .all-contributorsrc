@@ -24,6 +24,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "AARodgers",
+      "name": "Amanda Rodgers",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48111009?v=4",
+      "profile": "https://aarodgers.com/",
+      "contributions": [
+        "code",
+        "content",
+        "business"
+      ]
     }
   ],
   "contributorsPerLine": 7,
