@@ -1,6 +1,6 @@
 <a href="https://womensdirectory.org">
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
   <img src="app/assets/images/logo.svg" width="200" />
 </a>
@@ -21,6 +21,7 @@ This Rails app runs the Women's Directory [production website](https://womensdir
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/katjimeno"><img src="https://avatars.githubusercontent.com/u/13637435?v=4?s=100" width="100px;" alt="katjimeno"/><br /><sub><b>katjimeno</b></sub></a><br /><a href="https://github.com/Womens-Directory/womens-directory/commits?author=katjimeno" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://mplewis.com/"><img src="https://avatars.githubusercontent.com/u/1829094?v=4?s=100" width="100px;" alt="Matt Lewis"/><br /><sub><b>Matt Lewis</b></sub></a><br /><a href="https://github.com/Womens-Directory/womens-directory/commits?author=mplewis" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://aarodgers.com/"><img src="https://avatars.githubusercontent.com/u/48111009?v=4?s=100" width="100px;" alt="Amanda Rodgers"/><br /><sub><b>Amanda Rodgers</b></sub></a><br /><a href="https://github.com/Womens-Directory/womens-directory/commits?author=AARodgers" title="Code">💻</a> <a href="#content-AARodgers" title="Content">🖋</a> <a href="#business-AARodgers" title="Business development">💼</a></td>
     </tr>
   </tbody>
 </table>
