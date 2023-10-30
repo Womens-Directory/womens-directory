@@ -8,6 +8,17 @@ Women's Directory is a non-profit organization. Our website shows women in need 
 
 This Rails app runs the Women's Directory [production website](https://womensdirectory.org).
 
+# Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 # Features
 
 - Users can browse for locations that offer services helpful to women in need.
@@ -79,6 +90,6 @@ Roles are granted abilities which allow them to access specific kinds of data an
 
 Superadmins can manage permissions for non-superadmin users at [`/admin/user_permissions`](http://localhost:3000/admin/user_permissions).
 
-## Support
+# Support
 
 Problems, suggestions, or contributions? Please [open an issue](https://github.com/AARodgers/womens-directory/issues) or [submit a pull request](https://github.com/AARodgers/womens-directory/pulls).
