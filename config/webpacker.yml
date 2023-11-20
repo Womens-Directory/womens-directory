@@ -1,4 +1,5 @@
 # Note: You must restart bin/webpacker-dev-server for changes to take effect
+ensure_consistent_versioning: true
 
 default: &default
   source_path: app/javascript
