@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_29_053650) do
+ActiveRecord::Schema.define(version: 2023_10_01_183836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -327,6 +327,13 @@ ActiveRecord::Schema.define(version: 2022_10_29_053650) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["location_id"], name: "index_phone_numbers_on_location_id"
+  end
+
+  create_table "prompt_external_links", force: :cascade do |t|
+    t.text "link", null: false
+    t.text "text", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "submissions", force: :cascade do |t|

@@ -1,6 +1,7 @@
 class Features
   FEATURES = {
     user_submissions: 'Users can submit their own locations and organizations for approval.',
+    prompts: 'Users are prompted to answer surveys.',
   }
 
   FEATURES.each do |feature, description|
