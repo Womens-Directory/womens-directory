@@ -43,11 +43,19 @@ class AnalyticsReport < ApplicationRecord
       event_count: data['event_count'],
       event_types: data['event_types'],
       views_by_id: {
-        location: by_id['location'].
-          map { |id, count| [locs[id.to_i], count] }.
-          filter { |loc| loc.present? }.
-          map { |loc, count| loc.report_summary.merge(count: count) },
+        location: summarize(by_id['location'], locs),
+        cat_loc: summarize(by_id['cat_loc'], cats),
+        cat: summarize(by_id['cat'], cats),
+        org: summarize(by_id['org'], orgs),
+        cms_page: summarize(by_id['cms_page'], pages),
       }
     }
   end
+end
+
+def summarize(items, ids)
+  items.
+    map { |id, count| [ids[id.to_i], count] }.
+    filter { |item| item.present? }.
+    map { |item, count| item.to_report_summary.merge(count: count) }
 end
