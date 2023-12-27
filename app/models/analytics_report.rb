@@ -21,4 +21,8 @@ class AnalyticsReport < ApplicationRecord
     short_end_date = end_date.strftime("%Y-%m-%d")
     "Report #{id}: #{short_start_date} to #{short_end_date} (#{age} ago)"
   end
+
+  def ready
+    data.present?
+  end
 end

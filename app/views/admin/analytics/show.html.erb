@@ -7,10 +7,29 @@
     <li><strong>End Date:</strong> <%= @report.end_date %> (<%= time_ago_in_words(@report.end_date) %> ago)</li>
     <li><strong>Duration:</strong> <%= distance_of_time_in_words(@report.start_date, @report.end_date) %></li>
   </ul>
-  <% unless @report.data %>
-    <p>This report is still being generated. Please check back later.</p>
+  <% unless @report.ready %>
+    <p>This report is still being generated. Please check back soon.</p>
+    <p>This page will reload automatically when the report is ready.</p>
+    <script>
+      let interval = 1_000;
+      const maxInterval = 15_000;
+
+      async function check() {
+        const resp = await fetch('/admin/analytics/<%= @report.id %>/status');
+        const data = await resp.json();
+        if (data.ready) {
+          window.location.reload();
+          return;
+        }
+        console.log(`Report is not yet ready. Checking again in ${interval} ms.`);
+        setInterval(check, interval)
+        interval = Math.min(interval * 1.1, maxInterval);
+      }
+
+      check();
+    </script>
   <% end %>
-  <% if @report.data %>
+  <% if @report.ready %>
     <%= @report.data %>
   <% end %>
 </div>
