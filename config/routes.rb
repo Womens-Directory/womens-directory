@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     end
 
     get 'analytics', to: 'analytics#index'
+    get 'analytics/:id', to: 'analytics#show', as: 'analytics_report'
+    post 'analytics', to: 'analytics#create', as: 'analytics_create'
 
     mount Flipper::UI.app(Flipper) => '/flipper', as: 'flipper', constraints: Features::AdminAuthorized
   end

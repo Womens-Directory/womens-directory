@@ -9,5 +9,16 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+
+require 'action_view'
+require 'action_view/helpers'
+include ActionView::Helpers::DateHelper
+
 class AnalyticsReport < ApplicationRecord
+  def name
+    age = time_ago_in_words(created_at)
+    short_start_date = start_date.strftime("%Y-%m-%d")
+    short_end_date = end_date.strftime("%Y-%m-%d")
+    "Report #{id}: #{short_start_date} to #{short_end_date} (#{age} ago)"
+  end
 end

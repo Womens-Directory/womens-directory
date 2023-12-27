@@ -1,2 +1,10 @@
-<h1>Hello world!</h1>
-<p>This is the future home of the analytics summary dashboard.</p>
+<div class="autostyle">
+  <h1>Analytics</h1>
+  <h2>Reports</h2>
+  <ul>
+    <% @reports.each do |report| %>
+      <li><%= link_to report.name, admin_analytics_report_path(report.id) %></li>
+    <% end %>
+  </ul>
+  <h2>Generate New Report</h2>
+</div>
