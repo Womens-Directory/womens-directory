@@ -11,6 +11,6 @@ class Admin::AnalyticsController < ApplicationController
 
 	def create
 		id = Analytics.generate_report!(params[:start_date], params[:end_date])
-		redirect_to admin_analytics_path, notice: "Started generating report #{id}, please wait for it to complete"
+		redirect_to admin_analytics_report_path(id), notice: "Generating report #{id} – please be patient."
 	end
 end

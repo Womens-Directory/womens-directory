@@ -7,4 +7,11 @@
     <% end %>
   </ul>
   <h2>Generate New Report</h2>
+  <%= form_tag admin_analytics_create_path, method: :post do %>
+    <%= label_tag :start_date %>
+    <%= date_field_tag :start_date, Date.today - 1.month %>
+    <%= label_tag :end_date %>
+    <%= date_field_tag :end_date, Date.today %>
+    <%= submit_tag "Generate Report" %>
+  <% end %>
 </div>

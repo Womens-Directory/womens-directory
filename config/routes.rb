@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       post 'location', to: 'locations#create', as: 'create_location'
     end
 
-    get 'analytics', to: 'analytics#index'
+    get 'analytics', to: 'analytics#index', as: 'analytics'
     get 'analytics/:id', to: 'analytics#show', as: 'analytics_report'
     post 'analytics', to: 'analytics#create', as: 'analytics_create'
 
