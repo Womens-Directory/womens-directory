@@ -32,10 +32,50 @@ module Analytics
 		end
 
 		def backfill_existing_visits
-			Ahoy::Visit.find_each(batch_size: 100) do |visit|
+			count = 0
+			meaningful_visits.find_each(batch_size: 100) do |visit|
 				row = ignore_visitor_if_bot visit.visitor_token, visit.landing_page
-				Rails.logger.info "Ignored #{row.visitor_token}: #{row.visitor_ignore_rule.pattern}" if row
+				if row
+					Rails.logger.info "Ignored #{row.visitor_token}: #{row.visitor_ignore_rule.pattern}"
+					count += 1
+				end
 			end
+			count
+		end
+
+		def report(start_date, end_date)
+			event_types = Hash.new 0
+			location_views = Hash.new 0
+			cat_loc_views = Hash.new 0
+			cat_views = Hash.new 0
+			org_views = Hash.new 0
+			cms_page_views = Hash.new 0
+
+			visits = meaningful_visits.where(started_at: start_date..end_date).includes(:events)
+			visits.find_each(batch_size: 100) do |visit|
+				visit.events.each do |event|
+					event_types[event.name] += 1
+					if event.location_id
+						location_views[event.location_id] += 1
+						cat_loc_views[event.category_id] += 1
+					elsif event.category_id
+						cat_views[event.category_id] += 1
+					elsif event.org_id
+						org_views[event.org_id] += 1
+					elsif event.comfy_cms_page_id
+						cms_page_views[event.comfy_cms_page_id] += 1
+					end
+				end
+			end
+
+			{
+				event_types: event_types,
+				location_views: location_views,
+				cat_loc_views: cat_loc_views,
+				cat_views: cat_views,
+				org_views: org_views,
+				cms_page_views: cms_page_views,
+			}
 		end
 
 		private
