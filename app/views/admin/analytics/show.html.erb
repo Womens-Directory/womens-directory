@@ -1,6 +1,7 @@
 <div class="autostyle">
   <%= link_to "« Back to all reports", :admin_analytics %>
   <h1>Analytics Report <%= @report.id %></h1>
+  <div id="analytics-report" data-json="<%= html_escape(@report.data) %>"></div>
   <ul>
     <li><strong>Generated:</strong> <%= @report.created_at %> (<%= time_ago_in_words(@report.created_at) %> ago)</li>
     <li><strong>Start Date:</strong> <%= @report.start_date %> (<%= time_ago_in_words(@report.start_date) %> ago)</li>

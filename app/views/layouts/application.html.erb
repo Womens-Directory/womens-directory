@@ -1,46 +1,42 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-  <title><%= title %></title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="apple-mobile-web-app-title" content="Women's Dir.">
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-
-  <%= stylesheet_link_tag 'application', media: 'all' %>
-  <%= stylesheet_pack_tag 'application', 'feedback', 'map', 'prompt', media: 'all' %>
-  <%= javascript_pack_tag 'application', 'feedback', 'map', 'prompt' %>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
-</head>
-
-<body>
-  <%= render 'navbar' %>
-  <div class="container main-content is-max-desktop mb-6">
-    <% if flash[:notice] %>
-    <div class="notification mb-2 is-success"><button class="delete"></button><%= flash[:notice] %></div>
-    <% end %>
-    <% if flash[:alert] %>
-    <div class="notification mb-2 is-danger"><button class="delete"></button><%= flash[:alert] %></div>
-    <% end %>
-    <%= yield %>
-  </div>
-
-  <script type="text/plain" id="current-path"><%= request.path %></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const notis = document.querySelectorAll('.notification .delete') || []
-      notis.forEach(del => {
-        const noti = del.parentNode;
-        del.addEventListener('click', () => {
-          noti.parentNode.removeChild(noti);
+  <head>
+    <title><%= title %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-title" content="Women's Dir.">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= stylesheet_pack_tag 'application', 'feedback', 'map', 'prompt', 'analytics_report', media: 'all' %>
+    <%= javascript_pack_tag 'application', 'feedback', 'map', 'prompt', 'analytics_report' %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+  </head>
+  <body>
+    <%= render 'navbar' %>
+    <div class="container main-content is-max-desktop mb-6">
+      <% if flash[:notice] %>
+        <div class="notification mb-2 is-success"><button class="delete"></button><%= flash[:notice] %></div>
+      <% end %>
+      <% if flash[:alert] %>
+        <div class="notification mb-2 is-danger"><button class="delete"></button><%= flash[:alert] %></div>
+      <% end %>
+      <%= yield %>
+    </div>
+    <script type="text/plain" id="current-path">
+      <%= request.path %>
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const notis = document.querySelectorAll('.notification .delete') || []
+        notis.forEach(del => {
+          const noti = del.parentNode;
+          del.addEventListener('click', () => {
+            noti.parentNode.removeChild(noti);
+          });
         });
       });
-    });
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>
