@@ -38,6 +38,8 @@ class AnalyticsReport < ApplicationRecord
     orgs = Org.where(id: org_ids).index_by(&:id)
     pages = Comfy::Cms::Page.where(id: cms_page_ids).index_by(&:id)
 
+    # TODO: Analyze by unique visitors in period, instead of total events emitted
+
     result = {
       visit_count: data['visit_count'],
       event_count: data['event_count'],

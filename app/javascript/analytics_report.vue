@@ -3,32 +3,51 @@
 </template>
 
 <script setup lang="ts">
-type Data = {
-	// visit_count: visits.count,
-	// event_count: event_count,
-	// event_types: event_types,
-	// views_by_id: {
-	// 	location: location_views,
-	// 	cat_loc: cat_loc_views,
-	// 	cat: cat_views,
-	// 	org: org_views,
-	// 	cms_page: cms_page_views,
-	// }
-	visit_count: number,
-	event_count: number,
-	event_types: {
-		[key: string]: number,
-	},
-	views_by_id: {
-	},
+type LocationSummary = {
+	id: number,
+	name: string,
+	desc: string,
+	link: string,
+	where: string,
 }
 
-const props = defineProps({
+type CategorySummary = {
+	id: number,
+	name: string,
+	desc: string,
+	link: string,
+}
+
+type OrgSummary = {
+	id: number,
+	name: string,
+	desc: string,
+	link: string,
+	website: string,
+}
+
+type CmsPageSummary = {
+	id: number,
+	name: string,
+	link: string,
+}
+
+type Data = {
 	data: {
-		type: Object,
-		required: true,
+		visit_count: number,
+		event_count: number,
+		event_types: { [key: string]: number },
+		views_by_id: {
+			location: { [key: string]: LocationSummary },
+			cat_loc: { [key: string]: CategorySummary },
+			cat: { [key: string]: CategorySummary },
+			org: { [key: string]: OrgSummary },
+			cms_page: { [key: string]: CmsPageSummary },
+		},
 	}
-})
+}
+
+const props = defineProps<Data>()
 </script>
 
 <style scoped>

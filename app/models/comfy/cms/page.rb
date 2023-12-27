@@ -133,6 +133,14 @@ class Comfy::Cms::Page < ActiveRecord::Base
     self
   end
 
+	def to_report_summary
+		{
+			id: id,
+			name: label,
+			link: Rails.application.routes.url_helpers.comfy_cms_render_page_path(self.slug)
+		}
+	end
+
 protected
 
   def assigns_label
@@ -194,12 +202,4 @@ protected
     self.slug       = CGI.unescape(slug)      unless slug.nil?
     self.full_path  = CGI.unescape(full_path) unless full_path.nil?
   end
-
-	def to_report_summary
-		{
-			id: id,
-			name: name,
-			link: Rails.application.routes.url_helpers.comfy_cms_render_page_path(self.slug)
-		}
-	end
 end
