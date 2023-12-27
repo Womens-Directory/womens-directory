@@ -5,7 +5,7 @@ class BotDetector
 
   def call(env)
     req = Rack::Request.new(env)
-    ignore_visitor_if_bot req.cookies["ahoy_visitor"], req.path # TODO: hot path, job this?
+    Analytics::IgnoreVisitorJob.perform_later req.cookies["ahoy_visitor"], req.path
     @app.call(env)
   end
 end

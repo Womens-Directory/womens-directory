@@ -1,7 +1,9 @@
 module Analytics
 	class << self
-		def non_bot_visits
-			Ahoy::Visit.where.not(visitor_token: VisitorIgnore.select(:visitor_token))
+		def meaningful_visits
+			Ahoy::Visit.
+				where(user: nil).
+				where.not(visitor_token: VisitorIgnore.select(:visitor_token))
 		end
 
 		def matching_rule_id(path)
@@ -44,6 +46,12 @@ module Analytics
 					[id, Regexp.new(pattern)]
 				end
 			end
+		end
+	end
+
+	class IgnoreVisitorJob < ActiveJob::Base
+		def perform(visitor_token, path)
+			Analytics.ignore_visitor_if_bot visitor_token, path
 		end
 	end
 end
