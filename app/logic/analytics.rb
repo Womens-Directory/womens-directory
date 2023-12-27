@@ -43,7 +43,14 @@ module Analytics
 			count
 		end
 
-		def report(start_date, end_date)
+		def generate_report(start_date, end_date)
+			raise ArgumentError, "start_date must be before end_date" if start_date > end_date
+			report = AnalyticsReport.create! start_date: start_date, end_date: end_date
+			GenerateReportJob.perform_later report.id
+			return report.id
+		end
+
+		def calculate_report_data(start_date, end_date)
 			event_types = Hash.new 0
 			location_views = Hash.new 0
 			cat_loc_views = Hash.new 0
@@ -52,12 +59,16 @@ module Analytics
 			cms_page_views = Hash.new 0
 
 			visits = meaningful_visits.where(started_at: start_date..end_date).includes(:events)
+			event_count = 0
 			visits.find_each(batch_size: 100) do |visit|
 				visit.events.each do |event|
+					event_count += 1
 					event_types[event.name] += 1
 					if event.location_id
 						location_views[event.location_id] += 1
-						cat_loc_views[event.category_id] += 1
+						if event.category_id
+							cat_loc_views[event.category_id] += 1
+						end
 					elsif event.category_id
 						cat_views[event.category_id] += 1
 					elsif event.org_id
@@ -69,12 +80,16 @@ module Analytics
 			end
 
 			{
+				visit_count: visits.count,
+				event_count: event_count,
 				event_types: event_types,
-				location_views: location_views,
-				cat_loc_views: cat_loc_views,
-				cat_views: cat_views,
-				org_views: org_views,
-				cms_page_views: cms_page_views,
+				views_by_id: {
+					location: location_views,
+					cat_loc: cat_loc_views,
+					cat: cat_views,
+					org: org_views,
+					cms_page: cms_page_views,
+				}
 			}
 		end
 
@@ -92,6 +107,14 @@ module Analytics
 	class IgnoreVisitorJob < ActiveJob::Base
 		def perform(visitor_token, path)
 			Analytics.ignore_visitor_if_bot visitor_token, path
+		end
+	end
+
+	class GenerateReportJob < ActiveJob::Base
+		def perform(report_id)
+			report = AnalyticsReport.find report_id
+			data = Analytics.calculate_report_data report.start_date, report.end_date
+			report.update! data: data
 		end
 	end
 end
