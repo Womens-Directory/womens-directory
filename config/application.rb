@@ -27,6 +27,6 @@ module WomensDirectory
       g.template_engine :erb
     end
 
-    config.middleware.use BotDetector, [/\.php$/]
+    config.middleware.use BotDetector
   end
 end

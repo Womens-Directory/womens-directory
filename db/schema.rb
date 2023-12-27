@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_27_003036) do
+ActiveRecord::Schema.define(version: 2023_12_27_013431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -378,6 +378,18 @@ ActiveRecord::Schema.define(version: 2023_12_27_003036) do
     t.index ["transaction_id"], name: "index_versions_on_transaction_id"
   end
 
+  create_table "visitor_ignore_rules", force: :cascade do |t|
+    t.string "pattern", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "visitor_ignores", force: :cascade do |t|
+    t.string "visitor_token", null: false
+    t.bigint "visitor_ignore_rule_id", null: false
+    t.index ["visitor_ignore_rule_id"], name: "index_visitor_ignores_on_visitor_ignore_rule_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "ahoy_events", "categories"
@@ -389,4 +401,5 @@ ActiveRecord::Schema.define(version: 2023_12_27_003036) do
   add_foreign_key "locations", "orgs"
   add_foreign_key "locations", "submissions"
   add_foreign_key "orgs", "submissions"
+  add_foreign_key "visitor_ignores", "visitor_ignore_rules"
 end
