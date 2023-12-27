@@ -1,6 +1,7 @@
 require_relative "boot"
 
 require "rails/all"
+require "./lib/middleware/bot_detector"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -25,5 +26,7 @@ module WomensDirectory
     config.generators do |g|
       g.template_engine :erb
     end
+
+    config.middleware.use BotDetector, [/\.php$/]
   end
 end
