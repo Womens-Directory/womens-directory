@@ -83,6 +83,16 @@ class Location < ApplicationRecord
     }
   end
 
+  def report_summary
+    {
+      id: id,
+      name: name,
+      desc: desc,
+      where: "#{neighborhood}, #{city}, #{state}",
+      link: Rails.application.routes.url_helpers.show_location_path(self),
+    }
+  end
+
   # Don't break development apps when we're making fake locations locally
   if Rails.env.production?
     after_validation :geocode
