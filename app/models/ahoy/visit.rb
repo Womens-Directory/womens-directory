@@ -31,8 +31,9 @@
 #
 # Indexes
 #
-#  index_ahoy_visits_on_user_id      (user_id)
-#  index_ahoy_visits_on_visit_token  (visit_token) UNIQUE
+#  index_ahoy_visits_on_user_id        (user_id)
+#  index_ahoy_visits_on_visit_token    (visit_token) UNIQUE
+#  index_ahoy_visits_on_visitor_token  (visitor_token)
 #
 
 class ClearIpJob < ActiveJob::Base
