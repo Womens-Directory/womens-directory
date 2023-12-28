@@ -1,17 +1,17 @@
 <template>
 	<div>
-		<!-- <div class="bar-graph" data-name="loc">
+		<div>
 			<h2>Locations Viewed</h2>
-			<Bar :data="locData" ref="refLoc" />
+			<canvas id="graph-loc"></canvas>
 		</div>
-		<div class="bar-graph" data-name="catLoc">
+		<div>
 			<h2>Categories of Locations Viewed</h2>
-			<Bar :data="catLocData" ref="refCatLoc" />
+			<canvas id="graph-cat-loc"></canvas>
 		</div>
-		<div class="bar-graph" data-name="cat">
+		<div>
 			<h2>Categories Viewed</h2>
-			<Bar :data="catData" ref="refCat" />
-		</div> -->
+			<canvas id="graph-cat"></canvas>
+		</div>
 		<canvas id="chart"></canvas>
 	</div>
 </template>
@@ -24,16 +24,14 @@ import {
 	ArcElement,
 	BarElement,
 	CategoryScale,
-	Legend,
 	LinearScale,
 	Title,
 	Tooltip,
 	PieController,
 	BarController
 } from 'chart.js'
-import { Bar, Pie } from 'vue-chartjs'
 import ColorHash from 'color-hash'
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 
 const colorHash = new ColorHash({ saturation: 0.7 })
 
@@ -41,7 +39,6 @@ ChartJS.register(
 	ArcElement,
 	BarElement,
 	CategoryScale,
-	Legend,
 	LinearScale,
 	Title,
 	Tooltip,
@@ -101,57 +98,20 @@ type Data = {
 	},
 }
 
-// const props = defineProps<{ data: Data }>()
-// const viewsByID = props.data.views_by_id
+const props = defineProps<{ data: Data }>()
+const viewsByID = props.data.views_by_id
 
-// const locData = {
-// 	labels: [], datasets: [{ data: [], backgroundColor: [] }]
-// }
-// Object.values(viewsByID.location).sort((a, b) => b.count - a.count).slice(0, 50).forEach((loc) => {
-// 	locData.labels.push(loc.name)
-// 	locData.datasets[0].data.push(loc.count)
-// 	locData.datasets[0].backgroundColor.push(colorHash.hex(loc.name))
-// })
-
-// const catLocData = {
-// 	labels: [], datasets: [{ data: [], backgroundColor: [] }]
-// }
-// Object.values(viewsByID.cat_loc).sort((a, b) => b.count - a.count).forEach((cat) => {
-// 	catLocData.labels.push(cat.name)
-// 	catLocData.datasets[0].data.push(cat.count)
-// 	catLocData.datasets[0].backgroundColor.push(colorHash.hex(cat.name))
-// })
-
-// const catData = {
-// 	labels: [], datasets: [{ data: [], backgroundColor: [] }]
-// }
-// Object.values(viewsByID.cat).sort((a, b) => b.count - a.count).forEach((cat) => {
-// 	catData.labels.push(cat.name)
-// 	catData.datasets[0].data.push(cat.count)
-// 	catData.datasets[0].backgroundColor.push(colorHash.hex(cat.name))
-// })
-
-// const dataSets = {
-// 	loc: locData,
-// 	catLoc: catLocData,
-// 	cat: catData,
-// }
-
-// const refLoc = ref(null)
-// const refCatLoc = ref(null)
-// const refCat = ref(null)
-
-function render(selector, data: Graphable[], maxCount?: number) {
+function render(elem: HTMLCanvasElement, data: Graphable[], maxCount?: number) {
 	// Sort data by descending count
 	let items = data.sort((a, b) => b.count - a.count)
 	if (maxCount) items = items.slice(0, maxCount)
 	const labels = items.map(({ name }) => name);
 	const values = items.map(({ count }) => count);
+	const backgroundColor = items.map(({ name }) => colorHash.hex(name));
 
-	const elem = document.querySelector(selector);
 	const context = elem.getContext('2d');
 	const chart = new ChartJS(context, {
-		type: 'bar', data: { labels, datasets: [{ data: values, }] },
+		type: 'bar', data: { labels, datasets: [{ data: values, backgroundColor }] },
 	});
 
 	elem.onclick = function (e) {
@@ -162,40 +122,18 @@ function render(selector, data: Graphable[], maxCount?: number) {
 	};
 }
 
-const fakeData = [
-	{ name: 'Värde 1', count: 1, link: '/varde/1' },
-	{ name: 'Värde 2', count: 5, link: '/varde/2' },
-	{ name: 'Värde 3', count: 10, link: '/varde/3' },
-	{ name: 'Värde 4', count: 20, link: '/varde/4' },
-	{ name: 'Värde 5', count: 50, link: '/varde/5' },
-	{ name: 'Värde 6', count: 70, link: '/varde/6' },
-	{ name: 'Värde 7', count: 50, link: '/varde/7' },
-]
+const dataSets: Record<string, { data: Graphable[], maxCount?: number }> = {
+	'#graph-loc': { data: Object.values(viewsByID.location), maxCount: 20 },
+	'#graph-cat-loc': { data: Object.values(viewsByID.cat_loc) },
+	'#graph-cat': { data: Object.values(viewsByID.cat) },
+}
 
 onMounted(() => {
-	setTimeout(() => render('#chart', fakeData), 0)
-
-	// console.log({ refLoc, refCatLoc, refCat })
-	// function instrument() {
-	// 	const elems = document.querySelectorAll('.bar-graph')
-
-	// 	if (elems.length === 0) {
-	// 		setTimeout(instrument, 100)
-	// 		return
-	// 	}
-
-	// 	elems.forEach((el) => {
-	// 		const name = el.attributes['data-name'].value
-	// 		const canvas = el.querySelector('canvas')
-	// 		canvas.onclick = e => {
-	// 			const dataSet = dataSets[name]
-	// 			const container = ref(name)
-	// 			const chart = container
-	// 			console.log(chart)
-	// 		}
-	// 	})
-	// }
-	// instrument()
+	setTimeout(() => {
+		Object.entries(dataSets).forEach(([selector, dataSet]) => {
+			render(document.querySelector(selector), dataSet.data, dataSet.maxCount)
+		})
+	}, 0)
 })
 </script>
 
