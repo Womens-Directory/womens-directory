@@ -85,11 +85,8 @@ class Location < ApplicationRecord
 
   def to_report_summary
     {
-      id: id,
       name: name,
-      desc: desc,
       link: Rails.application.routes.url_helpers.show_location_path(self),
-      where: "#{neighborhood}, #{city}, #{state}",
     }
   end
 

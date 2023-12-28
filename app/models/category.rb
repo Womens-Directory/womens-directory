@@ -31,9 +31,7 @@ class Category < ApplicationRecord
 
   def to_report_summary
     {
-      id: id,
       name: name,
-      desc: description,
       link: Rails.application.routes.url_helpers.show_category_path(self),
     }
   end

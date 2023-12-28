@@ -133,7 +133,6 @@ class Comfy::Cms::Page < ActiveRecord::Base
 
 	def to_report_summary
 		{
-			id: id,
 			name: label,
 			link: Rails.application.routes.url_helpers.comfy_cms_render_page_path(self.slug)
 		}
