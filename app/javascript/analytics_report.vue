@@ -17,8 +17,6 @@
 </template>
 
 <script setup lang="ts">
-
-
 import {
 	Chart as ChartJS,
 	ArcElement,
@@ -136,13 +134,3 @@ onMounted(() => {
 	}, 0)
 })
 </script>
-
-<style scoped>
-h1 {
-	color: red;
-}
-
-.pie {
-	max-width: 400px;
-}
-</style>
