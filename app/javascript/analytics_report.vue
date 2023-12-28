@@ -12,7 +12,7 @@
 			<h2>Categories Viewed</h2>
 			<Bar :data="catData" ref="refCat" />
 		</div> -->
-		<canvas id="pieChart" width="400" height="400"></canvas>
+		<canvas id="chart"></canvas>
 	</div>
 </template>
 
@@ -82,6 +82,12 @@ type CmsPageSummary = {
 	link: string,
 }
 
+interface Graphable {
+	name: string,
+	link: string,
+	count: number,
+}
+
 type Data = {
 	visit_count: number,
 	event_count: number,
@@ -135,30 +141,38 @@ type Data = {
 // const refCatLoc = ref(null)
 // const refCat = ref(null)
 
+function render(selector, data: Record<string, number>) {
+	// Sort data descending
+	const items = Object.entries(data).sort((a, b) => b[1] - a[1]);
+	const labels = items.map(([label]) => label);
+	const values = items.map(([, value]) => value);
+
+	const elem = document.querySelector(selector);
+	const context = elem.getContext('2d');
+	const chart = new ChartJS(context, {
+		type: 'bar', data: { labels, datasets: [{ data: values, }] },
+	});
+
+	elem.onclick = function (e) {
+		var slice = chart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
+		if (!slice.length) return;
+		const item = items[slice[0].index];
+		console.log({ clicked: item })
+	};
+}
+
+const fakeData = {
+	"Värde 1": 1,
+	"Värde 2": 5,
+	"Värde 3": 10,
+	"Värde 4": 20,
+	"Värde 5": 50,
+	"Värde 6": 70,
+	"Värde 7": 50,
+}
 
 onMounted(() => {
-	setTimeout(() => {
-		const canvasP = document.querySelector('#pieChart');
-		const ctxP = canvasP.getContext('2d');
-		const myPieChart = new ChartJS(ctxP, {
-			type: 'pie',
-			data: {
-				labels: ["Värde 1", "Värde 2", "Värde 3", "Värde 4", "Värde 5", "Värde 6", "Värde 7"],
-				datasets: [{
-					data: [1, 5, 10, 20, 50, 70, 50],
-					backgroundColor: ["#64B5F6", "#FFD54F", "#2196F3", "#FFC107", "#1976D2", "#FFA000", "#0D47A1"],
-					hoverBackgroundColor: ["#B2EBF2", "#FFCCBC", "#4DD0E1", "#FF8A65", "#00BCD4", "#FF5722", "#0097A7"]
-				}]
-			},
-		});
-
-		canvasP.onclick = function (e) {
-			var slice = myPieChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
-			if (!slice.length) return;
-			var label = myPieChart.data.labels[slice[0].index];
-			console.log({ label })
-		}
-	}, 0)
+	setTimeout(() => render('#chart', fakeData), 0)
 
 	// console.log({ refLoc, refCatLoc, refCat })
 	// function instrument() {
