@@ -48,9 +48,14 @@
 			</div>
 
 			<h2>Visits by Date</h2>
+			<select name="visits-by-date-smooth" @change="updateVisitSmoothing">
+				<option value="0">No smoothing</option>
+				<option value="1">3-day smoothing</option>
+				<option value="3">7-day smoothing</option>
+				<option value="7">15-day smoothing</option>
+				<option value="15">31-day smoothing</option>
+			</select>
 			<canvas data-graph-content="visits-by-date"></canvas>
-			<h2>Visits by Date (smoothed to {{ DAYS_IN_WINDOW }}-day windows)</h2>
-			<canvas data-graph-content="visits-by-date-smooth"></canvas>
 		</div>
 
 		<div data-graph-aggregate="total-views" :class="{ 'is-hidden': currentTab !== 'total-views' }">
@@ -225,8 +230,6 @@ function render(elem: HTMLCanvasElement, type: ChartType, data: Graphable[], max
 		}
 	}
 
-	console.log({ data, sortBy, items })
-
 	if (maxCount) items = items.slice(0, maxCount)
 	const labels = items.map(({ name }) => name);
 	const values = items.map(({ count }) => count);
@@ -246,35 +249,61 @@ function render(elem: HTMLCanvasElement, type: ChartType, data: Graphable[], max
 		if (!item.link) return;
 		window.open(item.link, '_blank');
 	};
+
+	return chart;
 }
 
 const visitsByDate = Object.entries(props.data.visit_count_by_date)
 	.map(([name, count]) => ({ name, count }))
 	.sort((a, b) => a.name.localeCompare(b.name))
-const WINDOW_SIZE = 3;
-const DAYS_IN_WINDOW = WINDOW_SIZE * 2 + 1;
 
 function dateToMmDd(date: Date) {
 	return `${date.getMonth() + 1}/${date.getDate()}`
 }
 
-const visitsByDateSmooth = visitsByDate.map(({ }, i) => {
-	const start = Math.max(0, i - WINDOW_SIZE - 1);
-	const end = Math.min(visitsByDate.length, i + WINDOW_SIZE);
-	const window = visitsByDate.slice(start, end);
-	const sum = window.reduce((sum, { count }) => sum + count, 0);
+const daysInWindow = ref(1)
+let visitsByDateChart: ChartJS;
+const visitsByDateChartSelector = '[data-graph-content="visits-by-date"]'
 
-	const firstDateInRange = new Date(window[0].name);
-	const lastDateInRange = new Date(window[window.length - 1].name);
-	const nameRange = `${dateToMmDd(firstDateInRange)} - ${dateToMmDd(lastDateInRange)}`;
+function renderVisits() {
+	if (visitsByDateChart) visitsByDateChart.destroy();
 
-	return { name: nameRange, count: Math.floor(sum / window.length) };
-})
+	console.log(daysInWindow.value)
+	if (daysInWindow.value === 1) {
+		visitsByDateChart = render(
+			document.querySelector(visitsByDateChartSelector),
+			'line', visitsByDate, undefined, 'DONT_SORT',
+		)
+		return;
+	}
+
+	const visitsByDateSmooth = visitsByDate.map(({ }, i) => {
+		const start = Math.max(0, i - daysInWindow.value - 1);
+		const end = Math.min(visitsByDate.length, i + daysInWindow.value);
+		const window = visitsByDate.slice(start, end);
+		const sum = window.reduce((sum, { count }) => sum + count, 0);
+
+		const firstDateInRange = new Date(window[0].name);
+		const lastDateInRange = new Date(window[window.length - 1].name);
+		const nameRange = `${dateToMmDd(firstDateInRange)} - ${dateToMmDd(lastDateInRange)}`;
+
+		return { name: nameRange, count: Math.floor(sum / window.length) };
+	})
+
+	visitsByDateChart = render(
+		document.querySelector(visitsByDateChartSelector),
+		'line', visitsByDateSmooth, undefined, 'DONT_SORT',
+	)
+}
+
+function updateVisitSmoothing(ev: Event) {
+	const windowSize = parseInt((ev.target as HTMLSelectElement).value, 10);
+	daysInWindow.value = windowSize * 2 + 1;
+	renderVisits();
+}
 
 const dataSets: Record<string, { type: ChartType, data: Graphable[], maxCount?: number, sortBy?: SortBy }> = {
 	'[data-graph-content="event-types"]': { type: 'pie', data: Object.entries(props.data.event_types).map(([name, count]) => ({ name, count })) },
-	'[data-graph-content="visits-by-date"]': { type: 'line', data: visitsByDate, sortBy: 'DONT_SORT' },
-	'[data-graph-content="visits-by-date-smooth"]': { type: 'line', data: visitsByDateSmooth, sortBy: 'DONT_SORT' },
 
 	'div[data-graph-aggregate="total-views"] canvas[data-graph-content="loc"]': { type: 'bar', data: Object.values(viewsByID.location) },
 	'div[data-graph-aggregate="total-views"] canvas[data-graph-content="cat-loc"]': { type: 'bar', data: Object.values(viewsByID.cat_loc) },
@@ -300,6 +329,7 @@ onMounted(() => {
 		Object.entries(dataSets).forEach(([selector, { type, data, maxCount, sortBy }]) => {
 			render(document.querySelector(selector), type, data, maxCount, sortBy)
 		})
+		renderVisits()
 	}, 0)
 })
 
