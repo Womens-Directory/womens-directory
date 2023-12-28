@@ -7,7 +7,7 @@ class PaperTrail::VersionDecorator < ApplicationDecorator
   delegate_all
 
   def item
-    item_type.constantize.find item_id
+    item_type.constantize.find_by id: item_id
   end
 
   def changes
@@ -44,6 +44,6 @@ class PaperTrail::VersionDecorator < ApplicationDecorator
   private
 
   def parse_changes
-    @parse_changes ||= YAML.load object_changes
+    @parse_changes ||= YAML.load object_changes, aliases: true, permitted_classes: [Time, BigDecimal, ActiveSupport::TimeWithZone, ActiveSupport::TimeZone]
   end
 end
