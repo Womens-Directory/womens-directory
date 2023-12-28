@@ -33,6 +33,9 @@ import {
 	Tooltip,
 } from 'chart.js'
 import { Bar, Pie } from 'vue-chartjs'
+import ColorHash from 'color-hash'
+
+const colorHash = new ColorHash({ saturation: 0.7 })
 
 ChartJS.register(
 	ArcElement,
@@ -105,19 +108,21 @@ const props = defineProps<{ data: Data }>()
 const viewsByID = props.data.views_by_id
 
 const catLocData = {
-	labels: [], datasets: [{ data: [] }]
+	labels: [], datasets: [{ data: [], backgroundColor: [] }]
 }
 Object.values(viewsByID.cat_loc).sort((a, b) => b.count - a.count).forEach((cat) => {
 	catLocData.labels.push(cat.name)
 	catLocData.datasets[0].data.push(cat.count)
+	catLocData.datasets[0].backgroundColor.push(colorHash.hex(cat.name))
 })
 
 const catData = {
-	labels: [], datasets: [{ data: [] }]
+	labels: [], datasets: [{ data: [], backgroundColor: [] }]
 }
 Object.values(viewsByID.cat).sort((a, b) => b.count - a.count).forEach((cat) => {
 	catData.labels.push(cat.name)
 	catData.datasets[0].data.push(cat.count)
+	catData.datasets[0].backgroundColor.push(colorHash.hex(cat.name))
 })
 
 
