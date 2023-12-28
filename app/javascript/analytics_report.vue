@@ -12,7 +12,6 @@
 			<h2>Categories Viewed</h2>
 			<canvas id="graph-cat"></canvas>
 		</div>
-		<canvas id="chart"></canvas>
 	</div>
 </template>
 
@@ -83,21 +82,25 @@ interface Graphable {
 	count: number,
 }
 
+type ViewData = {
+	location: { [key: string]: LocationSummary },
+	cat_loc: { [key: string]: CategorySummary },
+	cat: { [key: string]: CategorySummary },
+	org: { [key: string]: OrgSummary },
+	cms_page: { [key: string]: CmsPageSummary },
+}
+
 type Data = {
 	visit_count: number,
 	event_count: number,
 	event_types: { [key: string]: number },
-	views_by_id: {
-		location: { [key: string]: LocationSummary },
-		cat_loc: { [key: string]: CategorySummary },
-		cat: { [key: string]: CategorySummary },
-		org: { [key: string]: OrgSummary },
-		cms_page: { [key: string]: CmsPageSummary },
-	},
+	total_views: ViewData,
+	views_by_visit: ViewData,
+	views_by_visitor: ViewData,
 }
 
 const props = defineProps<{ data: Data }>()
-const viewsByID = props.data.views_by_id
+const viewsByID = props.data.total_views
 
 function render(elem: HTMLCanvasElement, data: Graphable[], maxCount?: number) {
 	// Sort data by descending count

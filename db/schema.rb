@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 2023_12_27_182815) do
   end
 
   create_table "analytics_reports", force: :cascade do |t|
+    t.integer "version", default: 1, null: false
     t.datetime "start_date", null: false
     t.datetime "end_date", null: false
     t.jsonb "data"

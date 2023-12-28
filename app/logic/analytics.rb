@@ -51,45 +51,117 @@ module Analytics
 		end
 
 		def calculate_report_data(start_date, end_date)
-			event_types = Hash.new 0
-			location_views = Hash.new 0
-			cat_loc_views = Hash.new 0
-			cat_views = Hash.new 0
-			org_views = Hash.new 0
-			cms_page_views = Hash.new 0
-
 			visits = meaningful_visits.where(started_at: start_date..end_date).includes(:events)
+
+			total_views = {
+				location: Hash.new(0),
+				cat_loc: Hash.new(0),
+				cat: Hash.new(0),
+				org: Hash.new(0),
+				cms_page: Hash.new(0),
+			}
 			event_count = 0
+			event_types = Hash.new 0
 			visits.find_each(batch_size: 100) do |visit|
 				visit.events.each do |event|
 					event_count += 1
 					event_types[event.name] += 1
 					if event.location_id
-						location_views[event.location_id] += 1
+						total_views[:location][event.location_id] += 1
 						if event.category_id
-							cat_loc_views[event.category_id] += 1
+							total_views[:cat_loc][event.category_id] += 1
 						end
 					elsif event.category_id
-						cat_views[event.category_id] += 1
+						total_views[:cat][event.category_id] += 1
 					elsif event.org_id
-						org_views[event.org_id] += 1
+						total_views[:org][event.org_id] += 1
 					elsif event.comfy_cms_page_id
-						cms_page_views[event.comfy_cms_page_id] += 1
+						total_views[:cms_page][event.comfy_cms_page_id] += 1
 					end
 				end
+			end
+
+			by_visit = {
+				location: Hash.new(0),
+				cat_loc: Hash.new(0),
+				cat: Hash.new(0),
+				org: Hash.new(0),
+				cms_page: Hash.new(0),
+			}
+			visits.find_each(batch_size: 100) do |visit|
+				visited_locations = Set.new
+				visited_cat_locs = Set.new
+				visited_cats = Set.new
+				visited_orgs = Set.new
+				visited_cms_pages = Set.new
+
+				visit.events.each do |event|
+					if event.location_id
+						visited_locations << event.location_id
+						if event.category_id
+							visited_cat_locs << event.category_id
+						end
+					elsif event.category_id
+						visited_cats << event.category_id
+					elsif event.org_id
+						visited_orgs << event.org_id
+					elsif event.comfy_cms_page_id
+						visited_cms_pages << event.comfy_cms_page_id
+					end
+				end
+
+				visited_locations.each { |id| by_visit[:location][id] += 1 }
+				visited_cat_locs.each { |id| by_visit[:cat_loc][id] += 1 }
+				visited_cats.each { |id| by_visit[:cat][id] += 1 }
+				visited_orgs.each { |id| by_visit[:org][id] += 1 }
+				visited_cms_pages.each { |id| by_visit[:cms_page][id] += 1 }
+			end
+
+			by_visitor = {
+				location: Hash.new(0),
+				cat_loc: Hash.new(0),
+				cat: Hash.new(0),
+				org: Hash.new(0),
+				cms_page: Hash.new(0),
+			}
+			visits.pluck(:visitor_token).uniq.each do |visitor_token|
+				visited_locations = Set.new
+				visited_cat_locs = Set.new
+				visited_cats = Set.new
+				visited_orgs = Set.new
+				visited_cms_pages = Set.new
+
+				visits.where(visitor_token: visitor_token).find_each(batch_size: 100) do |visit|
+					visit.events.each do |event|
+						if event.location_id
+							visited_locations << event.location_id
+							if event.category_id
+								visited_cat_locs << event.category_id
+							end
+						elsif event.category_id
+							visited_cats << event.category_id
+						elsif event.org_id
+							visited_orgs << event.org_id
+						elsif event.comfy_cms_page_id
+							visited_cms_pages << event.comfy_cms_page_id
+						end
+					end
+				end
+
+				visited_locations.each { |id| by_visitor[:location][id] += 1 }
+				visited_cat_locs.each { |id| by_visitor[:cat_loc][id] += 1 }
+				visited_cats.each { |id| by_visitor[:cat][id] += 1 }
+				visited_orgs.each { |id| by_visitor[:org][id] += 1 }
+				visited_cms_pages.each { |id| by_visitor[:cms_page][id] += 1 }
 			end
 
 			{
 				visit_count: visits.count,
 				event_count: event_count,
 				event_types: event_types,
-				views_by_id: {
-					location: location_views,
-					cat_loc: cat_loc_views,
-					cat: cat_views,
-					org: org_views,
-					cms_page: cms_page_views,
-				}
+				total_views: total_views,
+				views_by_visit: by_visit,
+				views_by_visitor: by_visitor,
 			}
 		end
 

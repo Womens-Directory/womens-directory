@@ -25,8 +25,6 @@
 #  index_comfy_cms_pages_on_parent_id_and_position  (parent_id,position)
 #  index_comfy_cms_pages_on_site_id_and_full_path   (site_id,full_path)
 #
-# Copied to add to_report_summary from:
-# https://github.com/comfy/comfortable-mexican-sofa/blob/8f7e425a06aca9cfa8e21de6b7a10669c8495fc3/app/models/comfy/cms/page.rb
 
 class Comfy::Cms::Page < ActiveRecord::Base
 

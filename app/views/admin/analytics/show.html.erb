@@ -23,7 +23,7 @@
           return;
         }
         console.log(`Report is not yet ready. Checking again in ${interval} ms.`);
-        setInterval(check, interval)
+        setTimeout(check, interval)
         interval = Math.min(interval * 1.1, maxInterval);
       }
 
