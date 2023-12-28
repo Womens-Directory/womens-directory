@@ -13,10 +13,44 @@
 
 		<div data-graph-aggregate="summary" :class="{ 'is-hidden': currentTab !== 'summary' }">
 			<h1>Summary</h1>
-			<h2>Aggregate Views by Site Area</h2>
-			<div class="small" style="max-width: 400px;">
-				<canvas data-graph-content="event-types"></canvas>
+
+			<div class="columns">
+				<div class="column is-half">
+					<h2>Statistics</h2>
+					<ul>
+						<li>
+							<strong>Total Visits:</strong>
+							{{ data.visit_count }}
+						</li>
+						<li>
+							<strong>Avg Locations Viewed/Visit:</strong>
+							{{ (totalViews.location / data.visit_count).toFixed(1) }}
+						</li>
+						<li>
+							<strong>Avg Categories Viewed/Visit:</strong>
+							{{ (totalViews.cat / data.visit_count).toFixed(1) }}
+						</li>
+						<li>
+							<strong>Avg Orgs Viewed/Visit:</strong>
+							{{ (totalViews.org / data.visit_count).toFixed(1) }}
+						</li>
+						<li>
+							<strong>Avg Pages Viewed/Visit:</strong>
+							{{ (totalViews.cms_page / data.visit_count).toFixed(1) }}
+						</li>
+					</ul>
+				</div>
+
+				<div class="column is-half">
+					<h2>Aggregate Views by Site Area</h2>
+					<canvas data-graph-content="event-types"></canvas>
+				</div>
 			</div>
+
+			<h2>Visits by Date</h2>
+			<canvas data-graph-content="visits-by-date"></canvas>
+			<h2>Visits by Date (smoothed to {{ DAYS_IN_WINDOW }}-day windows)</h2>
+			<canvas data-graph-content="visits-by-date-smooth"></canvas>
 		</div>
 
 		<div data-graph-aggregate="total-views" :class="{ 'is-hidden': currentTab !== 'total-views' }">
@@ -72,15 +106,18 @@
 import {
 	Chart as ChartJS,
 	ArcElement,
+	BarController,
 	BarElement,
 	CategoryScale,
+	ChartType,
+	Legend,
 	LinearScale,
+	LineController,
+	LineElement,
+	PieController,
+	PointElement,
 	Title,
 	Tooltip,
-	PieController,
-	BarController,
-	ChartType,
-	Legend
 } from 'chart.js'
 import ColorHash from 'color-hash'
 import { onMounted, ref } from 'vue'
@@ -89,14 +126,17 @@ const colorHash = new ColorHash({ saturation: 0.7 })
 
 ChartJS.register(
 	ArcElement,
+	BarController,
 	BarElement,
 	CategoryScale,
+	Legend,
 	LinearScale,
+	LineController,
+	LineElement,
+	PieController,
+	PointElement,
 	Title,
 	Tooltip,
-	Legend,
-	BarController,
-	PieController
 )
 
 type LocationSummary = {
@@ -148,6 +188,7 @@ type ViewData = {
 
 type Data = {
 	visit_count: number,
+	visit_count_by_date: { [key: string]: number },
 	event_count: number,
 	event_types: { [key: string]: number },
 	total_views: ViewData,
@@ -155,15 +196,37 @@ type Data = {
 	views_by_visitor: ViewData,
 }
 
+type SortBy = 'DONT_SORT' | {
+	type: 'name' | 'count',
+	direction: 'asc' | 'desc',
+}
+
 const props = defineProps<{ data: Data }>()
 const viewsByID = props.data.total_views
 const viewsByVisit = props.data.views_by_visit
 const viewsByVisitor = props.data.views_by_visitor
 
-function render(elem: HTMLCanvasElement, type: ChartType, data: Graphable[], maxCount?: number) {
+const totalViews = { location: 0, cat: 0, org: 0, cms_page: 0 };
+['location', 'cat', 'org', 'cms_page'].map((key) => {
+	totalViews[key] = Object.values(viewsByID[key]).reduce((acc: number, cur: Graphable) => acc + cur.count, 0)
+})
+
+function render(elem: HTMLCanvasElement, type: ChartType, data: Graphable[], maxCount?: number, sortBy?: SortBy) {
 	if (!maxCount && type === 'bar') maxCount = 30
-	// Sort data by descending count
-	let items = data.sort((a, b) => b.count - a.count)
+	let items = data;
+
+	if (!sortBy) sortBy = { type: 'count', direction: 'desc' }
+	if (sortBy !== 'DONT_SORT') {
+		const { type, direction } = sortBy
+		if (type === 'count') {
+			items = items.sort((a, b) => direction === 'asc' ? a.count - b.count : b.count - a.count)
+		} else {
+			items = items.sort((a, b) => direction === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name))
+		}
+	}
+
+	console.log({ data, sortBy, items })
+
 	if (maxCount) items = items.slice(0, maxCount)
 	const labels = items.map(({ name }) => name);
 	const values = items.map(({ count }) => count);
@@ -173,7 +236,7 @@ function render(elem: HTMLCanvasElement, type: ChartType, data: Graphable[], max
 	const chart = new ChartJS(context, {
 		type,
 		data: { labels, datasets: [{ data: values, backgroundColor }] },
-		options: { plugins: { legend: { display: type !== 'bar' } } }
+		options: { plugins: { legend: { display: type === 'pie' } } }
 	});
 
 	elem.onclick = function (e) {
@@ -185,8 +248,33 @@ function render(elem: HTMLCanvasElement, type: ChartType, data: Graphable[], max
 	};
 }
 
-const dataSets: Record<string, { type: ChartType, data: Graphable[], maxCount?: number }> = {
+const visitsByDate = Object.entries(props.data.visit_count_by_date)
+	.map(([name, count]) => ({ name, count }))
+	.sort((a, b) => a.name.localeCompare(b.name))
+const WINDOW_SIZE = 3;
+const DAYS_IN_WINDOW = WINDOW_SIZE * 2 + 1;
+
+function dateToMmDd(date: Date) {
+	return `${date.getMonth() + 1}/${date.getDate()}`
+}
+
+const visitsByDateSmooth = visitsByDate.map(({ }, i) => {
+	const start = Math.max(0, i - WINDOW_SIZE - 1);
+	const end = Math.min(visitsByDate.length, i + WINDOW_SIZE);
+	const window = visitsByDate.slice(start, end);
+	const sum = window.reduce((sum, { count }) => sum + count, 0);
+
+	const firstDateInRange = new Date(window[0].name);
+	const lastDateInRange = new Date(window[window.length - 1].name);
+	const nameRange = `${dateToMmDd(firstDateInRange)} - ${dateToMmDd(lastDateInRange)}`;
+
+	return { name: nameRange, count: Math.floor(sum / window.length) };
+})
+
+const dataSets: Record<string, { type: ChartType, data: Graphable[], maxCount?: number, sortBy?: SortBy }> = {
 	'[data-graph-content="event-types"]': { type: 'pie', data: Object.entries(props.data.event_types).map(([name, count]) => ({ name, count })) },
+	'[data-graph-content="visits-by-date"]': { type: 'line', data: visitsByDate, sortBy: 'DONT_SORT' },
+	'[data-graph-content="visits-by-date-smooth"]': { type: 'line', data: visitsByDateSmooth, sortBy: 'DONT_SORT' },
 
 	'div[data-graph-aggregate="total-views"] canvas[data-graph-content="loc"]': { type: 'bar', data: Object.values(viewsByID.location) },
 	'div[data-graph-aggregate="total-views"] canvas[data-graph-content="cat-loc"]': { type: 'bar', data: Object.values(viewsByID.cat_loc) },
@@ -209,8 +297,8 @@ const dataSets: Record<string, { type: ChartType, data: Graphable[], maxCount?: 
 
 onMounted(() => {
 	setTimeout(() => {
-		Object.entries(dataSets).forEach(([selector, { type, data, maxCount }]) => {
-			render(document.querySelector(selector), type, data, maxCount)
+		Object.entries(dataSets).forEach(([selector, { type, data, maxCount, sortBy }]) => {
+			render(document.querySelector(selector), type, data, maxCount, sortBy)
 		})
 	}, 0)
 })
@@ -221,9 +309,3 @@ function selectTab(name: string) {
 	currentTab.value = name
 }
 </script>
-
-<style scoped>
-.small {
-	max-width: 400px;
-}
-</style>

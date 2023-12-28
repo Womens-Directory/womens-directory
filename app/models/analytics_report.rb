@@ -40,6 +40,7 @@ class AnalyticsReport < ApplicationRecord
 
     result = {
       visit_count: data['visit_count'],
+      visit_count_by_date: data['visit_count_by_date'],
       event_count: data['event_count'],
       event_types: data['event_types'],
       total_views: {

@@ -52,6 +52,7 @@ module Analytics
 
 		def calculate_report_data(start_date, end_date)
 			visits = meaningful_visits.where(started_at: start_date..end_date).includes(:events)
+			visit_count_by_date = visits.pluck(:started_at).group_by { |d| d.to_date }.map { |k, v| [k.iso8601, v.count] }.to_h
 
 			total_views = {
 				location: Hash.new(0),
@@ -157,6 +158,7 @@ module Analytics
 
 			{
 				visit_count: visits.count,
+				visit_count_by_date: visit_count_by_date,
 				event_count: event_count,
 				event_types: event_types,
 				total_views: total_views,

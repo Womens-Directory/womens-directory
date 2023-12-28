@@ -13,8 +13,8 @@
     <p>This report is still being generated. Please check back soon.</p>
     <p>This page will reload automatically when the report is ready.</p>
     <script>
-      let interval = 1_000;
-      const maxInterval = 15_000;
+      let interval = 5_000;
+      const maxInterval = 30_000;
 
       async function check() {
         const resp = await fetch('/admin/analytics/<%= @report.id %>/status');
