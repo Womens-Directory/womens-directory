@@ -141,11 +141,12 @@ type Data = {
 // const refCatLoc = ref(null)
 // const refCat = ref(null)
 
-function render(selector, data: Record<string, number>) {
-	// Sort data descending
-	const items = Object.entries(data).sort((a, b) => b[1] - a[1]);
-	const labels = items.map(([label]) => label);
-	const values = items.map(([, value]) => value);
+function render(selector, data: Graphable[], maxCount?: number) {
+	// Sort data by descending count
+	let items = data.sort((a, b) => b.count - a.count)
+	if (maxCount) items = items.slice(0, maxCount)
+	const labels = items.map(({ name }) => name);
+	const values = items.map(({ count }) => count);
 
 	const elem = document.querySelector(selector);
 	const context = elem.getContext('2d');
@@ -157,19 +158,19 @@ function render(selector, data: Record<string, number>) {
 		var slice = chart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
 		if (!slice.length) return;
 		const item = items[slice[0].index];
-		console.log({ clicked: item })
+		window.open(item.link, '_blank');
 	};
 }
 
-const fakeData = {
-	"Värde 1": 1,
-	"Värde 2": 5,
-	"Värde 3": 10,
-	"Värde 4": 20,
-	"Värde 5": 50,
-	"Värde 6": 70,
-	"Värde 7": 50,
-}
+const fakeData = [
+	{ name: 'Värde 1', count: 1, link: '/varde/1' },
+	{ name: 'Värde 2', count: 5, link: '/varde/2' },
+	{ name: 'Värde 3', count: 10, link: '/varde/3' },
+	{ name: 'Värde 4', count: 20, link: '/varde/4' },
+	{ name: 'Värde 5', count: 50, link: '/varde/5' },
+	{ name: 'Värde 6', count: 70, link: '/varde/6' },
+	{ name: 'Värde 7', count: 50, link: '/varde/7' },
+]
 
 onMounted(() => {
 	setTimeout(() => render('#chart', fakeData), 0)
