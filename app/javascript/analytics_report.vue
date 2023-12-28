@@ -8,15 +8,41 @@
 			<h2>Categories Viewed</h2>
 			<Pie :data="catData" />
 		</div>
+		<div class="bar">
+			<h2>Categories of Locations Viewed</h2>
+			<Bar :data="catLocData" />
+		</div>
+		<div class="bar">
+			<h2>Categories Viewed</h2>
+			<Bar :data="catData" />
+		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
-import { defineComponent } from 'vue'
-import { Pie } from 'vue-chartjs'
 
-ChartJS.register(ArcElement, Tooltip, Legend)
+
+import {
+	Chart as ChartJS,
+	ArcElement,
+	BarElement,
+	CategoryScale,
+	Legend,
+	LinearScale,
+	Title,
+	Tooltip,
+} from 'chart.js'
+import { Bar, Pie } from 'vue-chartjs'
+
+ChartJS.register(
+	ArcElement,
+	BarElement,
+	CategoryScale,
+	Legend,
+	LinearScale,
+	Title,
+	Tooltip,
+)
 
 type LocationSummary = {
 	count: number,
