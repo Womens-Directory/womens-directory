@@ -20,7 +20,7 @@ class AnalyticsReport < ApplicationRecord
     age = time_ago_in_words(created_at)
     short_start_date = start_date.strftime('%Y-%m-%d')
     short_end_date = end_date.strftime('%Y-%m-%d')
-    "Report #{id}: #{short_start_date} to #{short_end_date} (#{age} ago)"
+    "#{id}: #{short_start_date} to #{short_end_date} (#{age} ago)"
   end
 
   def ready

@@ -5,9 +5,9 @@
   <h1>Analytics Report <%= @report.id %></h1>
   <ul>
     <li><strong>Generated:</strong> <%= @report.created_at %> (<%= time_ago_in_words(@report.created_at) %> ago)</li>
-    <li><strong>Start Date:</strong> <%= @report.start_date %> (<%= time_ago_in_words(@report.start_date) %> ago)</li>
-    <li><strong>End Date:</strong> <%= @report.end_date %> (<%= time_ago_in_words(@report.end_date) %> ago)</li>
-    <li><strong>Duration:</strong> <%= distance_of_time_in_words(@report.start_date, @report.end_date) %></li>
+    <li><strong>Report Start:</strong> <%= @report.start_date %> (<%= time_ago_in_words(@report.start_date) %> ago)</li>
+    <li><strong>Report End:</strong> <%= @report.end_date %> (<%= time_ago_in_words(@report.end_date) %> ago)</li>
+    <li><strong>Report Period:</strong> <%= distance_of_time_in_words(@report.start_date, @report.end_date) %></li>
   </ul>
   <% unless @report.ready %>
     <p>This report is still being generated. Please check back soon.</p>

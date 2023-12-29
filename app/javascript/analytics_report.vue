@@ -2,12 +2,10 @@
 	<div>
 		<div class="tabs is-boxed">
 			<ul>
-				<li :class="{ 'is-active': currentTab === 'summary' }"><a @click="selectTab('summary')">Summary</a>
+				<li v-for="{ id, name } in tabs" :key="id"
+					:class="{ 'is-active': currentTab === id, 'has-text-weight-bold': true, 'mt-4': true }">
+					<a @click="selectTab(id)">{{ name }}</a>
 				</li>
-				<li :class="{ 'is-active': currentTab === 'total-views' }"><a @click="selectTab('total-views')">Total Views</a>
-				</li>
-				<li :class="{ 'is-active': currentTab === 'by-visit' }"><a @click="selectTab('by-visit')">By Visit</a></li>
-				<li :class="{ 'is-active': currentTab === 'by-visitor' }"><a @click="selectTab('by-visitor')">By Visitor</a></li>
 			</ul>
 		</div>
 
@@ -18,25 +16,8 @@
 				<div class="column is-half">
 					<h2>Statistics</h2>
 					<ul>
-						<li>
-							<strong>Total Visits:</strong>
-							{{ data.visit_count }}
-						</li>
-						<li>
-							<strong>Avg Locations Viewed/Visit:</strong>
-							{{ (totalViews.location / data.visit_count).toFixed(1) }}
-						</li>
-						<li>
-							<strong>Avg Categories Viewed/Visit:</strong>
-							{{ (totalViews.cat / data.visit_count).toFixed(1) }}
-						</li>
-						<li>
-							<strong>Avg Orgs Viewed/Visit:</strong>
-							{{ (totalViews.org / data.visit_count).toFixed(1) }}
-						</li>
-						<li>
-							<strong>Avg Pages Viewed/Visit:</strong>
-							{{ (totalViews.cms_page / data.visit_count).toFixed(1) }}
+						<li v-for="[k, v] of Object.entries(stats)" :key="k">
+							<strong>{{ k }}:</strong> {{ v }}
 						</li>
 					</ul>
 				</div>
@@ -59,50 +40,27 @@
 			<canvas data-graph-content="visits-by-date"></canvas>
 		</div>
 
-		<div data-graph-aggregate="total-views" :class="{ 'is-hidden': currentTab !== 'total-views' }">
-			<h1>Total Views</h1>
-			<p>All page views are counted individually, even if the same visitor views a page multiple times during a single
-				visit.</p>
-			<h2>Locations Viewed</h2>
+		<div v-for="{ id, name, desc } in aggrTabs" :key="id" :data-graph-aggregate="id"
+			:class="{ 'is-hidden': currentTab !== id }">
+			<h1>{{ name }}</h1>
+			<p>{{ desc }}</p>
+			<h2>Location Views</h2>
+			<p>The number of views for a given location in the reporting period.</p>
 			<canvas data-graph-content="loc"></canvas>
-			<h2>Categories of Locations Viewed</h2>
-			<canvas data-graph-content="cat-loc"></canvas>
-			<h2>Categories Viewed</h2>
+			<h2>Category Views</h2>
+			<p>The number of views for a given category in the reporting period.</p>
 			<canvas data-graph-content="cat"></canvas>
-			<h2>Organizations Viewed</h2>
+			<h2>Categories of Location Views</h2>
+			<p>This is an aggregate of <em>all</em> categories listed for each location that is viewed by a visitor. For
+				example, if a visitor views <em>Acme Assistance</em>, and this location is listed under both
+				<em>Mental Health</em> and <em>Food Assistance</em> categories, both
+				<em>Mental Health</em> and <em>Food Assistance</em> will have one view.
+			</p> <canvas data-graph-content="cat-loc"></canvas>
+			<h2>Organization Views</h2>
+			<p>The number of views for an organization in the reporting period.</p>
 			<canvas data-graph-content="org"></canvas>
-			<h2>Pages Viewed</h2>
-			<canvas data-graph-content="page"></canvas>
-		</div>
-
-		<div data-graph-aggregate="by-visit" :class="{ 'is-hidden': currentTab !== 'by-visit' }">
-			<h1>By Visit</h1>
-			<p>Pages viewed multiple times during a single visit are counted once. Pages viewed on two separate visits are
-				counted twice.</p>
-			<h2>Locations Viewed</h2>
-			<canvas data-graph-content="loc"></canvas>
-			<h2>Categories of Locations Viewed</h2>
-			<canvas data-graph-content="cat-loc"></canvas>
-			<h2>Categories Viewed</h2>
-			<canvas data-graph-content="cat"></canvas>
-			<h2>Organizations Viewed</h2>
-			<canvas data-graph-content="org"></canvas>
-			<h2>Pages Viewed</h2>
-			<canvas data-graph-content="page"></canvas>
-		</div>
-
-		<div data-graph-aggregate="by-visitor" :class="{ 'is-hidden': currentTab !== 'by-visitor' }">
-			<h1>By Visitor</h1>
-			<p>Pages viewed multiple times by the same visitor are only counted once, even if they are on separate visits.</p>
-			<h2>Locations Viewed</h2>
-			<canvas data-graph-content="loc"></canvas>
-			<h2>Categories of Locations Viewed</h2>
-			<canvas data-graph-content="cat-loc"></canvas>
-			<h2>Categories Viewed</h2>
-			<canvas data-graph-content="cat"></canvas>
-			<h2>Organizations Viewed</h2>
-			<canvas data-graph-content="org"></canvas>
-			<h2>Pages Viewed</h2>
+			<h2>Page Views</h2>
+			<p>The number of views for a page in the site CMS in the reporting period.</p>
 			<canvas data-graph-content="page"></canvas>
 		</div>
 	</div>
@@ -301,6 +259,17 @@ function updateVisitSmoothing(ev: Event) {
 	renderVisits();
 }
 
+const aggrTabs = [
+	{ id: 'total-views', name: 'Total Views', desc: 'All page views are counted individually, even if the same visitor views a page multiple times during a single visit.' },
+	{ id: 'by-visit', name: 'By Visit', desc: 'Pages viewed multiple times during a single visit are counted once. Pages viewed on two separate visits are counted twice.' },
+	{ id: 'by-visitor', name: 'By Visitor', desc: 'Pages viewed multiple times by the same visitor are only counted once, even if they are on separate visits.' },
+]
+
+const tabs = [
+	{ id: 'summary', name: 'Summary' },
+	...aggrTabs
+]
+
 const dataSets: Record<string, { type: ChartType, data: Graphable[], maxCount?: number, sortBy?: SortBy }> = {
 	'[data-graph-content="event-types"]': { type: 'pie', data: Object.entries(props.data.event_types).map(([name, count]) => ({ name, count })) },
 
@@ -323,9 +292,19 @@ const dataSets: Record<string, { type: ChartType, data: Graphable[], maxCount?: 
 	'div[data-graph-aggregate="by-visitor"] canvas[data-graph-content="page"]': { type: 'bar', data: Object.values(viewsByVisitor.cms_page) },
 }
 
+const visitCount = props.data.visit_count
+const stats = {
+	'Total Visits': visitCount,
+	'Avg Locations Viewed/Visit': (totalViews.location / visitCount).toFixed(1),
+	'Avg Categories Viewed/Visit': (totalViews.cat / visitCount).toFixed(1),
+	'Avg Orgs Viewed/Visit': (totalViews.org / visitCount).toFixed(1),
+	'Avg Pages Viewed/Visit': (totalViews.cms_page / visitCount).toFixed(1),
+}
+
 onMounted(() => {
 	setTimeout(() => {
 		Object.entries(dataSets).forEach(([selector, { type, data, maxCount, sortBy }]) => {
+			console.log({ selector })
 			render(document.querySelector(selector), type, data, maxCount, sortBy)
 		})
 		renderVisits()
