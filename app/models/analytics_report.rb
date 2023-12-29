@@ -2,13 +2,23 @@
 #
 # Table name: analytics_reports
 #
-#  id         :bigint           not null, primary key
-#  data       :jsonb
-#  end_date   :datetime         not null
-#  start_date :datetime         not null
-#  version    :integer          default(1), not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                         :bigint           not null, primary key
+#  data                       :jsonb
+#  end_date                   :datetime         not null
+#  report_generation_duration :integer
+#  start_date                 :datetime         not null
+#  version                    :integer          default(1), not null
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  user_id                    :bigint           not null
+#
+# Indexes
+#
+#  index_analytics_reports_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
 #
 
 require 'action_view'
@@ -16,6 +26,8 @@ require 'action_view/helpers'
 include ActionView::Helpers::DateHelper
 
 class AnalyticsReport < ApplicationRecord
+  belongs_to :user
+
   def name
     age = time_ago_in_words(created_at)
     short_start_date = start_date.strftime('%Y-%m-%d')

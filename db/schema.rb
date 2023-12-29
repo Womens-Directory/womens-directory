@@ -98,11 +98,14 @@ ActiveRecord::Schema.define(version: 2023_12_27_182815) do
 
   create_table "analytics_reports", force: :cascade do |t|
     t.integer "version", default: 1, null: false
+    t.bigint "user_id", null: false
     t.datetime "start_date", null: false
     t.datetime "end_date", null: false
     t.jsonb "data"
+    t.integer "report_generation_duration"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_analytics_reports_on_user_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -407,6 +410,7 @@ ActiveRecord::Schema.define(version: 2023_12_27_182815) do
   add_foreign_key "ahoy_events", "feedbacks"
   add_foreign_key "ahoy_events", "locations"
   add_foreign_key "ahoy_events", "orgs"
+  add_foreign_key "analytics_reports", "users"
   add_foreign_key "emails", "locations"
   add_foreign_key "locations", "orgs"
   add_foreign_key "locations", "submissions"

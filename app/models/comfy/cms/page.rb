@@ -131,12 +131,12 @@ class Comfy::Cms::Page < ActiveRecord::Base
     self
   end
 
-	def to_report_summary
-		{
-			name: label,
-			link: Rails.application.routes.url_helpers.comfy_cms_render_page_path(self.slug)
-		}
-	end
+  def to_report_summary
+    {
+      name: label,
+      link: Rails.application.routes.url_helpers.comfy_cms_render_page_path(self.slug)
+    }
+  end
 
 protected
 

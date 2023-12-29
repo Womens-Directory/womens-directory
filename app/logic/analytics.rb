@@ -43,9 +43,9 @@ module Analytics
 			count
 		end
 
-		def generate_report!(start_date, end_date)
+		def generate_report!(user, start_date, end_date)
 			raise ArgumentError, "start_date must be before end_date" if start_date > end_date
-			report = AnalyticsReport.create! start_date: start_date, end_date: end_date
+			report = AnalyticsReport.create! user: user, start_date: start_date, end_date: end_date
 			GenerateReportJob.perform_later report.id
 			return report.id
 		end
@@ -187,8 +187,10 @@ module Analytics
 	class GenerateReportJob < ActiveJob::Base
 		def perform(report_id)
 			report = AnalyticsReport.find report_id
+			start = Time.now
 			data = Analytics.calculate_report_data report.start_date, report.end_date
-			report.update! data: data
+			duration = Time.now - start
+			report.update! data: data, report_generation_duration: duration
 		end
 	end
 end
