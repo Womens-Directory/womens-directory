@@ -2,15 +2,15 @@
 #
 # Table name: analytics_reports
 #
-#  id                         :bigint           not null, primary key
-#  data                       :jsonb
-#  end_date                   :datetime         not null
-#  report_generation_duration :integer
-#  start_date                 :datetime         not null
-#  version                    :integer          default(1), not null
-#  created_at                 :datetime         not null
-#  updated_at                 :datetime         not null
-#  user_id                    :bigint           not null
+#  id                :bigint           not null, primary key
+#  data              :jsonb
+#  end_date          :datetime         not null
+#  gen_duration_secs :integer
+#  start_date        :datetime         not null
+#  version           :integer          default(1), not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  user_id           :bigint           not null
 #
 # Indexes
 #

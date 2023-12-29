@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 2023_12_27_182815) do
     t.datetime "start_date", null: false
     t.datetime "end_date", null: false
     t.jsonb "data"
-    t.integer "report_generation_duration"
+    t.integer "gen_duration_secs"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_analytics_reports_on_user_id"

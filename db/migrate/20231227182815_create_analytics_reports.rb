@@ -8,7 +8,7 @@ class CreateAnalyticsReports < ActiveRecord::Migration[6.1]
       t.datetime :end_date, null: false
 
       t.jsonb :data
-      t.integer :report_generation_duration
+      t.integer :gen_duration_secs
 
       t.timestamps
     end

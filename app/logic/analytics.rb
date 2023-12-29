@@ -190,7 +190,7 @@ module Analytics
 			start = Time.now
 			data = Analytics.calculate_report_data report.start_date, report.end_date
 			duration = Time.now - start
-			report.update! data: data, report_generation_duration: duration
+			report.update! data: data, gen_duration_secs: duration
 		end
 	end
 end
