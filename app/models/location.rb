@@ -83,6 +83,13 @@ class Location < ApplicationRecord
     }
   end
 
+  def to_report_summary
+    {
+      name: name,
+      link: Rails.application.routes.url_helpers.show_location_path(self),
+    }
+  end
+
   # Don't break development apps when we're making fake locations locally
   if Rails.env.production?
     after_validation :geocode

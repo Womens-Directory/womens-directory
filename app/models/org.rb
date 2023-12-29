@@ -41,4 +41,11 @@ class Org < ApplicationRecord
   def to_param
     "#{id}-#{name_as_slug}"
   end
+
+  def to_report_summary
+    {
+      name: name,
+      link: Rails.application.routes.url_helpers.show_org_path(self),
+    }
+  end
 end

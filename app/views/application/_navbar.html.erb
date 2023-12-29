@@ -28,6 +28,7 @@
             <div class="navbar-dropdown is-right">
               <a class="navbar-item" href="/admin" target="_blank">Database</a>
               <a class="navbar-item" href="/admin/birdseye/categories">Birdseye</a>
+              <a class="navbar-item" href="/admin/analytics">Analytics</a>
               <% if current_user.can? :create, Location %>
                 <a class="navbar-item" href="<%= admin_fresh_path %>">Quick Create...</a>
               <% end %>

@@ -1,0 +1,28 @@
+<div class="autostyle">
+  <h1>Analytics</h1>
+  <h2>Reports</h2>
+  <ul>
+    <% @reports.each do |report| %>
+      <li><%= link_to report.name, admin_analytics_report_path(report.id) %></li>
+    <% end %>
+  </ul>
+  <h2>Generate New Report</h2>
+  <%= form_tag admin_analytics_create_path, method: :post do %>
+    <%= label_tag :start_date %>
+    <%= datetime_field_tag :start_date, id: 'start_date' %>
+    <%= label_tag :end_date %>
+    <%= datetime_field_tag :end_date, id: 'end_date' %>
+    <input type="hidden" id="tz_offset" name="tz_offset">
+    <%= submit_tag "Generate Report" %>
+  <% end %>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const now = new Date();
+    const nowLocal = new Date(now - now.getTimezoneOffset() * 60000);
+    const oneMonthAgo = new Date(nowLocal - 1000 * 60 * 60 * 24 * 30);
+    document.querySelector('#tz_offset').value = now.getTimezoneOffset();
+    document.querySelector('#start_date').value = oneMonthAgo.toISOString().slice(0, 16);
+    document.querySelector('#end_date').value = nowLocal.toISOString().slice(0, 16);
+  });
+</script>

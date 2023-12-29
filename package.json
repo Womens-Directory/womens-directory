@@ -17,6 +17,8 @@
     "babel-loader": "8",
     "babel-plugin-macros": "^3.1.0",
     "bulma": "^0.9.2",
+    "chart.js": "^4.4.1",
+    "color-hash": "^2.0.2",
     "compression-webpack-plugin": "9",
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^3.4.1",
@@ -46,5 +48,8 @@
     "presets": [
       "./node_modules/shakapacker/package/babel/preset.js"
     ]
+  },
+  "devDependencies": {
+    "@types/color-hash": "^1.0.5"
   }
 }

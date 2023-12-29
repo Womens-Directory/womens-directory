@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_10_01_183836) do
+ActiveRecord::Schema.define(version: 2023_12_27_182815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,7 +53,9 @@ ActiveRecord::Schema.define(version: 2023_10_01_183836) do
     t.bigint "feedback_id"
     t.bigint "location_id"
     t.bigint "org_id"
+    t.bigint "comfy_cms_page_id"
     t.index ["category_id"], name: "index_ahoy_events_on_category_id"
+    t.index ["comfy_cms_page_id"], name: "index_ahoy_events_on_comfy_cms_page_id"
     t.index ["feedback_id"], name: "index_ahoy_events_on_feedback_id"
     t.index ["location_id"], name: "index_ahoy_events_on_location_id"
     t.index ["name", "time"], name: "index_ahoy_events_on_name_and_time"
@@ -91,6 +93,19 @@ ActiveRecord::Schema.define(version: 2023_10_01_183836) do
     t.datetime "started_at"
     t.index ["user_id"], name: "index_ahoy_visits_on_user_id"
     t.index ["visit_token"], name: "index_ahoy_visits_on_visit_token", unique: true
+    t.index ["visitor_token"], name: "index_ahoy_visits_on_visitor_token"
+  end
+
+  create_table "analytics_reports", force: :cascade do |t|
+    t.integer "version", default: 1, null: false
+    t.bigint "user_id", null: false
+    t.datetime "start_date", null: false
+    t.datetime "end_date", null: false
+    t.jsonb "data"
+    t.integer "gen_duration_secs"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_analytics_reports_on_user_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -376,14 +391,29 @@ ActiveRecord::Schema.define(version: 2023_10_01_183836) do
     t.index ["transaction_id"], name: "index_versions_on_transaction_id"
   end
 
+  create_table "visitor_ignore_rules", force: :cascade do |t|
+    t.string "pattern", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "visitor_ignores", force: :cascade do |t|
+    t.string "visitor_token", null: false
+    t.bigint "visitor_ignore_rule_id", null: false
+    t.index ["visitor_ignore_rule_id"], name: "index_visitor_ignores_on_visitor_ignore_rule_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "ahoy_events", "categories"
+  add_foreign_key "ahoy_events", "comfy_cms_pages"
   add_foreign_key "ahoy_events", "feedbacks"
   add_foreign_key "ahoy_events", "locations"
   add_foreign_key "ahoy_events", "orgs"
+  add_foreign_key "analytics_reports", "users"
   add_foreign_key "emails", "locations"
   add_foreign_key "locations", "orgs"
   add_foreign_key "locations", "submissions"
   add_foreign_key "orgs", "submissions"
+  add_foreign_key "visitor_ignores", "visitor_ignore_rules"
 end
