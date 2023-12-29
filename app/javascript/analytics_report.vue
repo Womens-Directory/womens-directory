@@ -48,12 +48,13 @@
 			</div>
 
 			<h2>Visits by Date</h2>
+			<label for="visits-by-date-smooth">Smoothing:</label>
 			<select name="visits-by-date-smooth" @change="updateVisitSmoothing">
 				<option value="0">No smoothing</option>
-				<option value="1">3-day smoothing</option>
-				<option value="3">7-day smoothing</option>
-				<option value="7">15-day smoothing</option>
-				<option value="15">31-day smoothing</option>
+				<option value="1">3-day window</option>
+				<option value="3">7-day window</option>
+				<option value="7">15-day window</option>
+				<option value="15">31-day window</option>
 			</select>
 			<canvas data-graph-content="visits-by-date"></canvas>
 		</div>
@@ -254,22 +255,21 @@ function render(elem: HTMLCanvasElement, type: ChartType, data: Graphable[], max
 }
 
 const visitsByDate = Object.entries(props.data.visit_count_by_date)
-	.map(([name, count]) => ({ name, count }))
+	.map(([name, count]) => ({ name: `Daily visits: ${name}`, count }))
 	.sort((a, b) => a.name.localeCompare(b.name))
 
 function dateToMmDd(date: Date) {
 	return `${date.getMonth() + 1}/${date.getDate()}`
 }
 
-const daysInWindow = ref(1)
+const windowSize = ref(0)
 let visitsByDateChart: ChartJS;
 const visitsByDateChartSelector = '[data-graph-content="visits-by-date"]'
 
 function renderVisits() {
 	if (visitsByDateChart) visitsByDateChart.destroy();
 
-	console.log(daysInWindow.value)
-	if (daysInWindow.value === 1) {
+	if (windowSize.value === 0) {
 		visitsByDateChart = render(
 			document.querySelector(visitsByDateChartSelector),
 			'line', visitsByDate, undefined, 'DONT_SORT',
@@ -278,14 +278,14 @@ function renderVisits() {
 	}
 
 	const visitsByDateSmooth = visitsByDate.map(({ }, i) => {
-		const start = Math.max(0, i - daysInWindow.value - 1);
-		const end = Math.min(visitsByDate.length, i + daysInWindow.value);
+		const start = Math.max(0, i - windowSize.value - 1);
+		const end = Math.min(visitsByDate.length, i + windowSize.value);
 		const window = visitsByDate.slice(start, end);
 		const sum = window.reduce((sum, { count }) => sum + count, 0);
 
 		const firstDateInRange = new Date(window[0].name);
 		const lastDateInRange = new Date(window[window.length - 1].name);
-		const nameRange = `${dateToMmDd(firstDateInRange)} - ${dateToMmDd(lastDateInRange)}`;
+		const nameRange = `Avg daily visits: ${dateToMmDd(firstDateInRange)} - ${dateToMmDd(lastDateInRange)}`;
 
 		return { name: nameRange, count: Math.floor(sum / window.length) };
 	})
@@ -297,8 +297,7 @@ function renderVisits() {
 }
 
 function updateVisitSmoothing(ev: Event) {
-	const windowSize = parseInt((ev.target as HTMLSelectElement).value, 10);
-	daysInWindow.value = windowSize * 2 + 1;
+	windowSize.value = parseInt((ev.target as HTMLSelectElement).value, 10);
 	renderVisits();
 }
 
