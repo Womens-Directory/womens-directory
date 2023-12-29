@@ -13,6 +13,7 @@ module Analytics
 		end
 
 		def ignore_visitor(visitor_token, rule_id)
+			return unless visitor_token
 			vi = VisitorIgnore.find_or_initialize_by visitor_token: visitor_token
 			if vi.new_record?
 				vi.visitor_ignore_rule_id = rule_id
