@@ -2,10 +2,12 @@ class Admin::AnalyticsController < ApplicationController
 	before_action :require_user!
 
 	def index
+		@title = 'Analytics'
 		@reports = AnalyticsReport.all.order(created_at: :desc)
 	end
 
 	def show
+		@title = "Report #{params[:id]}"
 		@report = AnalyticsReport.find(params[:id])
 	end
 
