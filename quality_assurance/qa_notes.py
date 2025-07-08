@@ -1,3 +1,13 @@
+
+# GOOGLE Places API Docs:
+
+https://developers.google.com/maps/documentation/places/web-service
+
+
+
+
+##################################################
+
 # Step 2: Get a Google Places API Key
 # Go to the Google Cloud Console
 
@@ -117,3 +127,14 @@ Billing is required, but Google gives $200/month free for Places API usage.
 You can monitor your usage in the “Billing” section of your project.
 
 Would you like example Python code using the key?
+
+###################################
+
+Access to Google Maps API
+Google does not automatically include Google Maps Platform credits under Google for Nonprofits. However:
+
+Nonprofits can apply for special consideration if they are using Maps API for a mission-aligned purpose like humanitarian aid, social impact, or quality assurance.
+
+This usually goes through Google's nonprofit partner program, such as TechSoup or a special request to Google Cloud support.
+
+###################################
